@@ -432,3 +432,10 @@ code { font-family: var(--mono); font-size: .9em; background: color-mix(in oklab
 .prose ul, .prose ol { margin: 0 0 1.2rem; }
 .toc { max-height: calc(100vh - 16rem); overflow-y: auto; }
 .lede, .scene-text p, .way p, .features p, .faq details p, .foot p { margin-top: 0; }
+@media (max-width: 480px) {
+  .topbar-in { gap: .4rem; padding-inline: .6rem; }
+  .brand-word { font-size: 1.45rem; }
+  .brand img { width: 30px; height: 30px; }
+  .topbar-tools .icon-btn { min-width: 2.2rem; padding: 0 .3rem; }
+  .topbar-tools a[href*="github.com"] { display: none; }
+}

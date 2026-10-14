@@ -27,7 +27,6 @@ function start(el) {
   const charLabel = $('.stage-char');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const pt = el.dataset.lang === 'pt';
-  const NS = 'http://www.w3.org/2000/svg';
   const KEY = 'fontsketch:studio:v1';
   const STRIP = $$('.strip .g').map((b) => b.dataset.ch);
 
@@ -76,8 +75,8 @@ function start(el) {
     let h = '';
     for (const [y, label, k] of lines) {
       const base = k === 'b';
-      h += `<line x1="0" x2="900" y1="${-y}" y2="${-y}" stroke="${base ? 'var(--ver-bright)' : 'var(--rule)'}" stroke-width="${base ? 2 : 1.4}" ${base ? '' : 'stroke-dasharray="6 6"'}/>`;
-      h += `<text x="890" y="${-y - 10}" text-anchor="end" font-size="26" font-family="system-ui, sans-serif" fill="var(--muted)" opacity=".8">${label}</text>`;
+      h += `<line x1="-200" x2="1100" y1="${-y}" y2="${-y}" stroke="${base ? 'var(--ver-bright)' : 'var(--rule)'}" stroke-width="${base ? 2 : 1.4}" ${base ? '' : 'stroke-dasharray="6 6"'}/>`;
+      h += `<text x="1080" y="${-y - 10}" text-anchor="end" font-size="26" font-family="system-ui, sans-serif" fill="var(--muted)" opacity=".8">${label}</text>`;
     }
     h += `<path d="M${ox} 280V-960M${ox + adv} 280V-960" stroke="var(--ver-bright)" stroke-width="1.2" stroke-dasharray="3 8" opacity=".55"/>`;
     gGuides.innerHTML = h;
@@ -106,7 +105,7 @@ function start(el) {
       if (animate && !reduce) {
         const id = `m${S.gen}-${i}`;
         const len = Math.max(0.35, Math.min(0.9, st.pts.length * 0.06));
-        h += `<mask id="${id}" maskUnits="userSpaceOnUse" x="-100" y="-1100" width="1100" height="1500"><path class="reveal" d="${spineD(st.pts, ox)}" pathLength="1" stroke-dasharray="1 1" stroke="#fff" stroke-width="${S.pen * 2.6}" fill="none" stroke-linecap="round" stroke-linejoin="round" style="--delay:${delay.toFixed(2)}s;--dur:${len.toFixed(2)}s"/></mask>`;
+        h += `<mask id="${id}" maskUnits="userSpaceOnUse" x="-300" y="-1100" width="1500" height="1500"><path class="reveal" d="${spineD(st.pts, ox)}" pathLength="1" stroke-dasharray="1 1" stroke="#fff" stroke-width="${S.pen * 2.6}" fill="none" stroke-linecap="round" stroke-linejoin="round" style="--delay:${delay.toFixed(2)}s;--dur:${len.toFixed(2)}s"/></mask>`;
         h += `<path class="glyph wet" data-i="${i}" d="${d}" mask="url(#${id})"/>`;
         delay += len * 0.85;
       } else h += `<path class="glyph" data-i="${i}" d="${d}"/>`;
@@ -539,7 +538,7 @@ function start(el) {
     try {
       if (kind === 'json') blob = new Blob([core.serialize(font)], { type: 'application/json' });
       else {
-        const bytes = await core.exportFont(font, { format: kind, hinting: 'auto' });
+        const bytes = await core.exportFontAsync(font, { format: kind, hinting: 'auto' });
         blob = new Blob([bytes], { type: `font/${kind}` });
       }
     } catch (err) {

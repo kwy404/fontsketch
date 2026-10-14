@@ -18,14 +18,14 @@ steps:
   - name: Verifique o Node
     text: Tenha o Node 18 ou mais recente instalado e rode npx fontsketch --help para ver os comandos disponíveis.
   - name: Gere a fonte de ícones
-    text: Rode npx fontsketch icons ./icons --out ./dist para gerar TTF, WOFF2 e um arquivo CSS com uma classe por ícone.
+    text: Rode npx fontsketch from-svg ./icons --family Icons -o ./dist para gerar WOFF2, WOFF e TTF, um arquivo CSS com uma classe por ícone e uma página HTML de prévia.
   - name: Use no seu site
     text: Copie a saída para o projeto, inclua o CSS e use as classes geradas no HTML.
   - name: Cuide da acessibilidade
     text: Esconda dos leitores de tela os ícones decorativos e dê um rótulo de texto aos ícones que têm significado.
 faq:
   - q: Como transformar ícones SVG em fonte?
-    a: Coloque os arquivos SVG numa pasta e rode a linha de comando do fontsketch com o comando icons. Ela gera arquivos TTF e WOFF2 e um CSS que associa cada ícone a uma classe que você usa no HTML.
+    a: Coloque os arquivos SVG numa pasta e rode a linha de comando do fontsketch com o comando from-svg. Ela gera arquivos WOFF2, WOFF e TTF e um CSS que associa cada ícone a uma classe que você usa no HTML.
   - q: Quais códigos Unicode uma fonte de ícones usa?
     a: Os ícones ficam na Área de Uso Privado do Unicode, que começa em U+E000. Esses códigos não têm significado padrão, então nunca conflitam com letras de verdade e os ícones só aparecem onde o seu CSS mandar.
   - q: Por que meus ícones de linha saíram preenchidos ou sumiram?
@@ -36,7 +36,7 @@ faq:
     a: Não do jeito tradicional. Cada glifo recebe uma única cor da propriedade color do CSS. Para ícones coloridos, use SVG.
 related: [transformar-svg-em-fonte, criar-fonte-online-gratis, como-criar-uma-fonte]
 ---
-Um gerador de fonte de ícones transforma uma pasta de ícones SVG numa fonte com CSS, para que cada ícone apareça com uma classe e seja estilizado como texto. Com o fontsketch basta um comando, `npx fontsketch icons ./icons --out ./dist`, que gera TTF e WOFF2 com os ícones na Área de Uso Privado do Unicode e as classes CSS.
+Um gerador de fonte de ícones transforma uma pasta de ícones SVG numa fonte com CSS, para que cada ícone apareça com uma classe e seja estilizado como texto. Com o fontsketch basta um comando, `npx fontsketch from-svg ./icons --family Icons -o ./dist`, que gera WOFF2, WOFF e TTF com os ícones na Área de Uso Privado do Unicode e as classes CSS.
 
 ## Como funciona uma fonte de ícones
 
@@ -96,10 +96,10 @@ npx fontsketch --help
 Para gerar a fonte de ícones a partir de uma pasta de SVGs:
 
 ```bash
-npx fontsketch icons ./icons --out ./dist
+npx fontsketch from-svg ./icons --family Icons -o ./dist
 ```
 
-A pasta de saída recebe os arquivos TTF e WOFF2 e um CSS com uma classe por ícone. Coloque o comando nos scripts de build do projeto para que a fonte seja gerada de novo sempre que um ícone mudar, e versione os SVGs de origem, não só o resultado, para que qualquer pessoa do time consiga recriar a fonte.
+A pasta de saída recebe os arquivos WOFF2, WOFF e TTF, um CSS com uma classe por ícone (`seta-esquerda.svg` vira `.icon-seta-esquerda`) e uma página `index.html` com a prévia de todos os ícones. Coloque o comando nos scripts de build do projeto para que a fonte seja gerada de novo sempre que um ícone mudar, e versione os SVGs de origem, não só o resultado, para que qualquer pessoa do time consiga recriar a fonte.
 
 Dê nomes descritivos aos arquivos, como `seta-esquerda.svg` ou `carrinho.svg`. Nomes claros deixam o CSS gerado e o HTML mais fáceis de ler.
 
@@ -116,7 +116,7 @@ Copie o WOFF2 e o CSS para o projeto e inclua a folha de estilo:
 </button>
 ```
 
-Os nomes de classe do exemplo são ilustrativos; use os que estão no CSS gerado. Os ícones se comportam como texto: `font-size` muda o tamanho e `color` muda a cor, inclusive no hover.
+Cada classe é `icon-` mais o nome do arquivo SVG; troque o prefixo com `--prefix`. Os ícones se comportam como texto: `font-size` muda o tamanho e `color` muda a cor, inclusive no hover.
 
 Para carregamento, o arquivo que os navegadores usam é o WOFF2. Em fontes de ícones é comum usar `font-display: block`, porque mostrar caracteres substitutos no lugar dos ícones parece defeito.
 
@@ -169,4 +169,4 @@ Muitos projetos usam as duas coisas: fonte de ícones para os ícones comuns da 
 
 ## Próximos passos
 
-Rode `npx fontsketch --help` e depois aponte o comando icons para a sua pasta de SVGs. Se precisar ajustar um glifo à mão, abra a fonte no [editor do fontsketch](app:). Quer criar uma fonte de letras em vez de ícones? Comece por [como criar uma fonte](guide:como-criar-uma-fonte) ou pelo guia [criar fonte online grátis](guide:criar-fonte-online-gratis).
+Rode `npx fontsketch --help` e depois aponte o comando from-svg para a sua pasta de SVGs. Se precisar ajustar um glifo à mão, abra a fonte no [editor do fontsketch](app:). Quer criar uma fonte de letras em vez de ícones? Comece por [como criar uma fonte](guide:como-criar-uma-fonte) ou pelo guia [criar fonte online grátis](guide:criar-fonte-online-gratis).

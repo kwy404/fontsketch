@@ -18,14 +18,14 @@ steps:
   - name: Install fontsketch
     text: Make sure Node 18 or later is installed, then run npx fontsketch --help to see the available commands.
   - name: Generate the icon font
-    text: Run npx fontsketch icons ./icons --out ./dist to build TTF and WOFF2 files plus a CSS file with one class per icon.
+    text: Run npx fontsketch from-svg ./icons --family Icons -o ./dist to build WOFF2, WOFF and TTF files, a CSS file with one class per icon and an HTML preview page.
   - name: Add the font to your site
     text: Copy the output to your project, link the CSS file and use the generated classes in your markup.
   - name: Make the icons accessible
     text: Hide decorative icons from screen readers and give meaningful icons a text label.
 faq:
   - q: How do I convert SVG icons to a font?
-    a: Put the SVG files in one folder and run the fontsketch CLI with the icons command. It outputs TTF and WOFF2 font files and a CSS file that maps each icon to a class you can use in HTML.
+    a: Put the SVG files in one folder and run the fontsketch CLI with the from-svg command. It outputs WOFF2, WOFF and TTF font files and a CSS file that maps each icon to a class you can use in HTML.
   - q: Which Unicode codepoints do icon fonts use?
     a: Icon fonts place glyphs in the Private Use Area, which starts at U+E000. These codepoints have no standard meaning, so they never clash with real letters and the icons only appear where your CSS puts them.
   - q: Why do my outlined icons appear filled in the icon font?
@@ -36,7 +36,7 @@ faq:
     a: Not in the usual sense. Each glyph takes one color from the CSS color property. For multicolor icons, use SVG instead.
 related: [make-a-font-from-svg, web-font-formats-ttf-otf-woff2, use-a-custom-font-on-your-website, font-hinting-explained]
 ---
-An icon font generator turns a folder of SVG icons into a font file plus CSS, so each icon is used with a class and styled like text. With fontsketch you run one command, `npx fontsketch icons ./icons --out ./dist`, and get TTF and WOFF2 files with icons mapped to Private Use Area codepoints, plus matching CSS classes.
+An icon font generator turns a folder of SVG icons into a font file plus CSS, so each icon is used with a class and styled like text. With fontsketch you run one command, `npx fontsketch from-svg ./icons --family Icons -o ./dist`, and get WOFF2, WOFF and TTF files with icons mapped to Private Use Area codepoints, plus matching CSS classes.
 
 ## How an icon font works
 
@@ -96,10 +96,10 @@ npx fontsketch --help
 To build an icon font from a folder of SVGs:
 
 ```bash
-npx fontsketch icons ./icons --out ./dist
+npx fontsketch from-svg ./icons --family Icons -o ./dist
 ```
 
-The output folder contains TTF and WOFF2 font files and a CSS file with one class per icon. Add the command to your build scripts so the font is regenerated whenever an icon changes, and commit the SVG sources, not just the output, so anyone on the team can rebuild.
+The output folder contains WOFF2, WOFF and TTF font files, a CSS file with one class per icon (`arrow-left.svg` becomes `.icon-arrow-left`) and an `index.html` page that previews every icon. Add the command to your build scripts so the font is regenerated whenever an icon changes, and commit the SVG sources, not just the output, so anyone on the team can rebuild.
 
 Name your files descriptively, such as `arrow-left.svg` or `cart.svg`. Clear file names make the generated CSS and your markup easier to read.
 
@@ -116,7 +116,7 @@ Copy the WOFF2 file and CSS into your project and link the stylesheet:
 </button>
 ```
 
-The class names in this example are illustrative; use the ones from your generated CSS. Icons behave like text: set `font-size` to resize them and `color` to recolor them, including on hover.
+Each class is `icon-` plus the SVG file name; change the prefix with `--prefix`. Icons behave like text: set `font-size` to resize them and `color` to recolor them, including on hover.
 
 For loading performance, the WOFF2 file is the one browsers will use. Our guide on [web font formats](guide:web-font-formats-ttf-otf-woff2) covers preloading and `font-display`. For an icon font, `font-display: block` is a common choice, because showing fallback characters in place of icons looks broken.
 
@@ -176,4 +176,4 @@ Icons are usually displayed at a few fixed sizes. Designing them on a grid that 
 
 ## Next steps
 
-Run `npx fontsketch --help`, then point the icons command at your SVG folder. If you need to edit a single glyph by hand, open the font in the [fontsketch editor](app:). To ship it properly, follow [use a custom font on your website](guide:use-a-custom-font-on-your-website).
+Run `npx fontsketch --help`, then point the from-svg command at your SVG folder. If you need to edit a single glyph by hand, open the font in the [fontsketch editor](app:). To ship it properly, follow [use a custom font on your website](guide:use-a-custom-font-on-your-website).

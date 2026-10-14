@@ -116,7 +116,7 @@ import { writeFile } from 'node:fs/promises';
 import { exportFont } from 'fontsketch';
 
 // font is a project with Regular and Bold masters
-const bytes = await exportFont(font, { format: 'woff2', variable: true });
+const bytes = exportFont(font, { format: 'woff2', variable: true });
 await writeFile('MySans-VF.woff2', bytes);
 ```
 

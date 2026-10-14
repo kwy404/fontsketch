@@ -70,10 +70,8 @@ function placeTool(c, kind, tip, dir) {
 
 /** Tentacle reaching a grip point on a tool, then a curl wrapping over the tool. */
 function holder(c, basePts, grip, dir, side, w0 = 34) {
-  const p = [-dir[1] * side, dir[0] * side];
-  const pts = [...basePts, grip];
-  let out = tentacle(c, pts, w0, 15, side === 1 ? -1 : 1);
-  return out;
+  void dir;
+  return tentacle(c, [...basePts, grip], w0, 15, side === 1 ? -1 : 1);
 }
 
 function wrap(c, grip, dir, side) {
@@ -88,7 +86,7 @@ function pointedPen(pts, hair, swell, n = 70) {
   return taper(pts, (t, tg) => hair + swell * Math.pow(Math.max(0, tg[1]), 1.6), { n });
 }
 
-export function letters(c, opt = {}) {
+export function letters(c) {
   let out = '';
   // Brush A (upper left), thick and thin with pressure.
   const brushW = (lo, hi) => (t) => lo + (hi - lo) * Math.pow(Math.sin(Math.PI * Math.min(Math.max(t, 0.02), 0.98)), 0.7);
@@ -171,7 +169,7 @@ export function splats(c) {
   return splat(28, 210, 7, 3, c.letter) + splat(392, 214, 6, 5, c.letter2) + splat(118, 380, 5, 8, c.letter) + splat(300, 54, 4.5, 11, c.letter2) + splat(130, 28, 4, 13, c.letter);
 }
 
-export function mascotSVG(mode = 'light', { title = true } = {}) {
+export function mascotSVG(mode = 'light') {
   const c = PAL[mode];
   const id = `q${mode[0]}`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16 452 452" width="452" height="452" role="img" aria-labelledby="${id}-t">

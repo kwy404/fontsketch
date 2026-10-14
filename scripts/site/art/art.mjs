@@ -1,12 +1,8 @@
 // Atelier illustrations (640x400), light and dark.
-import { readFileSync } from 'node:fs';
 import { text, textD, measure, font } from './text.mjs';
 import { broadNib, taper } from './lib.mjs';
 import { PAL, headSVG } from './mascot.mjs';
 import { nest } from './banner.mjs';
-import { fileURLToPath } from 'node:url';
-import { resolve, dirname } from 'node:path';
-const repo = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const { strokesToContours, contoursToSvgPath } = await import('../../../docs/assets/site/stroke.mjs');
 const { buildQuillHand } = await import('../quill-hand.mjs');
 const strokes = buildQuillHand().strokeData;
@@ -63,7 +59,7 @@ const node = (t, x, y, on = true) => on
 const quill = (mode, x, y, h) => nest(headSVG(mode), x, y, h * (228 / 304), h);
 
 export const ART = {
-  'scan-to-font': ['A phone photo of a handwriting sheet being flattened, cleaned and split into letters that become vector glyphs', (t, mode) => {
+  'scan-to-font': ['A phone photo of a handwriting sheet being flattened, cleaned and split into letters that become vector glyphs', (t) => {
     let s = '';
     // tilted photo
     s += `<g transform="translate(44 70)"><rect x="0" y="0" width="170" height="262" rx="22" fill="${t.line}"/><rect x="10" y="26" width="150" height="206" rx="6" fill="#8F8A7A"/>`;

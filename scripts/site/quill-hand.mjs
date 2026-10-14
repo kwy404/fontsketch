@@ -6,7 +6,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import * as core from '../../src/core/index.mjs';
+import * as core from '../../src/node.mjs';
 import { strokesToContours } from '../../docs/assets/site/stroke.mjs';
 import { GLYPHS, MARKS, ACCENTED } from './quill-hand-strokes.mjs';
 

@@ -103,7 +103,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { parseFont, exportFont } from 'fontsketch';
 
 const font = parseFont(await readFile('MyFont.ttf'));
-const woff2 = await exportFont(font, { format: 'woff2' });
+const woff2 = exportFont(font, { format: 'woff2' });
 await writeFile('MyFont.woff2', woff2);
 ```
 

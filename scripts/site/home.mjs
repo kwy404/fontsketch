@@ -186,7 +186,7 @@ export function homeBody(lang, ctx) {
         <label class="weight"><span>${t.tools.weight}</span><input type="range" min="28" max="140" value="66" step="1" data-weight aria-label="${t.tools.weight}"></label>
       </div>
       <div class="stage" tabindex="0" aria-describedby="stage-hint">
-        <svg id="stage-svg" class="stage-svg" viewBox="0 -1000 900 1300" role="img" aria-label="${t.stageLabel}: a"><g class="guides"></g><g class="ink"></g><g class="live"></g><g class="handles"></g></svg>
+        <svg id="stage-svg" class="stage-svg" viewBox="-200 -1000 1300 1300" role="img" aria-label="${t.stageLabel}: a"><g class="guides"></g><g class="ink"></g><g class="live"></g><g class="handles"></g></svg>
         <span class="stage-char" aria-hidden="true">a</span>
         <button type="button" class="next-btn btn btn-sm" data-act="next"><span>${t.tools.next}</span><svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></button>
       </div>

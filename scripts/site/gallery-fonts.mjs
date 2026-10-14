@@ -2,7 +2,7 @@
 //   Quill Hand Variable  the handwriting strokes expanded with two pen widths
 //   Compass Display      a geometric display face made of rings, bars and arcs
 //   Atelier Icons        an icon font with Private Use Area code points
-import * as core from '../../src/core/index.mjs';
+import * as core from '../../src/node.mjs';
 import { strokesToContours } from '../../docs/assets/site/stroke.mjs';
 import { buildQuillHand } from './quill-hand.mjs';
 
@@ -64,7 +64,6 @@ function sector(cx, cy, ro, ri, a0, a1, ryo = ro, ryi = ri) {
 
 // ---------- Compass Display ----------
 
-const W = 130;
 const COMPASS = {
   A: [620, () => [bar(70, 0, 310, 700), bar(310, 700, 550, 0), rect(170, 170, 450, 290), poly([[245, 640], [375, 640], [310, 720]])]],
   B: [560, () => [rect(60, 0, 190, 700), rect(60, 570, 330, 700), rect(60, 310, 330, 440), rect(60, 0, 330, 130), sector(330, 505, 195, 65, -90, 90), sector(330, 220, 220, 90, -90, 90)]],

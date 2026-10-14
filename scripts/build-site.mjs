@@ -14,7 +14,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import * as core from '../src/core/index.mjs';
+import * as core from '../src/node.mjs';
 import { buildArt, guideCardSVG, renderPng, socialSVG } from './site/build-art.mjs';
 import { writeQuillHand } from './site/quill-hand.mjs';
 import { buildCompass, buildIcons, buildQuillVariable } from './site/gallery-fonts.mjs';
@@ -137,18 +137,23 @@ const altFor = (g) => {
 const out = {};
 const stripChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?&';
 
-const codeCli = () => frame('# turn a folder of SVG icons into an icon font\nnpx fontsketch icons ./icons --out ./dist\n\n# every command and option\nnpx fontsketch --help', 'bash');
-const codeApi = () => frame(`import { createFont, addGlyph, exportFont, cssFontFace } from 'fontsketch';
+const codeCli = () => frame(`# a folder of SVG icons becomes WOFF2, WOFF, TTF, CSS classes and a preview page
+npx fontsketch from-svg ./icons --family Icons -o ./dist
+
+# compile a project saved from the editor
+npx fontsketch build my-hand.fontsketch.json -o ./fonts --formats woff2,ttf`, 'bash');
+const codeApi = () => frame(`import { writeFileSync } from 'node:fs';
+import { createFont, addGlyph, circleContour, reverseContour, exportFont, cssFontFace } from 'fontsketch';
 
 const font = createFont({ family: 'My Hand', designer: 'Me' });
 addGlyph(font, {
   name: 'o',
   advanceWidth: 520,
-  contours: [ring(260, 250, 230, 130)],
+  contours: [circleContour(260, 250, 230), reverseContour(circleContour(260, 250, 130))],
 });
 
-const woff2 = exportFont(font, { format: 'woff2', hinting: 'auto' });
-const css = cssFontFace(font, '/fonts/my-hand.woff2');`, 'js', 'build-font.mjs');
+writeFileSync('my-hand.woff2', exportFont(font, { format: 'woff2', hinting: 'auto' }));
+console.log(cssFontFace(font, '/fonts/my-hand.woff2'));`, 'js', 'build-font.mjs');
 
 for (const lang of ['en', 'pt']) {
   idPrefix = `h${lang}`;
