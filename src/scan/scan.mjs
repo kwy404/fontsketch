@@ -21,7 +21,7 @@ import { pathsToContours, traceMask } from './trace.mjs';
 
 /**
  * @typedef {{ code: string, message: string, char?: string }} ScanWarning
- * Codes: `few-markers`, `page-code-unreadable`, `sheet-mismatch`,
+ * Codes: `few-markers`, `mirrored`, `page-code-unreadable`, `sheet-mismatch`,
  * `low-resolution`, `no-guides`, `empty-cell`, `touches-border`, `faint`,
  * `noisy`, `label-overlap`, `off-baseline`.
  */
@@ -822,6 +822,9 @@ export function prepareSheet(input, options) {
   }
   if (markers.length < 4) {
     warnings.push({ code: 'few-markers', message: `Only ${markers.length} of 4 corner markers were found; the result may be slightly distorted.` });
+  }
+  if (markers.filter((m) => m.mirrored).length * 2 > markers.length) {
+    warnings.push({ code: 'mirrored', message: 'The photo is mirrored (front camera?); it was read the right way round.' });
   }
   const { H, error } = pageHomography(t, markers);
   // native resolution in pixels per mm around the page centre

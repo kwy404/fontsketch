@@ -92,12 +92,18 @@ describe('sheet layout', () => {
 });
 
 describe('markers and page code', () => {
-  it('uses marker codes that stay distinct under every rotation', () => {
-    const rots = (c) => [c, rotateCode(c), rotateCode(rotateCode(c)), rotateCode(rotateCode(rotateCode(c)))];
+  it('uses marker codes that stay distinct under every rotation and mirroring', () => {
+    const mirror = (c) => {
+      let o = 0;
+      for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) if ((c >> (y * 4 + x)) & 1) o |= 1 << (x * 4 + y);
+      return o;
+    };
+    const turns = (c) => [c, rotateCode(c), rotateCode(rotateCode(c)), rotateCode(rotateCode(rotateCode(c)))];
+    const rots = (c) => turns(c).concat(turns(mirror(c)));
     let min = 16;
     MARKER_CODES.forEach((a, i) => {
       const ra = rots(a);
-      for (let r = 1; r < 4; r++) min = Math.min(min, popcount(a ^ ra[r]));
+      for (let r = 1; r < 8; r++) min = Math.min(min, popcount(a ^ ra[r]));
       MARKER_CODES.forEach((b, j) => {
         if (j > i) for (const rb of rots(b)) min = Math.min(min, popcount(a ^ rb));
       });

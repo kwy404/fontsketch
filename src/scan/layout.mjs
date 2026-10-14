@@ -12,11 +12,11 @@ export const PAGE_SIZES = Object.freeze({
 /**
  * Inner 4x4 bit patterns of the four corner markers (bit `y * 4 + x`, 1 is
  * black), in the order top left, top right, bottom right, bottom left. Every
- * pattern differs from every rotation of itself and of the others in at least
- * 6 bits, so up to 2 misread modules are corrected and orientation is never
- * ambiguous.
+ * pattern differs from every rotation and mirror image of itself and of the
+ * others in at least 6 bits, so up to 2 misread modules are corrected and
+ * neither orientation nor a mirrored photo is ever ambiguous.
  */
-export const MARKER_CODES = Object.freeze([0xa2b2, 0x3926, 0xf4a1, 0x6ba5]);
+export const MARKER_CODES = Object.freeze([0xa8cc, 0x98d1, 0xc36e, 0x15f5]);
 
 /** Light cyan used for every guide; the scanner removes it. */
 export const DROPOUT_COLOR = Object.freeze([159, 216, 238]);

@@ -46,6 +46,20 @@ describe('marker detection', () => {
     }
   }, 60000);
 
+  it('reads mirrored photos the right way round', () => {
+    const p = photograph(sheet, { seed: 6, width: 1600, height: 1300, rotate: -8, blur: 0.6, noise: 2 });
+    const { width: w, height: h, data } = p;
+    const flipped = new Uint8ClampedArray(data.length);
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) flipped.set(data.subarray((y * w + x) * 4, (y * w + x) * 4 + 4), (y * w + (w - 1 - x)) * 4);
+    }
+    const r = scanSheet({ width: w, height: h, data: flipped }, { template: tpl });
+    expect(r.markers.every((m) => m.mirrored)).toBe(true);
+    expect(r.warnings.map((x) => x.code)).toContain('mirrored');
+    const g = r.glyphs.A;
+    expect(glyphIoU(g.contours, sheet.truth.A.strokes, sheet.truth.A.pen, g.shiftX)).toBeGreaterThan(0.8);
+  });
+
   it('keeps going with one marker hidden', () => {
     const p = photograph(sheet, { seed: 4, width: 2000, height: 1500, rotate: 4, blur: 0.6, noise: 2 });
     const { R } = sheet;

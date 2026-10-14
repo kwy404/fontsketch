@@ -18,10 +18,12 @@ import { MARKER_CODES, rotateCode } from './layout.mjs';
  *   size: number,
  *   refined: boolean,
  *   blur: number,
+ *   mirrored: boolean,
  * }} Marker
  * `corners` are in the marker's own order (top left, top right, bottom
  * right, bottom left as printed) in source image pixels. `blur` is the
  * estimated Gaussian blur (sigma, pixels) of the photo around the marker.
+ * `mirrored` is true when the marker was read from a mirror image.
  */
 
 const ROTATIONS = MARKER_CODES.map((c) => {
@@ -403,11 +405,17 @@ export function findMarkers(img, options = {}) {
       const qcx = quad.reduce((s, p) => s + p[0], 0) / 4;
       const qcy = quad.reduce((s, p) => s + p[1], 0) / 4;
       quad.sort((a, b) => Math.atan2(a[1] - qcy, a[0] - qcx) - Math.atan2(b[1] - qcy, b[0] - qcx));
-      const dec = decodeQuad(gray, /** @type {Array<[number, number]>} */ (quad));
+      // a mirrored photo (front camera, photo of a reflection) reads correctly
+      // with the corners taken the other way round; the codes are chosen so
+      // only one of the two readings can match
+      const straight = decodeQuad(gray, /** @type {Array<[number, number]>} */ (quad));
+      const flipped = decodeQuad(gray, /** @type {Array<[number, number]>} */ ([quad[0], quad[3], quad[2], quad[1]]));
+      const mirrored = !!flipped && (!straight || flipped.errors < straight.errors);
+      const dec = mirrored ? flipped : straight;
       if (!dec) continue;
       const prev = found.get(dec.id);
       const score = dec.errors * 1000 - dec.contrast;
-      if (!prev || score < prev.score) found.set(dec.id, { ...dec, score, side: Math.sqrt(qa) });
+      if (!prev || score < prev.score) found.set(dec.id, { ...dec, score, side: Math.sqrt(qa), mirrored });
     }
     if (found.size === 4 && [...found.values()].every((m) => m.errors === 0)) break;
   }
@@ -425,7 +433,7 @@ export function findMarkers(img, options = {}) {
       corners.reduce((s, p) => s + p[0], 0) / 4,
       corners.reduce((s, p) => s + p[1], 0) / 4,
     ]);
-    out.push({ id: m.id, corners, center, errors: m.errors, contrast: m.contrast, size: m.side * scale, refined, blur });
+    out.push({ id: m.id, corners, center, errors: m.errors, contrast: m.contrast, size: m.side * scale, refined, blur, mirrored: m.mirrored });
   }
   return out.sort((a, b) => a.id - b.id);
 }
