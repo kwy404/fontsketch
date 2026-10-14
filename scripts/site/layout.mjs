@@ -23,6 +23,7 @@ export const MORE = [
   ['numberparrot', 'https://kwy404.github.io/numberparrot/', 'parse localized numbers', 'converte números localizados'],
   ['edgegoat', 'https://kwy404.github.io/edgegoat/', 'edge case test inputs', 'casos extremos para testes'],
   ['vueleap', 'https://kwy404.github.io/vueleap/', 'migrate Vue 2 to Vue 3', 'migra Vue 2 para Vue 3'],
+  ['kastor', 'https://kwy404.github.io/kastor/', 'TypeScript ORM for almost every database', 'ORM TypeScript para quase todo banco de dados'],
 ];
 
 export const STR = {

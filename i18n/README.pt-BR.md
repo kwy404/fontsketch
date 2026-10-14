@@ -315,6 +315,7 @@ Suas. O fontsketch tem licença MIT e não coloca licença nem marca d'água nas
 - [numberparrot](https://kwy404.github.io/numberparrot/): converte números e moedas localizados.
 - [edgegoat](https://kwy404.github.io/edgegoat/): entradas de casos extremos para testes em JavaScript.
 - [vueleap](https://kwy404.github.io/vueleap/): migra de Vue 2 para Vue 3 com um comando.
+- [kastor](https://kwy404.github.io/kastor/): ORM para TypeScript para PostgreSQL, MySQL, SQLite, SQL Server, Oracle, MongoDB e mais.
 
 ## Autor
 

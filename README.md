@@ -315,6 +315,7 @@ You do. fontsketch is MIT licensed and adds no license or watermark to your font
 - [numberparrot](https://kwy404.github.io/numberparrot/): parse localized numbers and currency strings.
 - [edgegoat](https://kwy404.github.io/edgegoat/): edge case test inputs for JavaScript.
 - [vueleap](https://kwy404.github.io/vueleap/): migrate Vue 2 to Vue 3 with one command.
+- [kastor](https://kwy404.github.io/kastor/): TypeScript ORM for PostgreSQL, MySQL, SQLite, SQL Server, Oracle, MongoDB and more.
 
 ## Author
 
