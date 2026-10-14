@@ -196,6 +196,34 @@ Fonts are plain JSON friendly objects: 1000 units per em, Y axis up, quadratic T
 
 `simplify`, `fitCurves`, `fitContour`, `cubicToQuadratic`, `contourFromCubics`, `correctDirection`, `reverseContour`, `removeOverlaps`, `strokeToOutline`, `circleContour`, `transformContours`, `roundContours`, `bounds`, `contourArea` and `pathFromPoints` (SVG path data for previews).
 
+### Handwriting scan
+
+From `fontsketch/scan`, in browsers and in Node. Pass any `ImageData` like object (`{ width, height, data }`) or, in browsers, an `ImageBitmap`, image or canvas. `fontsketch/scan/worker` runs the same scan in a Web Worker.
+
+```js
+import { createFont, addGlyph, exportFont } from 'fontsketch';
+import { createTemplate, scanSheet } from 'fontsketch/scan';
+
+const sheet = createTemplate({ chars: ['essential', 'portuguese'], pageSize: 'A4' });
+// print sheet.pdf (bytes) or sheet.svgPages, write by hand, take a photo
+
+const result = scanSheet(photo, { template: sheet.template });
+const font = createFont({ family: 'My Hand' });
+for (const glyph of Object.values(result.glyphs)) {
+  if (!glyph.empty && glyph.confidence > 0.5) addGlyph(font, glyph);
+}
+result.rescan('g', { threshold: 0.6 }); // retrace one letter with another ink threshold
+const woff2 = exportFont(font, { format: 'woff2' });
+```
+
+| Function | Description |
+| --- | --- |
+| `createTemplate(options?)` | Printable sheet with corner markers, a page code and guide lines: `{ pdf, svg, svgPages, template, pages }`. `chars` takes a string or names from `CHARSETS` (`essential`, `lowercase`, `uppercase`, `digits`, `punctuation`, `basicLatin`, `portuguese`); also `pageSize` (`'A4'` or `'Letter'`), `title` and `metrics` |
+| `scanSheet(image, { template, threshold?, chars? })` | Finds the markers at any rotation, flattens perspective and lighting, removes the guides and traces every cell: `{ glyphs, warnings, page, rescan(char, options) }`. Each glyph has `contours`, `advanceWidth`, `confidence` and its own `warnings` |
+| `scanSheets(images, options)` | Several photos of a multi page template in any order, merged, with missing pages reported |
+| `importImage(image, options?)` | One letter, or a whole alphabet written in rows, from a photo without a template |
+| `importSvg(svg, options?)` | Letters from SVG artwork |
+
 ### Node helpers
 
 Available from `fontsketch` in Node and from `fontsketch/node`:

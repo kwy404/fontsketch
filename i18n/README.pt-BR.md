@@ -196,6 +196,34 @@ As fontes são objetos simples, prontos para JSON: 1000 unidades por em, eixo Y 
 
 `simplify`, `fitCurves`, `fitContour`, `cubicToQuadratic`, `contourFromCubics`, `correctDirection`, `reverseContour`, `removeOverlaps`, `strokeToOutline`, `circleContour`, `transformContours`, `roundContours`, `bounds`, `contourArea` e `pathFromPoints` (caminho SVG para prévias).
 
+### Leitura de letra à mão
+
+Em `fontsketch/scan`, no navegador e no Node. Aceita qualquer objeto no formato `ImageData` (`{ width, height, data }`) ou, no navegador, um `ImageBitmap`, imagem ou canvas. `fontsketch/scan/worker` faz a mesma leitura dentro de um Web Worker.
+
+```js
+import { createFont, addGlyph, exportFont } from 'fontsketch';
+import { createTemplate, scanSheet } from 'fontsketch/scan';
+
+const sheet = createTemplate({ chars: ['essential', 'portuguese'], pageSize: 'A4' });
+// imprima sheet.pdf (bytes) ou sheet.svgPages, escreva à mão e tire uma foto
+
+const result = scanSheet(photo, { template: sheet.template });
+const font = createFont({ family: 'Minha Letra' });
+for (const glyph of Object.values(result.glyphs)) {
+  if (!glyph.empty && glyph.confidence > 0.5) addGlyph(font, glyph);
+}
+result.rescan('g', { threshold: 0.6 }); // refaz uma letra com outro limiar de tinta
+const woff2 = exportFont(font, { format: 'woff2' });
+```
+
+| Função | Descrição |
+| --- | --- |
+| `createTemplate(options?)` | Folha para imprimir com marcadores nos cantos, código da página e linhas guia: `{ pdf, svg, svgPages, template, pages }`. `chars` aceita um texto ou nomes de `CHARSETS` (`essential`, `lowercase`, `uppercase`, `digits`, `punctuation`, `basicLatin`, `portuguese`); também `pageSize` (`'A4'` ou `'Letter'`), `title` e `metrics` |
+| `scanSheet(image, { template, threshold?, chars? })` | Acha os marcadores em qualquer rotação, corrige perspectiva e iluminação, remove as guias e vetoriza cada célula: `{ glyphs, warnings, page, rescan(char, options) }`. Cada letra traz `contours`, `advanceWidth`, `confidence` e seus próprios `warnings` |
+| `scanSheets(images, options)` | Várias fotos de um modelo com várias páginas, em qualquer ordem, juntas, avisando as páginas que faltam |
+| `importImage(image, options?)` | Uma letra, ou um alfabeto inteiro escrito em linhas, a partir de uma foto sem modelo |
+| `importSvg(svg, options?)` | Letras a partir de arte em SVG |
+
 ### Funções para Node
 
 Disponíveis em `fontsketch` no Node e em `fontsketch/node`:
