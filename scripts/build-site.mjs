@@ -78,7 +78,7 @@ function exportAll(font, file, formats = ['woff2', 'ttf', 'otf', 'woff'], option
   delete options.json;
   for (const format of formats) {
     try {
-      const bytes = core.exportFont(font, { format, hinting: 'auto', ...options });
+      const bytes = core.exportFont(font, { format, hinting: 'auto', timestamp: Date.UTC(2026, 9, 13), ...options });
       writeFileSync(join(dir, `${file}.${format}`), bytes);
       entry[format] = bytes.length;
     } catch (err) {
@@ -224,7 +224,7 @@ out['gallery/index.html'] = page(
   galleryBody('../', sizes, frame(readFileSync(join(root, 'scripts/site/gallery-fonts.mjs'), 'utf8').split('\n').filter((l) => /^ {2}[A-E]: |^export function buildCompass|^ {2}for \(const \[name, \[adv, fn\]\]|^ {4}core\.addGlyph/.test(l)).slice(0, 9).join('\n'), 'js', 'compass-display.mjs')),
 );
 
-const rootLinks = (html) => html.replace(/\b(href|src)="(?![a-z]+:|#|\/)([^"]*)"/g, (_, a, v) => `${a}="/fontsketch/${v.replace(/^(\.\.\/)+/, '')}"`);
+const rootLinks = (html) => html.replace(/\b(href|src)="(?![a-z]+:|#|\/)([^"]*)"/g, (_, a, v) => `${a}="/fontsketch/${v.replace(/^(\.\.?\/)+/, '')}"`);
 out['404.html'] = rootLinks(page(
   { lang: 'en', path: '', title: 'Page not found | fontsketch', description: 'This page is not in the type case. Head back to fontsketch, the free font maker that turns your handwriting into a real font in your browser.', noindex: true },
   `<section class="notfound"><span class="art nf-art"><img class="art-l" src="assets/art/quill.svg" width="452" height="452" alt="Quill the octopus looking for a missing letter"><img class="art-d" src="assets/art/quill-dark.svg" width="452" height="452" alt="" aria-hidden="true"></span><div><p class="kicker">404</p><h1>This glyph is missing from the font</h1><p class="lede">The page you asked for is not in the type case. Maybe it was renamed, or the link lost a letter.</p><p class="cta-btns"><a class="btn btn-primary" href="./">Back to the studio</a><a class="btn btn-outline" href="guides/">Browse the guides</a></p></div></section>`,

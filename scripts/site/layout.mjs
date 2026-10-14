@@ -20,7 +20,7 @@ export const MORE = [
   ['installkite', 'https://kwy404.github.io/installkite/', 'make any site an installable PWA', 'transforma qualquer site em PWA'],
   ['a11ymedic', 'https://kwy404.github.io/a11ymedic/', 'accessibility checker with fixes', 'verificador de acessibilidade'],
   ['graphemely', 'https://kwy404.github.io/graphemely/', 'emoji safe string utilities', 'strings seguras com emoji'],
-  ['numberparrot', 'https://kwy404.github.io/numberparrot/', 'parse localized numbers', 'converte numeros localizados'],
+  ['numberparrot', 'https://kwy404.github.io/numberparrot/', 'parse localized numbers', 'converte números localizados'],
   ['edgegoat', 'https://kwy404.github.io/edgegoat/', 'edge case test inputs', 'casos extremos para testes'],
   ['vueleap', 'https://kwy404.github.io/vueleap/', 'migrate Vue 2 to Vue 3', 'migra Vue 2 para Vue 3'],
 ];
@@ -45,7 +45,7 @@ export const STR = {
     links: [['Font editor', 'app/'], ['Gallery', 'gallery/'], ['All guides', 'guides/'], ['npm package', NPM], ['Source on GitHub', REPO], ['Changelog', `${REPO}/blob/main/CHANGELOG.md`]],
   },
   pt: {
-    skip: 'Pular para o conteudo',
+    skip: 'Pular para o conteúdo',
     nav: [['studio', 'Estúdio', '#studio'], ['story', 'Como funciona', '#story'], ['gallery', 'Galeria', 'gallery/'], ['guides', 'Guias', 'pt/guias/']],
     editor: 'Abrir o editor',
     theme: 'Tema: sistema, claro ou escuro',
@@ -123,7 +123,8 @@ export function page(o, body) {
   const alts = o.alternates || {};
   const htmlLang = o.lang === 'pt' ? 'pt-BR' : 'en';
   const href = (h) => (/^(https?:|#|mailto:)/.test(h) ? h : R + h);
-  const navHref = (h) => (h.startsWith('#') ? (o.path === '' || o.path === 'pt/' ? h : `${R}${o.lang === 'pt' ? 'pt/' : ''}${h}`) : R + h);
+  const isHome = (o.path === '' || o.path === 'pt/') && !o.noindex;
+  const navHref = (h) => (h.startsWith('#') ? (isHome ? h : `${R || './'}${o.lang === 'pt' ? 'pt/' : ''}${h}`) : R + h);
   const otherLang = o.langHref ? R + o.langHref : R + (o.lang === 'pt' ? '' : 'pt/');
   const guidesLinks = o.lang === 'pt'
     ? [['Criar fonte com minha letra', 'pt/guias/criar-fonte-com-minha-letra/'], ['Criar fonte online grátis', 'pt/guias/criar-fonte-online-gratis/'], ['Como criar uma fonte', 'pt/guias/como-criar-uma-fonte/'], ['Transformar SVG em fonte', 'pt/guias/transformar-svg-em-fonte/'], ['Gerador de fonte de ícones', 'pt/guias/gerador-de-fonte-de-icones/']]

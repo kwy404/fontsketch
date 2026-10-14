@@ -132,6 +132,8 @@ function drawHinting(scene, p) {
   ctx.lineWidth = 2.5 / (s * cell);
   ctx.stroke(path);
   ctx.setTransform(1, 0, 0, 1, 0, 0);
+  scene.querySelector('.hint-off')?.classList.toggle('is-on', t < 0.5);
+  scene.querySelector('.hint-on')?.classList.toggle('is-on', t >= 0.5);
 }
 function OffscreenCanvasOr(w, h) {
   if (typeof OffscreenCanvas !== 'undefined') return new OffscreenCanvas(w, h);

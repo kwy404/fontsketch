@@ -294,7 +294,7 @@ function sceneVisual(i, t, sizes = {}) {
   if (i === 3) {
     return `<div class="kern-stage">${['AV', 'To', 'Wa', 'Ty'].map((pair, k) => `<div class="kern-pair" style="--k:${k}" data-pair="${pair}"><span class="kp-a">${pair[0]}</span><span class="kp-b">${pair[1]}</span><output class="kp-val">0</output></div>`).join('')}</div>`;
   }
-  return `<div class="export-stage">${[['TTF', 'TrueType'], ['OTF', 'CFF'], ['WOFF2', 'Brotli']].map(([f, sub], k) => `<div class="xcard" style="--i:${k}"><div class="xface xback"><span>Aa</span></div><div class="xface xfront"><span class="xaa">Aa</span><strong>${f}</strong><small>${sub}</small><small class="xsize">${sizes[f.toLowerCase()] ? `${(sizes[f.toLowerCase()] / 1024).toFixed(1)} kB` : ''}</small></div></div>`).join('')}</div>`;
+  return `<div class="export-stage">${[['TTF', 'TrueType'], ['OTF', 'CFF'], ['WOFF2', 'Brotli']].map(([f, sub], k) => `<div class="xcard" style="--i:${k}"><div class="xface xback" aria-hidden="true"></div><div class="xface xfront"><span class="xaa">Aa</span><strong>${f}</strong><small>${sub}</small><small class="xsize">${sizes[f.toLowerCase()] ? `${(sizes[f.toLowerCase()] / 1024).toFixed(1)} kB` : ''}</small></div></div>`).join('')}</div>`;
 }
 
 export function homeJsonLd(lang) {

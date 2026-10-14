@@ -147,7 +147,7 @@ export function writeQuillHand() {
   const files = ['quill-hand.fontsketch.json', 'quill-hand.strokes.json'];
   for (const format of ['woff2', 'ttf']) {
     try {
-      const bytes = core.exportFont(font, { format, hinting: 'auto' });
+      const bytes = core.exportFont(font, { format, hinting: 'auto', timestamp: Date.UTC(2026, 9, 13) });
       if (bytes && typeof bytes.then === 'function') continue;
       writeFileSync(resolve(out, `quill-hand.${format}`), bytes);
       files.push(`quill-hand.${format}`);

@@ -44,18 +44,19 @@ function dlLinks(R, f, sizes) {
 
 export function galleryCards(R, lang, sizes, { full = false } = {}) {
   const t = L[lang];
+  const H = full ? 'h2' : 'h3';
   return `<div class="fonts${full ? ' fonts-full' : ''}">${FONTS.map((f) => {
     const count = sizes[f.file]?.glyphs || 0;
     if (f.icons) {
       return `<article class="font-card font-icons" id="${f.id}">
-  <header class="fc-head"><h3>${f.family}</h3><p class="fc-kind">${f.kind[lang]} · ${ICONS.length} ${t.glyphs}</p></header>
+  <header class="fc-head"><${H}>${f.family}</${H}><p class="fc-kind">${f.kind[lang]} · ${ICONS.length} ${t.glyphs}</p></header>
   <ul class="icon-grid">${ICONS.map(([name, label], i) => `<li><span class="icon-glyph" aria-hidden="true">&#x${(0xe000 + i).toString(16)};</span><code>.at-${name}</code><small>U+${(0xe000 + i).toString(16).toUpperCase()}</small><span class="sr-only">${label}</span></li>`).join('')}</ul>
   <p class="fc-made">${f.made[lang]}</p>
   <div class="fc-dl">${dlLinks(R, f, sizes)}</div>
 </article>`;
     }
     return `<article class="font-card" id="${f.id}" v-data="{ size: ${f.variable ? 64 : 56}, wght: 400 }">
-  <header class="fc-head"><h3>${f.family}</h3><p class="fc-kind">${f.kind[lang]}${count ? ` · ${count} ${t.glyphs}` : ''}</p></header>
+  <header class="fc-head"><${H}>${f.family}</${H}><p class="fc-kind">${f.kind[lang]}${count ? ` · ${count} ${t.glyphs}` : ''}</p></header>
   <div class="tester-wrap" style="font-family:'${f.family}',cursive"><p class="tester" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="${t.type}: ${f.family}" :style="'font-size:' + size + 'px;font-variation-settings:&quot;wght&quot; ' + wght" style="font-size:${f.variable ? 64 : 56}px">${esc(f.sample[lang])}</p></div>
   <div class="fc-controls"><label><span>${t.size}</span><input type="range" min="20" max="140" v-model.number="size" aria-label="${t.size}"></label>${f.variable ? `<label><span>${t.weight} <output v-text="wght">400</output></span><input type="range" min="100" max="900" step="1" v-model.number="wght" aria-label="${t.weight}"></label>` : ''}</div>
   ${full ? `<details class="fc-all"><summary>${t.all}</summary><p class="glyph-wall" style="font-family:'${f.family}',cursive">${esc(f.chars)}</p></details>` : ''}

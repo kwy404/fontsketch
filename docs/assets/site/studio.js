@@ -76,7 +76,7 @@ function start(el) {
     for (const [y, label, k] of lines) {
       const base = k === 'b';
       h += `<line x1="-200" x2="1100" y1="${-y}" y2="${-y}" stroke="${base ? 'var(--ver-bright)' : 'var(--rule)'}" stroke-width="${base ? 2 : 1.4}" ${base ? '' : 'stroke-dasharray="6 6"'}/>`;
-      h += `<text x="1080" y="${-y - 10}" text-anchor="end" font-size="26" font-family="system-ui, sans-serif" fill="var(--muted)" opacity=".8">${label}</text>`;
+      h += `<text x="1080" y="${-y - 10}" text-anchor="end" font-size="26" font-family="system-ui, sans-serif" fill="var(--soft-ink)" opacity=".8">${label}</text>`;
     }
     h += `<path d="M${ox} 280V-960M${ox + adv} 280V-960" stroke="var(--ver-bright)" stroke-width="1.2" stroke-dasharray="3 8" opacity=".55"/>`;
     gGuides.innerHTML = h;
