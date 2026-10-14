@@ -61,6 +61,14 @@
       "types": "./types/node.d.mts",
       "default": "./src/node.mjs"
     },
+    "./scan": {
+      "types": "./types/scan/index.d.mts",
+      "default": "./src/scan/index.mjs"
+    },
+    "./scan/worker": {
+      "types": "./types/scan/worker.d.mts",
+      "default": "./src/scan/worker.mjs"
+    },
     "./package.json": "./package.json"
   },
   "files": [
