@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<title>fontsketch</title>
+<g fill="#F7ECD6" stroke="#F7ECD6" stroke-width="8" stroke-linejoin="round"><path d="M32 14C46 14 55 24 55 37C55 50 45 59 32 59C19 59 9 50 9 37C9 24 18 14 32 14Z"/><path d="M10 24C8 13 20 6 33 6C45 6 54 12 53 20C46 26 19 27 10 24Z"/><path d="M36 7L39 2"/></g>
+<path d="M32 14C46 14 55 24 55 37C55 50 45 59 32 59C19 59 9 50 9 37C9 24 18 14 32 14Z" fill="#4440B0" stroke="#1C1A4A" stroke-width="2.6"/>
+<path d="M36 7L39 2" stroke="#1C1A4A" stroke-width="3" stroke-linecap="round"/>
+<path d="M10 24C8 13 20 6 33 6C45 6 54 12 53 20C46 26 19 27 10 24Z" fill="#E4472B" stroke="#1C1A4A" stroke-width="2.6" stroke-linejoin="round"/>
+<circle cx="23" cy="37" r="7.5" fill="#FFFDF6" stroke="#1C1A4A" stroke-width="2.2"/><circle cx="41" cy="37" r="7.5" fill="#FFFDF6" stroke="#1C1A4A" stroke-width="2.2"/>
+<circle cx="24.5" cy="36" r="4.2" fill="#1C1A4A"/><circle cx="42.5" cy="36" r="4.2" fill="#1C1A4A"/>
+<circle cx="23.2" cy="34.4" r="1.5" fill="#fff"/><circle cx="41.2" cy="34.4" r="1.5" fill="#fff"/>
+<ellipse cx="15" cy="47" rx="3.6" ry="2.2" fill="#E4472B" opacity=".6"/><ellipse cx="49" cy="47" rx="3.6" ry="2.2" fill="#E4472B" opacity=".6"/>
+<path d="M27 48Q32 53 37 48" fill="none" stroke="#1C1A4A" stroke-width="2.6" stroke-linecap="round"/>
+</svg>
