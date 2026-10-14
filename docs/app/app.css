@@ -397,6 +397,10 @@ body:not(.is-pro) .pro-only { display: none !important; }
 @media (max-width: 1199px) {
   .shell.has-inspector .inspector { grid-area: auto; display: flex; position: absolute; z-index: 24; top: 0; right: 0; bottom: 0; width: min(var(--insp-w), 86vw); box-shadow: var(--shadow-lg); }
 }
+@media (min-width: 641px) and (max-width: 899px) {
+  .shell.has-panel .toolbox { left: calc(var(--panel-w) + 14px); }
+  .shell.has-panel .optbar { left: calc(50% + var(--panel-w) / 2); max-width: calc(100% - var(--panel-w) - 24px); }
+}
 @media (max-width: 899px) {
   :root { --panel-w: 300px; }
   .shell.has-panel .panel { grid-area: auto; position: absolute; z-index: 22; top: 0; bottom: 0; left: var(--rail); width: min(var(--panel-w), calc(100vw - var(--rail))); box-shadow: var(--shadow-lg); }
@@ -430,6 +434,9 @@ body:not(.is-pro) .pro-only { display: none !important; }
   .pos-readout { display: none; }
   .toasts { bottom: calc(var(--film) + 70px); }
   .start-dlg .start-box { padding: 18px; }
+  .tpl-grid-start, .start-imports { grid-template-columns: 1fr 1fr; }
+  .start-card { min-height: 0; }
+  .tpl-card canvas { height: 72px; }
   .fi { width: 44px; }
   .fi canvas { width: 40px; height: 40px; }
 }
@@ -437,3 +444,6 @@ body:not(.is-pro) .pro-only { display: none !important; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 [hidden] { display: none !important; }
+.dup-box { width: min(380px, calc(100vw - 24px)); display: flex; flex-direction: column; gap: 12px; }
+.dup-input { font-size: 22px; width: 4em; text-align: center; }
+@media (min-width: 1200px) { .insp-close { display: none; } }

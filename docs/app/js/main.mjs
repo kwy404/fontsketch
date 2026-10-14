@@ -326,13 +326,28 @@ A.setPoint = (axis, v) => {
   syncSelection();
 };
 A.duplicateTo = () => {
-  const target = prompt('Copy the selection to which letter? Type the character.');
+  const d = $('#dup');
+  $('#dup-input').value = '';
+  $('#dup-mirror').checked = false;
+  d.showModal();
+  requestAnimationFrame(() => $('#dup-input').focus());
+};
+A.duplicateClose = () => $('#dup').close();
+A.duplicateDone = (e) => {
+  e.preventDefault();
+  const target = [...($('#dup-input').value || '').trim()][0];
+  $('#dup').close();
   if (!target) return;
   const data = editor.copy();
-  const from = editor.name;
-  A.selectChar([...target][0]);
-  editor.paste(data);
-  A.toast(`Copied from ${from} to ${editor.name}`);
+  if (!data) return;
+  if ($('#dup-mirror').checked) {
+    const b = bbox(data.contours);
+    if (b) data.contours = transformContours(data.contours, matrix.scale(-1, 1, (b.xMin + b.xMax) / 2, 0));
+  }
+  const from = S.glyph.label;
+  A.selectChar(target);
+  editor.paste({ ...data, components: [] });
+  A.toast(`Copied from ${from} to ${S.glyph.label}`, 'success', 'Undo', () => A.undo());
 };
 
 // Components

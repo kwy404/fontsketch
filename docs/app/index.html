@@ -516,6 +516,7 @@
       <button type="button" class="ib ib-sm" @click="S.opts.grid = !S.opts.grid; A.redraw()" :aria-pressed="S.opts.grid ? 'true' : 'false'" title="Grid (G)" aria-label="Grid"><svg class="ic"><use href="#i-grid"/></svg></button>
       <button type="button" class="ib ib-sm" @click="S.opts.snap = !S.opts.snap" :aria-pressed="S.opts.snap ? 'true' : 'false'" title="Snap to grid" aria-label="Snap to grid"><svg class="ic"><use href="#i-magnet"/></svg></button>
       <button type="button" class="ib ib-sm" @click="S.opts.preview = !S.opts.preview; A.redraw()" :aria-pressed="S.opts.preview ? 'true' : 'false'" title="Preview the filled letter (F)" aria-label="Preview fill"><svg class="ic"><use href="#i-eye"/></svg></button>
+      <button type="button" class="ib ib-sm insp-toggle" @click="S.inspector = !S.inspector" :aria-pressed="S.inspector ? 'true' : 'false'" title="Letter properties" aria-label="Letter properties"><svg class="ic"><use href="#i-sliders"/></svg></button>
     </div>
 
     <canvas id="cv" class="cv" tabindex="0" role="img" aria-roledescription="drawing canvas" :aria-label="'Canvas for ' + S.glyph.label + '. Draw with the brush, or press V for select, B for brush, E for eraser.'"></canvas>
@@ -555,7 +556,7 @@
   <!-- ============ Inspector ============ -->
   <aside class="inspector" aria-label="Letter properties">
     <section class="insp">
-      <h2 class="insp-h">Letter</h2>
+      <div class="row"><h2 class="insp-h grow">Letter</h2><button type="button" class="ib ib-xs insp-close" @click="S.inspector = false" aria-label="Close letter properties"><svg class="ic"><use href="#i-x"/></svg></button></div>
       <div class="insp-glyph"><span class="insp-char" v-text="S.glyph.char"></span><span><b v-text="S.glyph.name"></b><small v-text="S.glyph.code"></small><span class="badge badge-xs" :class="'st-' + S.glyph.status" v-text="S.glyph.status"></span></span></div>
       <div class="field-grid three">
         <label class="fg"><span>Width</span><input class="input input-xs" type="number" :value="S.glyph.adv" @change="A.setMetric('adv', +$event.target.value)"></label>
@@ -714,6 +715,16 @@
     <canvas id="redraw-canvas" class="redraw-canvas" v-ignore aria-label="Draw the letter here"></canvas>
     <div class="modal-actions"><button type="button" class="btn btn-ghost" @click="A.redrawClear()">Clear</button><button type="button" class="btn btn-ghost" @click="A.redrawClose(false)">Cancel</button><button type="button" class="btn btn-primary" @click="A.redrawClose(true)">Use this</button></div>
   </div>
+</dialog>
+
+<!-- ============ Copy to another letter ============ -->
+<dialog id="dup" class="modal" aria-labelledby="dup-title">
+  <form class="modal-box dup-box" method="dialog" @submit="A.duplicateDone($event)">
+    <div class="modal-header"><h2 id="dup-title" class="modal-title">Copy the selection to another letter</h2></div>
+    <label class="fg"><span>Letter</span><input id="dup-input" class="input dup-input" maxlength="2" autocomplete="off" spellcheck="false" placeholder="For example: b"></label>
+    <label class="fg-inline"><input id="dup-mirror" type="checkbox" class="toggle toggle-sm" role="switch"> Mirror it (b to d, p to q)</label>
+    <div class="modal-actions"><button type="button" class="btn btn-ghost" @click="A.duplicateClose()">Cancel</button><button type="submit" class="btn btn-primary">Copy</button></div>
+  </form>
 </dialog>
 
 <!-- ============ Tour ============ -->

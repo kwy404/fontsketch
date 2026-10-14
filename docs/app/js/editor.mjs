@@ -42,9 +42,18 @@ export class Editor {
     this.clipboard = null;
     this.bind();
     new ResizeObserver(() => {
-      const first = !this.sized;
-      this.sized = true;
-      if (first) this.fit();
+      const { w, h } = this.size;
+      if (!this.sized) {
+        if (w && h) {
+          this.sized = { w, h };
+          this.fit();
+        }
+        return;
+      }
+      // Keep the letter where it was when panels open or close.
+      this.view.ox += (w - this.sized.w) / 2;
+      this.view.oy += (h - this.sized.h) / 2;
+      this.sized = { w, h };
       this.redraw();
     }).observe(canvas);
   }
@@ -113,7 +122,7 @@ export class Editor {
     const scale = Math.min(usableH / (top - bottom), usableW / Math.max(adv + 200, 600));
     this.view.scale = scale;
     this.view.ox = RULER + 20 + (usableW - adv * scale) / 2;
-    this.view.oy = RULER + 15 + top * scale;
+    this.view.oy = RULER + 15 + top * scale + Math.max(0, (usableH - (top - bottom) * scale) / 2);
     this.redraw();
     this.onView();
   }
@@ -562,7 +571,8 @@ export class Editor {
     const metric = this.hitMetric(sx, sy);
     if (metric) {
       history.begin(metric === 'lsb' ? 'Left side bearing' : 'Advance width', this.scope);
-      this.drag = { kind: 'metric', which: metric, start: f, adv0: this.glyph.advanceWidth, orig: clone(this.contours), comps: clone(this.glyph.components || []) };
+      const mg = !this.editingMaster && P.font.masters?.[0]?.glyphs?.[this.name];
+      this.drag = { kind: 'metric', which: metric, start: f, adv0: this.glyph.advanceWidth, orig: clone(this.contours), comps: clone(this.glyph.components || []), masterOrig: mg ? clone(mg.contours) : null };
       return;
     }
     const b = this.selectionBox();
