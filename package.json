@@ -84,7 +84,8 @@
     "test:watch": "vitest",
     "prepublishOnly": "npm run build && npm test",
     "docs:app": "node scripts/build-docs.mjs",
-    "docs:templates": "node scripts/app-templates.mjs"
+    "docs:templates": "node scripts/app-templates.mjs",
+    "check:browser": "node scripts/browser-check.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
@@ -94,5 +95,8 @@
     "globals": "^16.5.0",
     "typescript": "~5.9.3",
     "vitest": "^3.2.7"
+  },
+  "dependencies": {
+    "brotli-wasm": "3.0.1"
   }
 }
