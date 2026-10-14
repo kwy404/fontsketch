@@ -453,14 +453,15 @@ export function median(values) {
 
 /**
  * Value at quantile `q` (0 to 1) of a typed array, by histogram over
- * [lo, hi] with `bins` buckets. Fast and allocation light.
- * @param {ArrayLike<number>} values @param {number} q @param {number} lo @param {number} hi @param {number} [bins]
+ * [lo, hi] with `bins` buckets. Fast and allocation light. `step` samples
+ * every n-th value.
+ * @param {ArrayLike<number>} values @param {number} q @param {number} lo @param {number} hi @param {number} [bins] @param {number} [step]
  */
-export function quantile(values, q, lo, hi, bins = 1024) {
+export function quantile(values, q, lo, hi, bins = 1024, step = 1) {
   const hist = new Uint32Array(bins);
   const span = hi - lo || 1;
   let n = 0;
-  for (let i = 0; i < values.length; i++) {
+  for (let i = 0; i < values.length; i += step) {
     const v = values[i];
     if (v !== v) continue;
     let b = Math.floor(((v - lo) / span) * bins);

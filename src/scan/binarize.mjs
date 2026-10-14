@@ -19,13 +19,27 @@ export function densities(n) {
   const dr = new Float32Array(len);
   const dg = new Float32Array(len);
   const db = new Float32Array(len);
+  const T = LOG_TABLE;
+  const K = LOG_STEPS;
+  // -ln(v) for v in [LN_MIN, 1) by table lookup with linear interpolation
+  const nl = (v) => {
+    if (v >= 1) return 0;
+    const f = (v > LN_MIN ? v : LN_MIN) * K;
+    const i = f | 0;
+    return T[i] + (T[i + 1] - T[i]) * (f - i);
+  };
+  const { r, g, b } = n;
   for (let i = 0; i < len; i++) {
-    dr[i] = n.r[i] >= 1 ? 0 : -Math.log(n.r[i] > LN_MIN ? n.r[i] : LN_MIN);
-    dg[i] = n.g[i] >= 1 ? 0 : -Math.log(n.g[i] > LN_MIN ? n.g[i] : LN_MIN);
-    db[i] = n.b[i] >= 1 ? 0 : -Math.log(n.b[i] > LN_MIN ? n.b[i] : LN_MIN);
+    dr[i] = nl(r[i]);
+    dg[i] = nl(g[i]);
+    db[i] = nl(b[i]);
   }
   return { dr, dg, db };
 }
+
+const LOG_STEPS = 8192;
+/** -ln(i / LOG_STEPS), finite at 0 (never used below LN_MIN). */
+const LOG_TABLE = Float64Array.from({ length: LOG_STEPS + 2 }, (_, i) => (i ? -Math.log(Math.min(i, LOG_STEPS) / LOG_STEPS) : 10));
 
 const norm3 = (v) => {
   const l = Math.hypot(v[0], v[1], v[2]);
@@ -155,8 +169,9 @@ export function sauvola(img, options = {}) {
  */
 export function noiseLevel(ink) {
   // the paper is most of any cell: the median absolute value tracks noise
-  const med = quantile(ink, 0.5, 0, 1, 2048);
-  const q80 = quantile(ink, 0.8, 0, 1, 2048);
+  const step = ink.length > 20000 ? 3 : 1;
+  const med = quantile(ink, 0.5, 0, 1, 2048, step);
+  const q80 = quantile(ink, 0.8, 0, 1, 2048, step);
   return Math.max(0.006, (q80 - med) * 1.2 + med * 0.5);
 }
 
@@ -171,7 +186,7 @@ export function noiseLevel(ink) {
  * @param {Float32Array} ink
  * @param {number} w
  * @param {number} h
- * @param {{ strokeWidth?: number, k?: number, window?: number, threshold?: number, noise?: number, sensitivity?: number, sauvola?: boolean }} [options]
+ * @param {{ strokeWidth?: number, k?: number, window?: number, threshold?: number, noise?: number, sensitivity?: number, sauvola?: boolean, hysteresis?: boolean }} [options]
  *   `threshold` (0 to 1, default 0.5) is the coverage level that counts as
  *   ink; lower values give bolder results. `sensitivity` scales the noise floor.
  * @returns {{ mask: Uint8Array, noise: number, core: number }}
@@ -212,11 +227,22 @@ export function binarizeInk(ink, w, h, options = {}) {
     mask[i] = 1;
     if (v > floor && ((sv ? sv[i] : v > floor * 2) || v > floor * 3)) strongMark[i] = 1;
   }
+  let coreSum = 0;
+  let coreN = 0;
+  if (options.hysteresis === false) {
+    // quick variant: strong pixels only
+    for (let i = 0; i < len; i++) {
+      if (mask[i] && !strongMark[i]) mask[i] = 0;
+      if (mask[i]) {
+        coreSum += localMax[i];
+        coreN++;
+      }
+    }
+    return { mask, noise, core: coreN ? coreSum / coreN : 0 };
+  }
   const cc = components(mask, w, h, true);
   const keep = new Uint8Array(cc.count + 1);
   for (let i = 0; i < len; i++) if (strongMark[i]) keep[cc.labels[i]] = 1;
-  let coreSum = 0;
-  let coreN = 0;
   for (let i = 0; i < len; i++) {
     if (!mask[i]) continue;
     if (!keep[cc.labels[i]]) {
