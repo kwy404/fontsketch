@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
+<title>WOFF2 vs TTF vs OTF, Which Font Format for the Web</title>
+<meta name="description" content="WOFF2 vs TTF vs OTF explained. Which font format to use for the web, how @font-face, font-display, preload, subsetting and unicode-range make fonts load fast.">
+<link rel="canonical" href="https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/">
+<link rel="alternate" hreflang="en" href="https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/">
+<link rel="alternate" hreflang="x-default" href="https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/">
+<meta name="author" content="Alexandre Kohler">
+<meta name="theme-color" content="#FBF4E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121132" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="fontsketch">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="WOFF2 vs TTF vs OTF, Which Font Format for the Web">
+<meta property="og:description" content="WOFF2 vs TTF vs OTF explained. Which font format to use for the web, how @font-face, font-display, preload, subsetting and unicode-range make fonts load fast.">
+<meta property="og:url" content="https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/">
+<meta property="og:image" content="https://kwy404.github.io/fontsketch/assets/og/web-font-formats-ttf-otf-woff2.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Four file cards labeled TTF, OTF, WOFF and WOFF2 with relative file sizes, the WOFF2 card smallest">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WOFF2 vs TTF vs OTF, Which Font Format for the Web">
+<meta name="twitter:description" content="WOFF2 vs TTF vs OTF explained. Which font format to use for the web, how @font-face, font-display, preload, subsetting and unicode-range make fonts load fast.">
+<meta name="twitter:image" content="https://kwy404.github.io/fontsketch/assets/og/web-font-formats-ttf-otf-woff2.png">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="../../assets/fonts/quill-hand.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;1,9..144,600&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monsooncss@0.2.0/dist/monsoon.min.css">
+<link rel="stylesheet" href="../../assets/site/site.css">
+<script src="https://cdn.jsdelivr.net/npm/voodoojs@1.0.0/dist/voodoo.full.min.js" data-manual defer></script>
+<script type="module" src="../../assets/site/site.js"></script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "TechArticle",
+   "@id": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/#article",
+   "headline": "WOFF2 vs TTF vs OTF, which font format to use for the web",
+   "description": "WOFF2 vs TTF vs OTF explained. Which font format to use for the web, how @font-face, font-display, preload, subsetting and unicode-range make fonts load fast.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/web-font-formats-ttf-otf-woff2.png",
+   "inLanguage": "en",
+   "datePublished": "2026-10-13",
+   "dateModified": "2026-10-13",
+   "wordCount": 989,
+   "keywords": "woff2 vs ttf",
+   "author": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "mainEntityOfPage": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/",
+   "about": {
+    "@type": "SoftwareApplication",
+    "name": "fontsketch",
+    "url": "https://kwy404.github.io/fontsketch/"
+   }
+  },
+  {
+   "@type": "HowTo",
+   "@id": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/#howto",
+   "name": "How to export and serve a web font efficiently",
+   "description": "WOFF2 vs TTF vs OTF explained. Which font format to use for the web, how @font-face, font-display, preload, subsetting and unicode-range make fonts load fast.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/web-font-formats-ttf-otf-woff2.png",
+   "inLanguage": "en",
+   "totalTime": "PT20M",
+   "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+   },
+   "tool": [
+    {
+     "@type": "HowToTool",
+     "name": "fontsketch (free, in the browser)"
+    }
+   ],
+   "step": [
+    {
+     "@type": "HowToStep",
+     "position": 1,
+     "name": "Export WOFF2",
+     "text": "Export your font as WOFF2 from fontsketch, together with the generated CSS @font-face snippet.",
+     "url": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/#step-1"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 2,
+     "name": "Reduce the character set",
+     "text": "Include only the characters your site needs, and split large character sets into subsets with unicode-range.",
+     "url": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/#step-2"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 3,
+     "name": "Write the @font-face rule",
+     "text": "Point src to the WOFF2 file, declare weight and style, and choose a font-display value.",
+     "url": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/#step-3"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 4,
+     "name": "Preload the critical file",
+     "text": "Add a preload link with crossorigin for the one font file used above the fold.",
+     "url": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/#step-4"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 5,
+     "name": "Serve with long caching",
+     "text": "Use a versioned file name and a long cache lifetime, with the correct font/woff2 content type.",
+     "url": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/#step-5"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/#faq",
+   "inLanguage": "en",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Should I use WOFF2 or TTF for my website?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Use WOFF2. It is the same font data compressed with Brotli and is supported by every current browser. TTF files are larger and are meant for installing fonts on a computer."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do I still need WOFF or EOT fallbacks?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "EOT and SVG fonts are obsolete. WOFF is only useful for very old browsers. For most sites, a single WOFF2 file per style is enough, with a system font as the fallback in your font stack."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between TTF and OTF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Both are OpenType fonts. TTF usually has TrueType outlines made of quadratic curves, while OTF usually has CFF outlines made of cubic curves. For installing and using fonts, both work on Windows and macOS."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which font-display value should I use?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "swap shows fallback text immediately and switches when the font loads, good for most text. optional avoids layout shifts by only using the font if it arrives very quickly. block suits icon fonts."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How much smaller is WOFF2 than TTF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It varies with the font, but WOFF2 is commonly around half the size of an uncompressed TTF and noticeably smaller than WOFF, thanks to Brotli compression and font specific preprocessing."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://kwy404.github.io/fontsketch/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Guides",
+     "item": "https://kwy404.github.io/fontsketch/guides/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "WOFF2 vs TTF vs OTF, which font format to use for the web",
+     "item": "https://kwy404.github.io/fontsketch/guides/web-font-formats-ttf-otf-woff2/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body class="guide" data-root="../../">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol><symbol id="i-npm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 17V7h10v10h-3V10h-2v7Z"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></symbol><symbol id="i-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></symbol><symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16Z"/><path d="M14 6l3 3"/></symbol><symbol id="i-points" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18C8 6 16 6 19 18"/><rect x="3" y="16" width="4" height="4"/><rect x="17" y="16" width="4" height="4"/><circle cx="12" cy="9" r="2"/></symbol><symbol id="i-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12M5 15l9-9 5 5-8 8H8Z"/><path d="M10 10l5 5"/></symbol><symbol id="i-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></symbol><symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></symbol><symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 4 13 8-13 8Z"/></symbol><symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M13 6l6 6-6 6"/></symbol><symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h13"/></symbol><symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18"/></symbol></svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar" v-data="{ open: false }" @keydown.escape="open = false">
+  <div class="topbar-in">
+    <a class="brand" href="../../" aria-label="fontsketch home"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+    <nav id="topnav" class="topnav" :class="open ? 'is-open' : ''" aria-label="Main">
+      <a href="../../#studio">Studio</a>
+      <a href="../../#story">How it works</a>
+      <a href="../../gallery/">Gallery</a>
+      <a href="../../guides/" aria-current="page">Guides</a>
+      <a class="topnav-cta btn btn-primary btn-sm" href="../../app/"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Open the editor</a>
+    </nav>
+    <div class="topbar-tools">
+      <a class="icon-btn lang-btn" href="../../pt/" hreflang="pt-BR" lang="pt-BR" title="Português"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg><span>PT</span></a>
+      <a class="icon-btn" href="https://github.com/kwy404/fontsketch" rel="noopener" aria-label="fontsketch on GitHub"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg></a>
+      <button type="button" class="icon-btn theme-btn" v-theme-toggle.cycle aria-label="Theme: system, light or dark" title="Theme: system, light or dark"><svg class="ic ti-system" aria-hidden="true"><use href="#i-system"/></svg><svg class="ic ti-light" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ic ti-dark" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button type="button" class="icon-btn nav-btn" aria-controls="topnav" :aria-expanded="open ? 'true' : 'false'" aria-expanded="false" @click="open = !open" aria-label="Menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="guide-wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../guides/">Guides</a></li><li aria-current="page">WOFF2 vs TTF vs OTF, which font format to use for the web</li></ol></nav>
+<header class="guide-head">
+  <div class="guide-head-text">
+    <p class="kicker">Guide · woff2 vs ttf</p>
+    <h1>WOFF2 vs TTF vs OTF, which font format to use for the web</h1>
+    <p class="guide-meta"><span>4 min read</span><span>Updated <time datetime="2026-10-13">2026-10-13</time></span></p>
+  </div>
+  <figure class="guide-art"><span class="art "><img class="art-l" src="../../assets/art/export-cards.svg" width="640" height="400" alt="Four file cards labeled TTF, OTF, WOFF and WOFF2 with relative file sizes, the WOFF2 card smallest" fetchpriority="high"><img class="art-d" src="../../assets/art/export-cards-dark.svg" width="640" height="400" alt="" aria-hidden="true" fetchpriority="high"></span></figure>
+</header>
+<div class="guide-grid">
+  <aside class="guide-side" aria-label="On this page">
+    <div class="toc"><p class="toc-h">On this page</p><ol><li><a href="#the-four-formats-at-a-glance">The four formats at a glance</a></li><li><a href="#a-quick-decision-guide">A quick decision guide</a></li><li><a href="#writing-the-font-face-rule">Writing the @font-face rule</a></li><li><a href="#choosing-font-display">Choosing font-display</a></li><li><a href="#reducing-layout-shift">Reducing layout shift</a></li><li><a href="#preload-the-critical-font">Preload the critical font</a></li><li><a href="#subsetting-and-unicode-range">Subsetting and unicode-range</a></li><li><a href="#hinting-and-file-size">Hinting and file size</a></li><li><a href="#serving-and-caching">Serving and caching</a></li><li><a href="#web-font-checklist">Web font checklist</a></li><li><a href="#next-steps">Next steps</a></li><li><a href="#steps">Step by step</a></li><li><a href="#faq">Questions people ask</a></li></ol></div>
+    <div class="try-card"><img src="../../assets/art/quill-head.svg" width="84" height="112" alt="" loading="lazy"><p class="try-h">Try it right now</p><p>Draw a letter on the stage and watch it become a real font. Free, no upload, no account.</p><a class="btn btn-primary btn-sm" href="../../#studio">Open the studio</a><a class="btn btn-ghost btn-sm" href="../../app/">Open the editor</a></div>
+  </aside>
+  <article class="prose" id="article">
+<p>For the web, use WOFF2. It contains the same font data as TTF or OTF but compressed with Brotli, so it is much smaller, and every current browser supports it. Use TTF or OTF to install fonts on a computer. Load it with @font-face, pick a font-display value, preload the critical file and subset what you do not need.</p>
+<section id="the-four-formats-at-a-glance" class="prose-sec"><h2>The four formats at a glance</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Format</th><th scope="col">What it is</th><th scope="col">Main use</th></tr></thead><tbody><tr><td>TTF</td><td>OpenType font with TrueType outlines (quadratic curves)</td><td>Installing on Windows, macOS, Linux</td></tr><tr><td>OTF</td><td>OpenType font usually with CFF outlines (cubic curves)</td><td>Installing on desktops, print workflows</td></tr><tr><td>WOFF</td><td>TTF or OTF wrapped and compressed with zlib</td><td>Legacy web fallback</td></tr><tr><td>WOFF2</td><td>TTF or OTF compressed with Brotli plus font specific transforms</td><td>The web, today</td></tr></tbody></table></div>
+<p>fontsketch exports all four, plus a ready CSS @font-face snippet.</p>
+<h3 id="ttf-vs-otf">TTF vs OTF</h3>
+<p>Both are OpenType. The difference is the outline flavor. TrueType outlines use quadratic bezier curves and TrueType hinting instructions. CFF outlines use cubic curves, the same kind you draw with a bezier pen in most vector apps, and declarative stem hints. For everyday use, either installs and works on Windows and macOS. Some older apps or devices handle TTF more reliably, which is why TTF is the safe default when you are unsure.</p>
+<h3 id="why-woff2-wins-on-the-web">Why WOFF2 wins on the web</h3>
+<p>WOFF2 is not a different kind of font. It is a container that compresses the tables of a TTF or OTF. Two things make it small:</p>
+<ol><li><strong>Brotli compression</strong>, which beats the zlib compression used by WOFF.</li><li><strong>Preprocessing</strong> of the glyph data before compression, which makes outlines far more compressible.</li></ol>
+<p>The result is typically around half the size of the raw TTF and clearly smaller than WOFF. The browser decompresses it back into a normal font.</p>
+</section>
+<section id="a-quick-decision-guide" class="prose-sec"><h2>A quick decision guide</h2>
+<p>If you only remember one paragraph, make it this one:</p>
+<ul><li><strong>Building a website or web app?</strong> Ship WOFF2. Nothing else is needed for current browsers.</li><li><strong>Supporting a very old embedded browser</strong> you know your users have? Add WOFF as a second source after WOFF2.</li><li><strong>Installing on your own computer</strong> or sending a font to a designer? Use TTF, or OTF if the recipient prefers CFF outlines.</li><li><strong>Embedding in a mobile app?</strong> Most app platforms take TTF or OTF directly; check the platform documentation.</li><li><strong>Cutting with a craft machine</strong> or using in office documents? Install TTF on the computer.</li></ul>
+<p>When in doubt, export all of them from the same project. They contain the same design, so there is no risk in having several files, as long as each goes where it belongs.</p>
+</section>
+<section id="writing-the-font-face-rule" class="prose-sec"><h2>Writing the @font-face rule</h2>
+<p>A modern, minimal rule:</p>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g15-1" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g15-1"><span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"/fonts/myhand-v1.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-weight</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">400</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-style</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">normal</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-display</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">swap</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">body</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">system-ui</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">sans-serif</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span></code></pre></figure>
+<p>Key points:</p>
+<ul><li><strong>font-family</strong> is any name you choose; reuse it in your CSS.</li><li><strong>format(&quot;woff2&quot;)</strong> lets the browser skip files it cannot use without downloading them.</li><li><strong>font-weight and font-style</strong> must match how you use the font. If you declare only 400 and then use bold, the browser fakes a bold by smearing the outline. Declare a separate rule for each real style.</li><li>A <strong>fallback stack</strong> after your font keeps text readable while loading and in the rare case it fails.</li></ul>
+<p>For a variable font, declare a range, for example <code>font-weight: 400 700</code>. The <a href="../../guides/variable-font-tutorial/">variable font tutorial</a> explains this.</p>
+</section>
+<section id="choosing-font-display" class="prose-sec"><h2>Choosing font-display</h2>
+<p><code>font-display</code> controls what users see while the font downloads.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Value</th><th scope="col">Behavior</th><th scope="col">Good for</th></tr></thead><tbody><tr><td>swap</td><td>Shows fallback immediately, swaps when loaded</td><td>Most body and heading text</td></tr><tr><td>fallback</td><td>Short invisible period, then fallback; swaps only if the font arrives soon</td><td>Text where late swaps feel jarring</td></tr><tr><td>optional</td><td>Uses the font only if it is available almost immediately</td><td>Performance first sites, avoids layout shift</td></tr><tr><td>block</td><td>Hides text for up to about three seconds</td><td>Icon fonts, where fallback characters look broken</td></tr><tr><td>auto</td><td>Browser decides</td><td>Rarely the best choice</td></tr></tbody></table></div>
+</section>
+<section id="reducing-layout-shift" class="prose-sec"><h2>Reducing layout shift</h2>
+<p>When a fallback font swaps to your web font, text can reflow if the two fonts have different widths and line heights. CSS lets you tune the fallback to match:</p>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g15-2" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g15-2"><span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand Fallback"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">local</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"Arial"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  size-adjust</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">104%</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">  ascent-override: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">92%</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">  descent-override: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">24%</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">body</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand Fallback"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">sans-serif</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; }</span></span></code></pre></figure>
+<p>Adjust the percentages until the fallback paragraph occupies the same space as your font. This keeps layout shift low even with <code>swap</code>.</p>
+</section>
+<section id="preload-the-critical-font" class="prose-sec"><h2>Preload the critical font</h2>
+<p>Browsers discover fonts late: only after the CSS is parsed and an element needs the font. Preloading tells the browser up front:</p>
+<figure class="frame frame-editor" data-lang="html"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#e34c26"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">&lt;&gt;</text></svg><span>index.html</span></span><button type="button" class="frame-copy" v-copy-from="#g15-3" aria-label="Copy index.html"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g15-3"><span class="line"><span style="--shiki-light:#800000;--shiki-dark:#808080">&#x3C;</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">link</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> rel</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"preload"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> href</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"/fonts/myhand-v1.woff2"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> as</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"font"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> type</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"font/woff2"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> crossorigin</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span></span></code></pre></figure>
+<p>The <code>crossorigin</code> attribute is required even for same origin fonts, otherwise the preloaded file is not reused. Preload only the one or two files used above the fold; preloading every weight wastes bandwidth.</p>
+</section>
+<section id="subsetting-and-unicode-range" class="prose-sec"><h2>Subsetting and unicode-range</h2>
+<p>The fastest byte is the one you never send. Two techniques:</p>
+<ul><li><strong>Subsetting</strong>: remove glyphs your site never uses. If your font only appears in English headings, you do not need Cyrillic or rare symbols. When designing in fontsketch, you can simply leave out characters you do not need.</li><li><strong>unicode-range</strong>: split a large font into subset files and tell the browser which characters each covers. It downloads only the files it needs for the text on the page.</li></ul>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g15-4" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g15-4"><span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"/fonts/myhand-latin.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  unicode-range</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: U+0000-00FF, U+0131, U+0152-0153, U+2018-201D, U+20AC;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"/fonts/myhand-latin-ext.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  unicode-range</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: U+0100-017F;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span></code></pre></figure>
+</section>
+<section id="hinting-and-file-size" class="prose-sec"><h2>Hinting and file size</h2>
+<p>TrueType hinting instructions improve rendering at small sizes on Windows but add bytes. For display and handwriting fonts used large, exporting without hinting is a reasonable trade. The <a href="../../guides/font-hinting-explained/">font hinting guide</a> helps you decide.</p>
+</section>
+<section id="serving-and-caching" class="prose-sec"><h2>Serving and caching</h2>
+<ul><li>Serve WOFF2 with the content type <code>font/woff2</code>.</li><li>Use versioned file names, such as <code>myhand-v2.woff2</code>, and a long cache lifetime.</li><li>Self host when you can. It avoids an extra connection to a third party domain and keeps visitors' requests on your own site.</li><li>If fonts are served from another domain, the server must send CORS headers that allow your site.</li></ul>
+</section>
+<section id="web-font-checklist" class="prose-sec"><h2>Web font checklist</h2>
+<ul><li>WOFF2 exported, one file per real style or one variable file</li><li>Character set limited to what the site needs</li><li>@font-face with format, weight, style and font-display</li><li>Fallback stack, ideally with metric overrides</li><li>One or two critical files preloaded with crossorigin</li><li>Versioned file names and long caching</li></ul>
+</section>
+<section id="next-steps" class="prose-sec"><h2>Next steps</h2>
+<p>Export WOFF2 and the CSS snippet from the <a href="../../app/">fontsketch editor</a>, then follow <a href="../../guides/use-a-custom-font-on-your-website/">use a custom font on your website</a> for framework specific setup. If you are shipping icons, the <a href="../../guides/icon-font-generator/">icon font generator guide</a> covers the CLI route.</p>
+</section>
+    <section id="steps" class="prose-sec steps-sec"><h2>Step by step</h2><ol class="steps"><li id="step-1"><span class="step-n">1</span><div><h3>Export WOFF2</h3><p>Export your font as WOFF2 from fontsketch, together with the generated CSS @font-face snippet.</p></div></li><li id="step-2"><span class="step-n">2</span><div><h3>Reduce the character set</h3><p>Include only the characters your site needs, and split large character sets into subsets with unicode-range.</p></div></li><li id="step-3"><span class="step-n">3</span><div><h3>Write the @font-face rule</h3><p>Point src to the WOFF2 file, declare weight and style, and choose a font-display value.</p></div></li><li id="step-4"><span class="step-n">4</span><div><h3>Preload the critical file</h3><p>Add a preload link with crossorigin for the one font file used above the fold.</p></div></li><li id="step-5"><span class="step-n">5</span><div><h3>Serve with long caching</h3><p>Use a versioned file name and a long cache lifetime, with the correct font/woff2 content type.</p></div></li></ol></section>
+    <section id="faq" class="prose-sec"><h2>Questions people ask</h2><div class="faq"><details><summary>Should I use WOFF2 or TTF for my website?</summary><p>Use WOFF2. It is the same font data compressed with Brotli and is supported by every current browser. TTF files are larger and are meant for installing fonts on a computer.</p></details><details><summary>Do I still need WOFF or EOT fallbacks?</summary><p>EOT and SVG fonts are obsolete. WOFF is only useful for very old browsers. For most sites, a single WOFF2 file per style is enough, with a system font as the fallback in your font stack.</p></details><details><summary>What is the difference between TTF and OTF?</summary><p>Both are OpenType fonts. TTF usually has TrueType outlines made of quadratic curves, while OTF usually has CFF outlines made of cubic curves. For installing and using fonts, both work on Windows and macOS.</p></details><details><summary>Which font-display value should I use?</summary><p>swap shows fallback text immediately and switches when the font loads, good for most text. optional avoids layout shifts by only using the font if it arrives very quickly. block suits icon fonts.</p></details><details><summary>How much smaller is WOFF2 than TTF?</summary><p>It varies with the font, but WOFF2 is commonly around half the size of an uncompressed TTF and noticeably smaller than WOFF, thanks to Brotli compression and font specific preprocessing.</p></details></div></section>
+  </article>
+</div>
+<section class="related" aria-labelledby="related-h"><h2 id="related-h">Keep reading</h2><div class="cards"><a class="gcard" href="../../guides/use-a-custom-font-on-your-website/"><span class="art "><img class="art-l" src="../../assets/art/type-case.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/type-case-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">add custom font to website</span><span class="gcard-t">How to add a custom font to your website</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/font-hinting-explained/"><span class="art "><img class="art-l" src="../../assets/art/hinting-grid.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/hinting-grid-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">font hinting explained</span><span class="gcard-t">Font hinting explained, and when TrueType hinting matters</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/variable-font-tutorial/"><span class="art "><img class="art-l" src="../../assets/art/variable-weight.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/variable-weight-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">variable font tutorial</span><span class="gcard-t">Variable font tutorial, from two masters to one flexible file</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/icon-font-generator/"><span class="art "><img class="art-l" src="../../assets/art/icon-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/icon-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">icon font generator</span><span class="gcard-t">Icon font generator, from a folder of SVG icons to a web font</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="../../"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+      <p>A free, open source font maker. Draw, import or scan your handwriting and export real TTF, OTF, WOFF and WOFF2 fonts, all in your browser.</p>
+      <p class="foot-made">Made by <strong>Alexandre Kohler</strong> (<a href="https://github.com/kwy404" rel="me noopener">GitHub</a> and <a href="https://www.linkedin.com/in/alexandre-silva-173687256/" rel="me noopener">LinkedIn</a>).</p>
+      <p class="foot-built">Built with <a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a>. Interactive parts built with <a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a>.</p>
+    </div>
+    <div>
+      <h2 class="foot-h">Product</h2>
+      <ul class="foot-list"><li><a href="../../app/">Font editor</a></li><li><a href="../../gallery/">Gallery</a></li><li><a href="../../guides/">All guides</a></li><li><a href="https://www.npmjs.com/package/fontsketch" rel="noopener">npm package</a></li><li><a href="https://github.com/kwy404/fontsketch" rel="noopener">Source on GitHub</a></li><li><a href="https://github.com/kwy404/fontsketch/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">Popular guides</h2>
+      <ul class="foot-list"><li><a href="../../guides/turn-your-handwriting-into-a-font/">Turn your handwriting into a font</a></li><li><a href="../../guides/create-a-font-online-free/">Create a font online free</a></li><li><a href="../../guides/make-a-font-from-svg/">Make a font from SVG</a></li><li><a href="../../guides/icon-font-generator/">Icon font generator</a></li><li><a href="../../guides/variable-font-tutorial/">Variable font tutorial</a></li><li><a href="../../guides/font-hinting-explained/">Font hinting explained</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">More from kwy404</h2>
+      <ul class="foot-list foot-more"><li><a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a><small>CSS framework with no build step</small></li><li><a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a><small>reactive HTML attributes</small></li><li><a href="https://kwy404.github.io/breakhound/" rel="noopener">breakhound</a><small>finds bugs in any JS library</small></li><li><a href="https://kwy404.github.io/cookieowl/" rel="noopener">cookieowl</a><small>cookie consent for LGPD and GDPR</small></li><li><a href="https://kwy404.github.io/installkite/" rel="noopener">installkite</a><small>make any site an installable PWA</small></li><li><a href="https://kwy404.github.io/a11ymedic/" rel="noopener">a11ymedic</a><small>accessibility checker with fixes</small></li><li><a href="https://kwy404.github.io/graphemely/" rel="noopener">graphemely</a><small>emoji safe string utilities</small></li><li><a href="https://kwy404.github.io/numberparrot/" rel="noopener">numberparrot</a><small>parse localized numbers</small></li><li><a href="https://kwy404.github.io/edgegoat/" rel="noopener">edgegoat</a><small>edge case test inputs</small></li><li><a href="https://kwy404.github.io/vueleap/" rel="noopener">vueleap</a><small>migrate Vue 2 to Vue 3</small></li></ul>
+    </div>
+  </div>
+  <p class="foot-legal">MIT License. Fonts you make are yours. <span>fontsketch 0.1.0</span></p>
+</footer>
+</body>
+</html>

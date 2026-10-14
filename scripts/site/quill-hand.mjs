@@ -118,11 +118,11 @@ export function buildQuillHand() {
   }
   // A little kerning for the pairs handwriting gets wrong most.
   const k = {
-    'A|V': -50, 'V|A': -50, 'A|T': -40, 'T|A': -40, 'A|Y': -40, 'Y|A': -40, 'A|W': -30, 'W|A': -30,
-    'T|o': -60, 'T|a': -60, 'T|e': -60, 'T|y': -30, 'T|r': -30, 'V|o': -40, 'V|a': -40, 'V|e': -40,
-    'Y|o': -50, 'Y|a': -50, 'Y|e': -50, 'P|a': -30, 'P|o': -30, 'F|o': -30, 'F|a': -30, 'L|T': -60,
-    'L|V': -50, 'L|Y': -50, 'r|period': -40, 'r|comma': -40, 'f|o': -10, 'y|period': -30, 'v|period': -30,
-    'quoteright|s': -20, 'W|o': -30, 'W|a': -30,
+    'A|V': -90, 'V|A': -90, 'A|T': -70, 'T|A': -70, 'A|Y': -70, 'Y|A': -70, 'A|W': -50, 'W|A': -50,
+    'T|o': -90, 'T|a': -90, 'T|e': -90, 'T|y': -60, 'T|r': -50, 'T|u': -50, 'V|o': -60, 'V|a': -60, 'V|e': -60,
+    'Y|o': -70, 'Y|a': -70, 'Y|e': -70, 'P|a': -40, 'P|o': -40, 'F|o': -40, 'F|a': -40, 'L|T': -80,
+    'L|V': -70, 'L|Y': -70, 'r|period': -50, 'r|comma': -50, 'f|o': -15, 'y|period': -40, 'v|period': -40,
+    'quoteright|s': -30, 'W|o': -60, 'W|a': -60, 'W|e': -50,
   };
   font.kerning.pairs = k;
   return { font, strokeData };
@@ -132,7 +132,17 @@ export function writeQuillHand() {
   const { font, strokeData } = buildQuillHand();
   mkdirSync(out, { recursive: true });
   writeFileSync(resolve(out, 'quill-hand.fontsketch.json'), core.serialize(font));
-  writeFileSync(resolve(out, 'quill-hand.strokes.json'), JSON.stringify({ slant: SLANT, glyphs: strokeData }));
+  // Compact data for the site studio: spines, code points, composites and kerning.
+  const glyphs = {};
+  const composites = {};
+  for (const g of Object.values(font.glyphs)) {
+    if (g.components?.length) composites[g.name] = { u: g.unicodes, adv: g.advanceWidth, comps: g.components.map((c) => [c.glyph, c.dx, c.dy]) };
+    else if (strokeData[g.name]) glyphs[g.name] = { u: g.unicodes, adv: strokeData[g.name].advance, s: strokeData[g.name].strokes.map((st) => (st.w ? { p: st.pts, w: st.w } : st.pts)) };
+    else if (g.name !== '.notdef') glyphs[g.name] = { u: g.unicodes, adv: g.advanceWidth, s: [] };
+  }
+  const { family, ...meta } = font.meta;
+  void family;
+  writeFileSync(resolve(out, 'quill-hand.strokes.json'), JSON.stringify({ meta, slant: SLANT, glyphs, composites, kerning: font.kerning.pairs }));
   const files = ['quill-hand.fontsketch.json', 'quill-hand.strokes.json'];
   for (const format of ['woff2', 'ttf']) {
     try {

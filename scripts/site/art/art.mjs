@@ -8,7 +8,8 @@ import { fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const { strokesToContours, contoursToSvgPath } = await import('../../../docs/assets/site/stroke.mjs');
-const strokes = JSON.parse(readFileSync(`${repo}/docs/assets/fonts/quill-hand.strokes.json`, 'utf8')).glyphs;
+const { buildQuillHand } = await import('../quill-hand.mjs');
+const strokes = buildQuillHand().strokeData;
 
 export const T = {
   light: { bg: '#FBF4E4', bg2: '#F3E5C6', paper: '#FFFDF6', line: '#2A2770', ink: '#2A2770', soft: '#6A66A8', faint: '#C9C4EC', ver: '#E4472B', gold: '#E2A93B', wood: '#C98B4E', woodD: '#9C6633', grid: '#E7D9B8', label: '#4C4890', shadow: 'rgba(28,26,74,.14)' },

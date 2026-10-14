@@ -4,6 +4,7 @@ import { textD } from './text.mjs';
 export const ICON_THEME = {
   light: { line: '#2A2770', fill: '#F6E7C8', acc: '#E4472B', paper: '#FFFDF6', soft: '#B9B4E6' },
   dark: { line: '#D4D1FF', fill: '#2E2B6E', acc: '#FF7A5C', paper: '#3A3780', soft: '#6D69C9' },
+  css: { line: 'var(--ic-line)', fill: 'var(--ic-fill)', acc: 'var(--ic-acc)', paper: 'var(--ic-paper)', soft: 'var(--ic-soft)' },
 };
 
 const L = (c, w = 2.6) => `stroke="${c.line}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"`;
@@ -81,4 +82,9 @@ export function iconSVG(name, mode) {
   const c = ICON_THEME[mode];
   const [title, fn] = ICONS[name];
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="${title}">${fn(c).replace(/\n/g, '')}</svg>`;
+}
+
+/** Icons as a sprite of symbols colored by CSS custom properties. */
+export function iconSprite() {
+  return `<svg width="0" height="0" style="position:absolute" aria-hidden="true">${Object.keys(ICONS).map((n) => `<symbol id="f-${n}" viewBox="0 0 48 48">${ICONS[n][1](ICON_THEME.css).replace(/\n/g, '')}</symbol>`).join('')}</svg>`;
 }

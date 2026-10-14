@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
+<title>Font Hinting Explained, TrueType Hinting for Sharp Text</title>
+<meta name="description" content="Font hinting explained simply. See how TrueType hinting snaps stems to the pixel grid at 9 to 16 px, when it matters, and how to pick auto, manual or none.">
+<link rel="canonical" href="https://kwy404.github.io/fontsketch/guides/font-hinting-explained/">
+<link rel="alternate" hreflang="en" href="https://kwy404.github.io/fontsketch/guides/font-hinting-explained/">
+<link rel="alternate" hreflang="x-default" href="https://kwy404.github.io/fontsketch/guides/font-hinting-explained/">
+<meta name="author" content="Alexandre Kohler">
+<meta name="theme-color" content="#FBF4E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121132" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="fontsketch">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Font Hinting Explained, TrueType Hinting for Sharp Text">
+<meta property="og:description" content="Font hinting explained simply. See how TrueType hinting snaps stems to the pixel grid at 9 to 16 px, when it matters, and how to pick auto, manual or none.">
+<meta property="og:url" content="https://kwy404.github.io/fontsketch/guides/font-hinting-explained/">
+<meta property="og:image" content="https://kwy404.github.io/fontsketch/assets/og/font-hinting-explained.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The letter n rasterized on a coarse pixel grid, unhinted with blurry stems beside a hinted version with stems snapped to full pixels">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Font Hinting Explained, TrueType Hinting for Sharp Text">
+<meta name="twitter:description" content="Font hinting explained simply. See how TrueType hinting snaps stems to the pixel grid at 9 to 16 px, when it matters, and how to pick auto, manual or none.">
+<meta name="twitter:image" content="https://kwy404.github.io/fontsketch/assets/og/font-hinting-explained.png">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="../../assets/fonts/quill-hand.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;1,9..144,600&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monsooncss@0.2.0/dist/monsoon.min.css">
+<link rel="stylesheet" href="../../assets/site/site.css">
+<script src="https://cdn.jsdelivr.net/npm/voodoojs@1.0.0/dist/voodoo.full.min.js" data-manual defer></script>
+<script type="module" src="../../assets/site/site.js"></script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "TechArticle",
+   "@id": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/#article",
+   "headline": "Font hinting explained, and when TrueType hinting matters",
+   "description": "Font hinting explained simply. See how TrueType hinting snaps stems to the pixel grid at 9 to 16 px, when it matters, and how to pick auto, manual or none.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/font-hinting-explained.png",
+   "inLanguage": "en",
+   "datePublished": "2026-10-13",
+   "dateModified": "2026-10-13",
+   "wordCount": 1030,
+   "keywords": "font hinting explained",
+   "author": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "mainEntityOfPage": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/",
+   "about": {
+    "@type": "SoftwareApplication",
+    "name": "fontsketch",
+    "url": "https://kwy404.github.io/fontsketch/"
+   }
+  },
+  {
+   "@type": "HowTo",
+   "@id": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/#howto",
+   "name": "How to choose and test hinting for your font in fontsketch",
+   "description": "Font hinting explained simply. See how TrueType hinting snaps stems to the pixel grid at 9 to 16 px, when it matters, and how to pick auto, manual or none.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/font-hinting-explained.png",
+   "inLanguage": "en",
+   "totalTime": "PT25M",
+   "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+   },
+   "tool": [
+    {
+     "@type": "HowToTool",
+     "name": "fontsketch (free, in the browser)"
+    }
+   ],
+   "step": [
+    {
+     "@type": "HowToStep",
+     "position": 1,
+     "name": "Decide where the font will be read",
+     "text": "List the sizes and platforms. Small UI or body text on Windows benefits most from hinting, large display text barely at all.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/#step-1"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 2,
+     "name": "Draw hint friendly outlines",
+     "text": "Keep stem widths consistent, place points at curve extremes and align heights to shared zones such as x-height and baseline.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/#step-2"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 3,
+     "name": "Pick a hinting mode at export",
+     "text": "Choose automatic TrueType hinting, manual stem hints for key glyphs, or no hinting for display and icon fonts at large sizes.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/#step-3"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 4,
+     "name": "Test at small pixel sizes",
+     "text": "Render a paragraph at 9 to 16 px on Windows and on a standard density monitor and compare against an unhinted build.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/#step-4"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 5,
+     "name": "Weigh file size against clarity",
+     "text": "If hinting adds weight without visible benefit on your target screens, export without it.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/#step-5"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/#faq",
+   "inLanguage": "en",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does font hinting do?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hinting adds instructions that adjust a glyph outline to the pixel grid before it is rasterized at small sizes. Stems land on whole pixels and heights line up, so text looks sharper and more even."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does hinting matter on Mac or high DPI screens?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Much less. macOS largely ignores TrueType hinting instructions, and on high density displays there are enough pixels that outlines render well without help. Hinting matters most on Windows at standard densities."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does hinting make a font file bigger?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. TrueType instructions add data to every hinted glyph, often a noticeable share of the file. For icon fonts or display fonts used large, skipping hinting saves bytes."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between autohinting and manual hinting?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Autohinting detects stems and alignment heights and generates instructions for the whole font. Manual hinting lets you mark specific stems yourself, which can fix glyphs the automatic pass misreads."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Should I hint a variable font?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Test it. Variable fonts are often used on high resolution screens where hinting matters less, but small interface text on Windows can still benefit. Compare hinted and unhinted builds at 12 to 16 px."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://kwy404.github.io/fontsketch/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Guides",
+     "item": "https://kwy404.github.io/fontsketch/guides/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Font hinting explained, and when TrueType hinting matters",
+     "item": "https://kwy404.github.io/fontsketch/guides/font-hinting-explained/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body class="guide" data-root="../../">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol><symbol id="i-npm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 17V7h10v10h-3V10h-2v7Z"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></symbol><symbol id="i-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></symbol><symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16Z"/><path d="M14 6l3 3"/></symbol><symbol id="i-points" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18C8 6 16 6 19 18"/><rect x="3" y="16" width="4" height="4"/><rect x="17" y="16" width="4" height="4"/><circle cx="12" cy="9" r="2"/></symbol><symbol id="i-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12M5 15l9-9 5 5-8 8H8Z"/><path d="M10 10l5 5"/></symbol><symbol id="i-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></symbol><symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></symbol><symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 4 13 8-13 8Z"/></symbol><symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M13 6l6 6-6 6"/></symbol><symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h13"/></symbol><symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18"/></symbol></svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar" v-data="{ open: false }" @keydown.escape="open = false">
+  <div class="topbar-in">
+    <a class="brand" href="../../" aria-label="fontsketch home"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+    <nav id="topnav" class="topnav" :class="open ? 'is-open' : ''" aria-label="Main">
+      <a href="../../#studio">Studio</a>
+      <a href="../../#story">How it works</a>
+      <a href="../../gallery/">Gallery</a>
+      <a href="../../guides/" aria-current="page">Guides</a>
+      <a class="topnav-cta btn btn-primary btn-sm" href="../../app/"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Open the editor</a>
+    </nav>
+    <div class="topbar-tools">
+      <a class="icon-btn lang-btn" href="../../pt/" hreflang="pt-BR" lang="pt-BR" title="Português"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg><span>PT</span></a>
+      <a class="icon-btn" href="https://github.com/kwy404/fontsketch" rel="noopener" aria-label="fontsketch on GitHub"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg></a>
+      <button type="button" class="icon-btn theme-btn" v-theme-toggle.cycle aria-label="Theme: system, light or dark" title="Theme: system, light or dark"><svg class="ic ti-system" aria-hidden="true"><use href="#i-system"/></svg><svg class="ic ti-light" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ic ti-dark" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button type="button" class="icon-btn nav-btn" aria-controls="topnav" :aria-expanded="open ? 'true' : 'false'" aria-expanded="false" @click="open = !open" aria-label="Menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="guide-wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../guides/">Guides</a></li><li aria-current="page">Font hinting explained, and when TrueType hinting matters</li></ol></nav>
+<header class="guide-head">
+  <div class="guide-head-text">
+    <p class="kicker">Guide · font hinting explained</p>
+    <h1>Font hinting explained, and when TrueType hinting matters</h1>
+    <p class="guide-meta"><span>5 min read</span><span>Updated <time datetime="2026-10-13">2026-10-13</time></span></p>
+  </div>
+  <figure class="guide-art"><span class="art "><img class="art-l" src="../../assets/art/hinting-grid.svg" width="640" height="400" alt="The letter n rasterized on a coarse pixel grid, unhinted with blurry stems beside a hinted version with stems snapped to full pixels" fetchpriority="high"><img class="art-d" src="../../assets/art/hinting-grid-dark.svg" width="640" height="400" alt="" aria-hidden="true" fetchpriority="high"></span></figure>
+</header>
+<div class="guide-grid">
+  <aside class="guide-side" aria-label="On this page">
+    <div class="toc"><p class="toc-h">On this page</p><ol><li><a href="#the-problem-hinting-solves">The problem hinting solves</a></li><li><a href="#what-hinting-instructions-actually-do">What hinting instructions actually do</a></li><li><a href="#where-hinting-matters-and-where-it-does-not">Where hinting matters, and where it does not</a></li><li><a href="#hinting-options-in-fontsketch">Hinting options in fontsketch</a></li><li><a href="#draw-outlines-that-hint-well">Draw outlines that hint well</a></li><li><a href="#how-to-test-hinting">How to test hinting</a></li><li><a href="#hinting-and-file-size">Hinting and file size</a></li><li><a href="#hinting-checklist">Hinting checklist</a></li><li><a href="#next-steps">Next steps</a></li><li><a href="#steps">Step by step</a></li><li><a href="#faq">Questions people ask</a></li></ol></div>
+    <div class="try-card"><img src="../../assets/art/quill-head.svg" width="84" height="112" alt="" loading="lazy"><p class="try-h">Try it right now</p><p>Draw a letter on the stage and watch it become a real font. Free, no upload, no account.</p><a class="btn btn-primary btn-sm" href="../../#studio">Open the studio</a><a class="btn btn-ghost btn-sm" href="../../app/">Open the editor</a></div>
+  </aside>
+  <article class="prose" id="article">
+<p>Font hinting is a set of instructions inside a font that fits glyph outlines to the pixel grid at small sizes. At 9 to 16 px a stem might fall between two pixels and turn into a gray smear; hinting snaps it to whole pixels so text looks crisp. It matters most on Windows at standard screen densities.</p>
+<section id="the-problem-hinting-solves" class="prose-sec"><h2>The problem hinting solves</h2>
+<p>Fonts are drawn as precise vector outlines in a coordinate space, 1000 units per em in fontsketch. A screen is a grid of square pixels. Rendering text means deciding, for each pixel, how much of it the outline covers.</p>
+<p>At large sizes this is easy: a letter 200 pixels tall has plenty of pixels to describe every curve. At small sizes there are very few. Consider a lowercase n at 12 px. With an x-height of 500 units, the x-height is just 6 pixels. A stem 80 units wide is under 1 pixel. If that stem starts at x = 3.4 pixels, it covers parts of two pixels and the rasterizer paints both in light gray. The result:</p>
+<ul><li>Stems look blurry and lighter than intended</li><li>The two stems of n render differently because they sit at different subpixel positions</li><li>x-height wobbles: one letter rounds up to 6 pixels, another down to 5</li><li>Round letters with overshoot look taller than flat letters by a whole pixel</li></ul>
+<p>Hinting addresses each of these by moving outline points slightly before rasterization, only at the sizes where it helps.</p>
+</section>
+<section id="what-hinting-instructions-actually-do" class="prose-sec"><h2>What hinting instructions actually do</h2>
+<p>TrueType hinting is a small program stored in the font. Key ideas:</p>
+<ul><li><strong>Stem snapping.</strong> Stem edges are moved so the stem covers a whole number of pixels, at least one.</li><li><strong>Consistent stem widths.</strong> Stems of similar width in different letters are rounded to the same pixel count, so the n and the m look like they belong together.</li><li><strong>Alignment zones.</strong> Baseline, x-height and cap height are rounded to whole pixels, and overshoots are suppressed at small sizes so round and flat letters share one height.</li><li><strong>Size awareness.</strong> At larger sizes the instructions relax or stop, letting the natural outline show.</li></ul>
+<p>Fonts with CFF outlines, the OTF flavor, use a different model: they store stem hints and alignment zones as declarations, and the rasterizer decides how to apply them. The goals are the same.</p>
+</section>
+<section id="where-hinting-matters-and-where-it-does-not" class="prose-sec"><h2>Where hinting matters, and where it does not</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Situation</th><th scope="col">Hinting impact</th></tr></thead><tbody><tr><td>Windows, standard density monitor, 9 to 16 px text</td><td>High</td></tr><tr><td>Windows, high density laptop screen</td><td>Low to moderate</td></tr><tr><td>macOS at any size</td><td>Very low, instructions are largely ignored</td></tr><tr><td>Mobile devices with dense screens</td><td>Low</td></tr><tr><td>Display text above about 24 px</td><td>Very low</td></tr><tr><td>Print</td><td>None, printers have plenty of resolution</td></tr></tbody></table></div>
+<p>So the question is not &quot;should fonts be hinted&quot; but &quot;will this font be read small on lower density screens&quot;. A text face for a web app used in offices: yes. A handwriting font for wedding invitations: probably not.</p>
+</section>
+<section id="hinting-options-in-fontsketch" class="prose-sec"><h2>Hinting options in fontsketch</h2>
+<p>fontsketch gives you three choices at export:</p>
+<ol><li><strong>Automatic TrueType hinting.</strong> fontsketch detects stems and snaps them to the pixel grid at small sizes, along with the main alignment heights. This is the right default for text fonts.</li><li><strong>Manual stem hints.</strong> You mark the stems that matter on specific glyphs. Useful when the automatic pass misreads an unusual design, such as a high contrast or reverse contrast letter.</li><li><strong>No hinting.</strong> Smallest files and the natural outline everywhere. Ideal for icon fonts, display fonts and anything used large.</li></ol>
+<p>In the Node API, the same choice is the <code>hinting</code> option of <code>exportFont</code>.</p>
+</section>
+<section id="draw-outlines-that-hint-well" class="prose-sec"><h2>Draw outlines that hint well</h2>
+<p>Automatic hinting can only be as good as the outlines it analyzes. These habits help a lot, and they are good drawing practice anyway:</p>
+<ul><li><strong>Consistent stems.</strong> If your lowercase stems are 84, 86 and 88 units wide, decide on one value. The hinter groups similar stems, and clean data makes better groups.</li><li><strong>Points at extremes.</strong> Put on curve points at the top, bottom, left and right of every bowl, with horizontal or vertical handles. Hinters find edges by looking for these points.</li><li><strong>Shared heights.</strong> Flat tops of lowercase letters should sit exactly on the x-height, flat capitals exactly on cap height. Overshoots should be consistent, around 10 to 15 units.</li><li><strong>No tiny wobbles.</strong> Traced shapes often have near vertical edges made of many short segments. Simplify them so a straight stem is really straight.</li><li><strong>Remove overlaps.</strong> Overlapping contours confuse stem detection.</li></ul>
+<p>If your outlines come from tracing, run simplify and check extremes on the most frequent letters first. The <a href="../../guides/how-to-make-a-font/">how to make a font</a> guide covers this cleanup in more detail.</p>
+</section>
+<section id="how-to-test-hinting" class="prose-sec"><h2>How to test hinting</h2>
+<ol><li>Export two builds: one with automatic hinting, one without.</li><li>Load both on a test page with the same paragraph at 11, 12, 13, 14 and 16 px.</li><li>View it on Windows on a standard density monitor if you can, since that is where differences show.</li><li>Take screenshots and zoom in. Look at stem consistency, x-height consistency and whether bowls close up.</li><li>Check the file sizes of the WOFF2 builds.</li></ol>
+<p>If the hinted build is clearly sharper, keep it. If you cannot see a difference on your target devices, choose the smaller file. For icon fonts, see the <a href="../../guides/icon-font-generator/">icon font generator guide</a>; icons are usually displayed at fixed sizes that you can design for directly.</p>
+</section>
+<section id="hinting-and-file-size" class="prose-sec"><h2>Hinting and file size</h2>
+<p>Hinting instructions add bytes to each glyph. On a font with a few hundred glyphs the difference can be significant relative to the outlines. WOFF2 compresses instructions well, but they never come free. For web performance, the bigger wins are usually subsetting to the characters you need and serving WOFF2; the <a href="../../guides/web-font-formats-ttf-otf-woff2/">web font formats guide</a> explains both.</p>
+</section>
+<section id="hinting-checklist" class="prose-sec"><h2>Hinting checklist</h2>
+<ul><li>Target sizes and platforms identified</li><li>Stems consistent, extremes placed, overlaps removed</li><li>Heights aligned to baseline, x-height and cap height</li><li>Hinted and unhinted builds compared at 11 to 16 px</li><li>File size checked for the web build</li><li>Icons and display fonts exported without hinting unless tests show a benefit</li></ul>
+</section>
+<section id="next-steps" class="prose-sec"><h2>Next steps</h2>
+<p>Export a hinted and an unhinted build from the <a href="../../app/">fontsketch editor</a> and compare them side by side at small sizes. If your font has several weights in one file, read the <a href="../../guides/variable-font-tutorial/">variable font tutorial</a> before testing so you check every weight.</p>
+</section>
+    <section id="steps" class="prose-sec steps-sec"><h2>Step by step</h2><ol class="steps"><li id="step-1"><span class="step-n">1</span><div><h3>Decide where the font will be read</h3><p>List the sizes and platforms. Small UI or body text on Windows benefits most from hinting, large display text barely at all.</p></div></li><li id="step-2"><span class="step-n">2</span><div><h3>Draw hint friendly outlines</h3><p>Keep stem widths consistent, place points at curve extremes and align heights to shared zones such as x-height and baseline.</p></div></li><li id="step-3"><span class="step-n">3</span><div><h3>Pick a hinting mode at export</h3><p>Choose automatic TrueType hinting, manual stem hints for key glyphs, or no hinting for display and icon fonts at large sizes.</p></div></li><li id="step-4"><span class="step-n">4</span><div><h3>Test at small pixel sizes</h3><p>Render a paragraph at 9 to 16 px on Windows and on a standard density monitor and compare against an unhinted build.</p></div></li><li id="step-5"><span class="step-n">5</span><div><h3>Weigh file size against clarity</h3><p>If hinting adds weight without visible benefit on your target screens, export without it.</p></div></li></ol></section>
+    <section id="faq" class="prose-sec"><h2>Questions people ask</h2><div class="faq"><details><summary>What does font hinting do?</summary><p>Hinting adds instructions that adjust a glyph outline to the pixel grid before it is rasterized at small sizes. Stems land on whole pixels and heights line up, so text looks sharper and more even.</p></details><details><summary>Does hinting matter on Mac or high DPI screens?</summary><p>Much less. macOS largely ignores TrueType hinting instructions, and on high density displays there are enough pixels that outlines render well without help. Hinting matters most on Windows at standard densities.</p></details><details><summary>Does hinting make a font file bigger?</summary><p>Yes. TrueType instructions add data to every hinted glyph, often a noticeable share of the file. For icon fonts or display fonts used large, skipping hinting saves bytes.</p></details><details><summary>What is the difference between autohinting and manual hinting?</summary><p>Autohinting detects stems and alignment heights and generates instructions for the whole font. Manual hinting lets you mark specific stems yourself, which can fix glyphs the automatic pass misreads.</p></details><details><summary>Should I hint a variable font?</summary><p>Test it. Variable fonts are often used on high resolution screens where hinting matters less, but small interface text on Windows can still benefit. Compare hinted and unhinted builds at 12 to 16 px.</p></details></div></section>
+  </article>
+</div>
+<section class="related" aria-labelledby="related-h"><h2 id="related-h">Keep reading</h2><div class="cards"><a class="gcard" href="../../guides/web-font-formats-ttf-otf-woff2/"><span class="art "><img class="art-l" src="../../assets/art/export-cards.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/export-cards-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">woff2 vs ttf</span><span class="gcard-t">WOFF2 vs TTF vs OTF, which font format to use for the web</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/how-to-make-a-font/"><span class="art "><img class="art-l" src="../../assets/art/metrics-ruler.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/metrics-ruler-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">how to make a font</span><span class="gcard-t">How to make a font, from first letter to finished file</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/variable-font-tutorial/"><span class="art "><img class="art-l" src="../../assets/art/variable-weight.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/variable-weight-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">variable font tutorial</span><span class="gcard-t">Variable font tutorial, from two masters to one flexible file</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/icon-font-generator/"><span class="art "><img class="art-l" src="../../assets/art/icon-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/icon-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">icon font generator</span><span class="gcard-t">Icon font generator, from a folder of SVG icons to a web font</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="../../"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+      <p>A free, open source font maker. Draw, import or scan your handwriting and export real TTF, OTF, WOFF and WOFF2 fonts, all in your browser.</p>
+      <p class="foot-made">Made by <strong>Alexandre Kohler</strong> (<a href="https://github.com/kwy404" rel="me noopener">GitHub</a> and <a href="https://www.linkedin.com/in/alexandre-silva-173687256/" rel="me noopener">LinkedIn</a>).</p>
+      <p class="foot-built">Built with <a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a>. Interactive parts built with <a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a>.</p>
+    </div>
+    <div>
+      <h2 class="foot-h">Product</h2>
+      <ul class="foot-list"><li><a href="../../app/">Font editor</a></li><li><a href="../../gallery/">Gallery</a></li><li><a href="../../guides/">All guides</a></li><li><a href="https://www.npmjs.com/package/fontsketch" rel="noopener">npm package</a></li><li><a href="https://github.com/kwy404/fontsketch" rel="noopener">Source on GitHub</a></li><li><a href="https://github.com/kwy404/fontsketch/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">Popular guides</h2>
+      <ul class="foot-list"><li><a href="../../guides/turn-your-handwriting-into-a-font/">Turn your handwriting into a font</a></li><li><a href="../../guides/create-a-font-online-free/">Create a font online free</a></li><li><a href="../../guides/make-a-font-from-svg/">Make a font from SVG</a></li><li><a href="../../guides/icon-font-generator/">Icon font generator</a></li><li><a href="../../guides/variable-font-tutorial/">Variable font tutorial</a></li><li><a href="../../guides/font-hinting-explained/">Font hinting explained</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">More from kwy404</h2>
+      <ul class="foot-list foot-more"><li><a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a><small>CSS framework with no build step</small></li><li><a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a><small>reactive HTML attributes</small></li><li><a href="https://kwy404.github.io/breakhound/" rel="noopener">breakhound</a><small>finds bugs in any JS library</small></li><li><a href="https://kwy404.github.io/cookieowl/" rel="noopener">cookieowl</a><small>cookie consent for LGPD and GDPR</small></li><li><a href="https://kwy404.github.io/installkite/" rel="noopener">installkite</a><small>make any site an installable PWA</small></li><li><a href="https://kwy404.github.io/a11ymedic/" rel="noopener">a11ymedic</a><small>accessibility checker with fixes</small></li><li><a href="https://kwy404.github.io/graphemely/" rel="noopener">graphemely</a><small>emoji safe string utilities</small></li><li><a href="https://kwy404.github.io/numberparrot/" rel="noopener">numberparrot</a><small>parse localized numbers</small></li><li><a href="https://kwy404.github.io/edgegoat/" rel="noopener">edgegoat</a><small>edge case test inputs</small></li><li><a href="https://kwy404.github.io/vueleap/" rel="noopener">vueleap</a><small>migrate Vue 2 to Vue 3</small></li></ul>
+    </div>
+  </div>
+  <p class="foot-legal">MIT License. Fonts you make are yours. <span>fontsketch 0.1.0</span></p>
+</footer>
+</body>
+</html>

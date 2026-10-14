@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
+<title>Add a Custom Font to Your Website With @font-face</title>
+<meta name="description" content="Add a custom font to your website with @font-face. Ready snippets for plain HTML, React, Next.js and Vue, plus preload, fallbacks and fixes for common errors.">
+<link rel="canonical" href="https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/">
+<link rel="alternate" hreflang="en" href="https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/">
+<link rel="alternate" hreflang="x-default" href="https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/">
+<meta name="author" content="Alexandre Kohler">
+<meta name="theme-color" content="#FBF4E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121132" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="fontsketch">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Add a Custom Font to Your Website With @font-face">
+<meta property="og:description" content="Add a custom font to your website with @font-face. Ready snippets for plain HTML, React, Next.js and Vue, plus preload, fallbacks and fixes for common errors.">
+<meta property="og:url" content="https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/">
+<meta property="og:image" content="https://kwy404.github.io/fontsketch/assets/og/use-a-custom-font-on-your-website.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A WOFF2 font file dropped into a project folder next to HTML, React, Next.js and Vue code snippets using the same font family">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Add a Custom Font to Your Website With @font-face">
+<meta name="twitter:description" content="Add a custom font to your website with @font-face. Ready snippets for plain HTML, React, Next.js and Vue, plus preload, fallbacks and fixes for common errors.">
+<meta name="twitter:image" content="https://kwy404.github.io/fontsketch/assets/og/use-a-custom-font-on-your-website.png">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="../../assets/fonts/quill-hand.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;1,9..144,600&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monsooncss@0.2.0/dist/monsoon.min.css">
+<link rel="stylesheet" href="../../assets/site/site.css">
+<script src="https://cdn.jsdelivr.net/npm/voodoojs@1.0.0/dist/voodoo.full.min.js" data-manual defer></script>
+<script type="module" src="../../assets/site/site.js"></script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "TechArticle",
+   "@id": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/#article",
+   "headline": "How to add a custom font to your website",
+   "description": "Add a custom font to your website with @font-face. Ready snippets for plain HTML, React, Next.js and Vue, plus preload, fallbacks and fixes for common errors.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/use-a-custom-font-on-your-website.png",
+   "inLanguage": "en",
+   "datePublished": "2026-10-13",
+   "dateModified": "2026-10-13",
+   "wordCount": 1022,
+   "keywords": "add custom font to website",
+   "author": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "mainEntityOfPage": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/",
+   "about": {
+    "@type": "SoftwareApplication",
+    "name": "fontsketch",
+    "url": "https://kwy404.github.io/fontsketch/"
+   }
+  },
+  {
+   "@type": "HowTo",
+   "@id": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/#howto",
+   "name": "How to add a custom font to a website with @font-face",
+   "description": "Add a custom font to your website with @font-face. Ready snippets for plain HTML, React, Next.js and Vue, plus preload, fallbacks and fixes for common errors.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/use-a-custom-font-on-your-website.png",
+   "inLanguage": "en",
+   "totalTime": "PT15M",
+   "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+   },
+   "tool": [
+    {
+     "@type": "HowToTool",
+     "name": "fontsketch (free, in the browser)"
+    }
+   ],
+   "step": [
+    {
+     "@type": "HowToStep",
+     "position": 1,
+     "name": "Export the web font",
+     "text": "Export WOFF2 from fontsketch along with the generated CSS @font-face snippet.",
+     "url": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/#step-1"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 2,
+     "name": "Put the file in your project",
+     "text": "Copy the WOFF2 file into a fonts folder that your site serves, such as public/fonts or src/assets/fonts.",
+     "url": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/#step-2"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 3,
+     "name": "Declare the font with @font-face",
+     "text": "Add the @font-face rule with the correct path, weight, style and font-display value.",
+     "url": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/#step-3"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 4,
+     "name": "Apply the font family",
+     "text": "Use the family name in font-family on body or specific elements, followed by a fallback stack.",
+     "url": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/#step-4"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 5,
+     "name": "Preload and verify",
+     "text": "Preload the main file, then confirm in the browser developer tools that the font downloads and renders.",
+     "url": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/#step-5"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/#faq",
+   "inLanguage": "en",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How do I add a custom font to my website without a font hosting service?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Self host it. Put the WOFF2 file in your project, declare it with @font-face pointing to that file, and use the family name in your CSS. No third party service is involved."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is my custom font not loading?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The usual causes are a wrong path relative to the CSS file, a family name typo, a missing crossorigin attribute on a preload, or the server blocking cross origin requests. Check the Network panel for a 404 or CORS error."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where do I put font files in a React or Vue project?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Either in the public folder and reference them with an absolute path such as /fonts/MyHand.woff2, or next to your CSS in src so the build tool fingerprints them. Both work."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my bold text look smeared with a custom font?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "You only declared a regular weight, so the browser synthesizes bold. Add a separate @font-face rule for the real bold file, or use a variable font with a weight range."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I use my handwriting font on a website?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Export it as WOFF2 from fontsketch, add it with @font-face and use it for headings or accents. Handwriting fonts are usually best for short text rather than long paragraphs."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://kwy404.github.io/fontsketch/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Guides",
+     "item": "https://kwy404.github.io/fontsketch/guides/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "How to add a custom font to your website",
+     "item": "https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body class="guide" data-root="../../">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol><symbol id="i-npm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 17V7h10v10h-3V10h-2v7Z"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></symbol><symbol id="i-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></symbol><symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16Z"/><path d="M14 6l3 3"/></symbol><symbol id="i-points" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18C8 6 16 6 19 18"/><rect x="3" y="16" width="4" height="4"/><rect x="17" y="16" width="4" height="4"/><circle cx="12" cy="9" r="2"/></symbol><symbol id="i-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12M5 15l9-9 5 5-8 8H8Z"/><path d="M10 10l5 5"/></symbol><symbol id="i-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></symbol><symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></symbol><symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 4 13 8-13 8Z"/></symbol><symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M13 6l6 6-6 6"/></symbol><symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h13"/></symbol><symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18"/></symbol></svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar" v-data="{ open: false }" @keydown.escape="open = false">
+  <div class="topbar-in">
+    <a class="brand" href="../../" aria-label="fontsketch home"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+    <nav id="topnav" class="topnav" :class="open ? 'is-open' : ''" aria-label="Main">
+      <a href="../../#studio">Studio</a>
+      <a href="../../#story">How it works</a>
+      <a href="../../gallery/">Gallery</a>
+      <a href="../../guides/" aria-current="page">Guides</a>
+      <a class="topnav-cta btn btn-primary btn-sm" href="../../app/"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Open the editor</a>
+    </nav>
+    <div class="topbar-tools">
+      <a class="icon-btn lang-btn" href="../../pt/" hreflang="pt-BR" lang="pt-BR" title="Português"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg><span>PT</span></a>
+      <a class="icon-btn" href="https://github.com/kwy404/fontsketch" rel="noopener" aria-label="fontsketch on GitHub"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg></a>
+      <button type="button" class="icon-btn theme-btn" v-theme-toggle.cycle aria-label="Theme: system, light or dark" title="Theme: system, light or dark"><svg class="ic ti-system" aria-hidden="true"><use href="#i-system"/></svg><svg class="ic ti-light" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ic ti-dark" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button type="button" class="icon-btn nav-btn" aria-controls="topnav" :aria-expanded="open ? 'true' : 'false'" aria-expanded="false" @click="open = !open" aria-label="Menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="guide-wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../guides/">Guides</a></li><li aria-current="page">How to add a custom font to your website</li></ol></nav>
+<header class="guide-head">
+  <div class="guide-head-text">
+    <p class="kicker">Guide · add custom font to website</p>
+    <h1>How to add a custom font to your website</h1>
+    <p class="guide-meta"><span>5 min read</span><span>Updated <time datetime="2026-10-13">2026-10-13</time></span></p>
+  </div>
+  <figure class="guide-art"><span class="art "><img class="art-l" src="../../assets/art/type-case.svg" width="640" height="400" alt="A WOFF2 font file dropped into a project folder next to HTML, React, Next.js and Vue code snippets using the same font family" fetchpriority="high"><img class="art-d" src="../../assets/art/type-case-dark.svg" width="640" height="400" alt="" aria-hidden="true" fetchpriority="high"></span></figure>
+</header>
+<div class="guide-grid">
+  <aside class="guide-side" aria-label="On this page">
+    <div class="toc"><p class="toc-h">On this page</p><ol><li><a href="#step-1-get-a-woff2-file">Step 1: get a WOFF2 file</a></li><li><a href="#before-you-start-license-and-purpose">Before you start: license and purpose</a></li><li><a href="#plain-html-and-css">Plain HTML and CSS</a></li><li><a href="#react-with-vite">React with Vite</a></li><li><a href="#next-js">Next.js</a></li><li><a href="#vue-with-vite">Vue with Vite</a></li><li><a href="#generating-the-css-from-node">Generating the CSS from Node</a></li><li><a href="#site-builders-and-content-management-systems">Site builders and content management systems</a></li><li><a href="#multiple-weights-and-styles">Multiple weights and styles</a></li><li><a href="#keep-the-font-fast">Keep the font fast</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#checklist">Checklist</a></li><li><a href="#next-steps">Next steps</a></li><li><a href="#steps">Step by step</a></li><li><a href="#faq">Questions people ask</a></li></ol></div>
+    <div class="try-card"><img src="../../assets/art/quill-head.svg" width="84" height="112" alt="" loading="lazy"><p class="try-h">Try it right now</p><p>Draw a letter on the stage and watch it become a real font. Free, no upload, no account.</p><a class="btn btn-primary btn-sm" href="../../#studio">Open the studio</a><a class="btn btn-ghost btn-sm" href="../../app/">Open the editor</a></div>
+  </aside>
+  <article class="prose" id="article">
+<p>To add a custom font to your website, export it as WOFF2, place the file in your project, declare it with an @font-face rule that points to the file, then use the family name in font-family with a fallback stack. The same rule works in plain HTML, React, Next.js and Vue; only the file location and import style change.</p>
+<section id="step-1-get-a-woff2-file" class="prose-sec"><h2>Step 1: get a WOFF2 file</h2>
+<p>WOFF2 is the format browsers download fastest. If you made the font in fontsketch, export WOFF2 and copy the CSS @font-face snippet it generates. If you are using someone else's font, check that its license allows web embedding. The <a href="../../guides/web-font-formats-ttf-otf-woff2/">web font formats guide</a> explains why WOFF2 is the right choice and when other formats still matter.</p>
+<p>Name files in lowercase without spaces and include a version, for example <code>myhand-v1.woff2</code>. It avoids case sensitivity bugs on Linux servers and makes cache busting easy.</p>
+</section>
+<section id="before-you-start-license-and-purpose" class="prose-sec"><h2>Before you start: license and purpose</h2>
+<p>Two quick checks save trouble later. First, the license: a font you made yourself is yours to embed, but a font from elsewhere needs a license that explicitly allows web use. Desktop licenses often do not include it. Open source fonts under the SIL Open Font License can be self hosted freely.</p>
+<p>Second, decide where the font will appear. A distinctive display or handwriting font shines in headings, buttons, quotes and logos, but long paragraphs in a handwriting style tire readers quickly. A common pattern is one custom font for headings and a well tested system or text font for body copy. Fewer custom files also means a faster page.</p>
+</section>
+<section id="plain-html-and-css" class="prose-sec"><h2>Plain HTML and CSS</h2>
+<p>A simple folder structure:</p>
+<figure class="frame frame-editor" data-lang="text"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#6a66a8"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">Aa</text></svg><span>notes.txt</span></span><button type="button" class="frame-copy" v-copy-from="#g13-1" aria-label="Copy notes.txt"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-1"><span class="line"><span>site/</span></span>
+<span class="line"><span>  index.html</span></span>
+<span class="line"><span>  css/style.css</span></span>
+<span class="line"><span>  fonts/myhand-v1.woff2</span></span></code></pre></figure>
+<p>In <code>css/style.css</code>:</p>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g13-2" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-2"><span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"../fonts/myhand-v1.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-weight</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">400</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-style</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">normal</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-display</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">swap</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">h1</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">h2</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"Segoe Print"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, cursive;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span></code></pre></figure>
+<p>The URL inside <code>@font-face</code> is relative to the <strong>CSS file</strong>, not the HTML page. That is the most common cause of missing fonts.</p>
+<p>In <code>index.html</code>, preload the font and link the stylesheet:</p>
+<figure class="frame frame-editor" data-lang="html"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#e34c26"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">&lt;&gt;</text></svg><span>index.html</span></span><button type="button" class="frame-copy" v-copy-from="#g13-3" aria-label="Copy index.html"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-3"><span class="line"><span style="--shiki-light:#800000;--shiki-dark:#808080">&#x3C;</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">head</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#808080">  &#x3C;</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">link</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> rel</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"preload"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> href</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"/fonts/myhand-v1.woff2"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> as</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"font"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> type</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"font/woff2"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> crossorigin</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#808080">  &#x3C;</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">link</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> rel</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"stylesheet"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> href</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#CE9178">"/css/style.css"</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#808080">&#x3C;/</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">head</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span></span></code></pre></figure>
+</section>
+<section id="react-with-vite" class="prose-sec"><h2>React with Vite</h2>
+<p>Option A, use the public folder. Put the file in <code>public/fonts/myhand-v1.woff2</code> and reference it with an absolute path:</p>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g13-4" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-4"><span class="line"><span style="--shiki-light:#008000;--shiki-dark:#6A9955">/* src/fonts.css */</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"/fonts/myhand-v1.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-display</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">swap</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span></code></pre></figure>
+<p>Option B, keep the font in <code>src/assets/fonts/</code> and use a relative path. The build tool then fingerprints the file name for caching:</p>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g13-5" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-5"><span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"./assets/fonts/myhand-v1.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-display</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">swap</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span></code></pre></figure>
+<p>Import the CSS once at the entry point:</p>
+<figure class="frame frame-editor" data-lang="js"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#c9a400"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">JS</text></svg><span>font.mjs</span></span><button type="button" class="frame-copy" v-copy-from="#g13-6" aria-label="Copy font.mjs"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-6"><span class="line"><span style="--shiki-light:#008000;--shiki-dark:#6A9955">// src/main.jsx</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> './fonts.css'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE"> React</span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0"> from</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> 'react'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">createRoot</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> } </span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">from</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> 'react-dom/client'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE"> App</span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0"> from</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> './App.jsx'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">createRoot</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">document</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">.</span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">getElementById</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">'root'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">)).</span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">render</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#800000;--shiki-dark:#808080">&#x3C;</span><span style="--shiki-light:#267F99;--shiki-dark:#4EC9B0">App</span><span style="--shiki-light:#800000;--shiki-dark:#808080"> /></span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span></code></pre></figure>
+<p>Then use it anywhere:</p>
+<figure class="frame frame-editor" data-lang="js"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#c9a400"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">JS</text></svg><span>font.mjs</span></span><button type="button" class="frame-copy" v-copy-from="#g13-7" aria-label="Copy font.mjs"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-7"><span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">export</span><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6"> function</span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA"> Title</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">() {</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">  return</span><span style="--shiki-light:#800000;--shiki-dark:#808080"> &#x3C;</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">h1</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> style</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6">{</span><span style="--shiki-light:#000000FF;--shiki-dark:#D4D4D4">{ </span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">fontFamily:</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> '"MyHand", cursive'</span><span style="--shiki-light:#000000FF;--shiki-dark:#D4D4D4"> }</span><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6">}</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">Hello</span><span style="--shiki-light:#800000;--shiki-dark:#808080">&#x3C;/</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">h1</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span></code></pre></figure>
+</section>
+<section id="next-js" class="prose-sec"><h2>Next.js</h2>
+<p>Next.js has a built in helper for local fonts that self hosts the file, preloads it and generates fallback metrics to reduce layout shift.</p>
+<figure class="frame frame-editor" data-lang="js"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#c9a400"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">JS</text></svg><span>font.mjs</span></span><button type="button" class="frame-copy" v-copy-from="#g13-8" aria-label="Copy font.mjs"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-8"><span class="line"><span style="--shiki-light:#008000;--shiki-dark:#6A9955">// app/layout.js</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE"> localFont</span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0"> from</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> 'next/font/local'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6">const</span><span style="--shiki-light:#0070C1;--shiki-dark:#4FC1FF"> myHand</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> = </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">localFont</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">({</span></span>
+<span class="line"><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">  src:</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> './fonts/myhand-v1.woff2'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">,</span></span>
+<span class="line"><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">  display:</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> 'swap'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">,</span></span>
+<span class="line"><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">  variable:</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> '--font-myhand'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">,</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">export</span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0"> default</span><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6"> function</span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA"> RootLayout</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">({ </span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">children</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> }) {</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">  return</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> (</span></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#808080">    &#x3C;</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">html</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> lang</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"en"</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE"> className</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">=</span><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6">{</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">myHand</span><span style="--shiki-light:#000000FF;--shiki-dark:#D4D4D4">.</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">variable</span><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6">}</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#808080">      &#x3C;</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">body</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6">{</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">children</span><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6">}</span><span style="--shiki-light:#800000;--shiki-dark:#808080">&#x3C;/</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">body</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#808080">    &#x3C;/</span><span style="--shiki-light:#800000;--shiki-dark:#569CD6">html</span><span style="--shiki-light:#800000;--shiki-dark:#808080">></span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">  );</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span></code></pre></figure>
+<p>Put the file at <code>app/fonts/myhand-v1.woff2</code>. In your CSS, use the variable:</p>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g13-9" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-9"><span class="line"><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">h1</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">var</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">--font-myhand</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">), cursive; }</span></span></code></pre></figure>
+<p>For several weights, pass an array of sources to <code>localFont</code>, each with its own <code>weight</code> and <code>style</code>.</p>
+</section>
+<section id="vue-with-vite" class="prose-sec"><h2>Vue with Vite</h2>
+<p>The approach mirrors React. Place the file in <code>src/assets/fonts/</code>, write the rule in a CSS file and import it in <code>main.js</code>:</p>
+<figure class="frame frame-editor" data-lang="js"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#c9a400"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">JS</text></svg><span>font.mjs</span></span><button type="button" class="frame-copy" v-copy-from="#g13-10" aria-label="Copy font.mjs"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-10"><span class="line"><span style="--shiki-light:#008000;--shiki-dark:#6A9955">// src/main.js</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">createApp</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> } </span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">from</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> 'vue'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE"> App</span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0"> from</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> './App.vue'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> './assets/fonts.css'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">createApp</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">App</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">).</span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">mount</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">'#app'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span></code></pre></figure>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g13-11" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-11"><span class="line"><span style="--shiki-light:#008000;--shiki-dark:#6A9955">/* src/assets/fonts.css */</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"./fonts/myhand-v1.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-display</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">swap</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">:root</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">--font-display</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MyHand"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, cursive; }</span></span></code></pre></figure>
+<p>Then in any component style block, <code>font-family: var(--font-display);</code>.</p>
+</section>
+<section id="generating-the-css-from-node" class="prose-sec"><h2>Generating the CSS from Node</h2>
+<p>If you build fonts in a pipeline, the fontsketch Node package can produce the files and the CSS for you. <code>exportFont</code> writes the WOFF2 bytes and <code>cssFontFace</code> generates the matching @font-face rule, so your build can output both together.</p>
+</section>
+<section id="site-builders-and-content-management-systems" class="prose-sec"><h2>Site builders and content management systems</h2>
+<p>If your site runs on a hosted builder or a content management system, the idea is the same even without a code editor. Upload the WOFF2 file to the media library or a theme folder, copy its public URL, and paste an @font-face rule with that absolute URL into the custom CSS area of your theme. Then apply the family name to the elements you want.</p>
+<p>Two things often go wrong on these platforms. Some media libraries refuse font uploads by default, so you may need a theme folder instead. And if the file is served from a different domain than the site, such as a separate media host, that server must allow cross origin requests for fonts, or browsers will block the file silently.</p>
+</section>
+<section id="multiple-weights-and-styles" class="prose-sec"><h2>Multiple weights and styles</h2>
+<p>Declare one <code>@font-face</code> rule per real file, all with the same family name:</p>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g13-12" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g13-12"><span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MySans"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"/fonts/mysans-400.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">); </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-weight</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">400</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-style</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">normal</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; }</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MySans"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"/fonts/mysans-700.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">); </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-weight</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">700</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-style</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">normal</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; }</span></span></code></pre></figure>
+<p>Now <code>font-weight: 700</code> picks the real bold. With a variable font, one rule with a range such as <code>font-weight: 400 700</code> replaces both; see the <a href="../../guides/variable-font-tutorial/">variable font tutorial</a>.</p>
+</section>
+<section id="keep-the-font-fast" class="prose-sec"><h2>Keep the font fast</h2>
+<p>Each font file is a download that competes with images and scripts. A sensible budget for most sites is two to four font files on the first page view. Some ways to stay inside it:</p>
+<ul><li>Use one variable font instead of several static weights when you need three or more.</li><li>Drop styles you rarely use; an italic used once can often be replaced by the regular style with emphasis from color or size.</li><li>Include only the characters you need, and split large sets with unicode-range.</li><li>Preload only the file needed for text visible without scrolling.</li></ul>
+<p>Your browser's built in performance audit will flag fonts that delay the first render of text. The <a href="../../guides/web-font-formats-ttf-otf-woff2/">web font formats guide</a> goes deeper into subsetting and font-display.</p>
+</section>
+<section id="troubleshooting" class="prose-sec"><h2>Troubleshooting</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Symptom</th><th scope="col">Likely cause</th><th scope="col">Fix</th></tr></thead><tbody><tr><td>Fallback font shows, 404 in Network panel</td><td>Wrong path</td><td>Make the URL relative to the CSS file, or use an absolute path</td></tr><tr><td>Font blocked, CORS error in console</td><td>Served from another domain</td><td>Add an Access-Control-Allow-Origin header on the font server</td></tr><tr><td>Preloaded font downloads twice</td><td>Missing crossorigin on preload</td><td>Add crossorigin to the link tag</td></tr><tr><td>Bold looks smeared</td><td>No real bold declared</td><td>Add a 700 weight rule or use a variable font</td></tr><tr><td>Old version keeps showing</td><td>Cache</td><td>Rename the file with a new version</td></tr><tr><td>Works locally, fails on server</td><td>File name case mismatch</td><td>Use lowercase file names everywhere</td></tr></tbody></table></div>
+<p>To confirm which font is actually used, open the browser developer tools, select a text element and look for the rendered fonts in the computed styles. The Network panel filtered by Font shows whether the file downloaded.</p>
+</section>
+<section id="checklist" class="prose-sec"><h2>Checklist</h2>
+<ul><li>WOFF2 file in a served folder, lowercase versioned name</li><li>@font-face with correct relative or absolute path</li><li>font-display chosen, usually swap</li><li>Fallback stack after the custom family</li><li>Critical file preloaded with crossorigin</li><li>Real weights declared, or a variable font range</li><li>Verified in developer tools</li></ul>
+</section>
+<section id="next-steps" class="prose-sec"><h2>Next steps</h2>
+<p>Export WOFF2 and the CSS snippet from the <a href="../../app/">fontsketch editor</a> and drop them into one of the setups above. Do not have a font yet? Make one from your own writing with <a href="../../guides/turn-your-handwriting-into-a-font/">turn your handwriting into a font</a>, or ship a set of interface icons with the <a href="../../guides/icon-font-generator/">icon font generator</a>.</p>
+</section>
+    <section id="steps" class="prose-sec steps-sec"><h2>Step by step</h2><ol class="steps"><li id="step-1"><span class="step-n">1</span><div><h3>Export the web font</h3><p>Export WOFF2 from fontsketch along with the generated CSS @font-face snippet.</p></div></li><li id="step-2"><span class="step-n">2</span><div><h3>Put the file in your project</h3><p>Copy the WOFF2 file into a fonts folder that your site serves, such as public/fonts or src/assets/fonts.</p></div></li><li id="step-3"><span class="step-n">3</span><div><h3>Declare the font with @font-face</h3><p>Add the @font-face rule with the correct path, weight, style and font-display value.</p></div></li><li id="step-4"><span class="step-n">4</span><div><h3>Apply the font family</h3><p>Use the family name in font-family on body or specific elements, followed by a fallback stack.</p></div></li><li id="step-5"><span class="step-n">5</span><div><h3>Preload and verify</h3><p>Preload the main file, then confirm in the browser developer tools that the font downloads and renders.</p></div></li></ol></section>
+    <section id="faq" class="prose-sec"><h2>Questions people ask</h2><div class="faq"><details><summary>How do I add a custom font to my website without a font hosting service?</summary><p>Self host it. Put the WOFF2 file in your project, declare it with @font-face pointing to that file, and use the family name in your CSS. No third party service is involved.</p></details><details><summary>Why is my custom font not loading?</summary><p>The usual causes are a wrong path relative to the CSS file, a family name typo, a missing crossorigin attribute on a preload, or the server blocking cross origin requests. Check the Network panel for a 404 or CORS error.</p></details><details><summary>Where do I put font files in a React or Vue project?</summary><p>Either in the public folder and reference them with an absolute path such as /fonts/MyHand.woff2, or next to your CSS in src so the build tool fingerprints them. Both work.</p></details><details><summary>Why does my bold text look smeared with a custom font?</summary><p>You only declared a regular weight, so the browser synthesizes bold. Add a separate @font-face rule for the real bold file, or use a variable font with a weight range.</p></details><details><summary>Can I use my handwriting font on a website?</summary><p>Yes. Export it as WOFF2 from fontsketch, add it with @font-face and use it for headings or accents. Handwriting fonts are usually best for short text rather than long paragraphs.</p></details></div></section>
+  </article>
+</div>
+<section class="related" aria-labelledby="related-h"><h2 id="related-h">Keep reading</h2><div class="cards"><a class="gcard" href="../../guides/web-font-formats-ttf-otf-woff2/"><span class="art "><img class="art-l" src="../../assets/art/export-cards.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/export-cards-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">woff2 vs ttf</span><span class="gcard-t">WOFF2 vs TTF vs OTF, which font format to use for the web</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/turn-your-handwriting-into-a-font/"><span class="art "><img class="art-l" src="../../assets/art/scan-to-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/scan-to-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">turn your handwriting into a font</span><span class="gcard-t">How to turn your handwriting into a font (free, in your browser)</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/variable-font-tutorial/"><span class="art "><img class="art-l" src="../../assets/art/variable-weight.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/variable-weight-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">variable font tutorial</span><span class="gcard-t">Variable font tutorial, from two masters to one flexible file</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/icon-font-generator/"><span class="art "><img class="art-l" src="../../assets/art/icon-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/icon-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">icon font generator</span><span class="gcard-t">Icon font generator, from a folder of SVG icons to a web font</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="../../"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+      <p>A free, open source font maker. Draw, import or scan your handwriting and export real TTF, OTF, WOFF and WOFF2 fonts, all in your browser.</p>
+      <p class="foot-made">Made by <strong>Alexandre Kohler</strong> (<a href="https://github.com/kwy404" rel="me noopener">GitHub</a> and <a href="https://www.linkedin.com/in/alexandre-silva-173687256/" rel="me noopener">LinkedIn</a>).</p>
+      <p class="foot-built">Built with <a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a>. Interactive parts built with <a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a>.</p>
+    </div>
+    <div>
+      <h2 class="foot-h">Product</h2>
+      <ul class="foot-list"><li><a href="../../app/">Font editor</a></li><li><a href="../../gallery/">Gallery</a></li><li><a href="../../guides/">All guides</a></li><li><a href="https://www.npmjs.com/package/fontsketch" rel="noopener">npm package</a></li><li><a href="https://github.com/kwy404/fontsketch" rel="noopener">Source on GitHub</a></li><li><a href="https://github.com/kwy404/fontsketch/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">Popular guides</h2>
+      <ul class="foot-list"><li><a href="../../guides/turn-your-handwriting-into-a-font/">Turn your handwriting into a font</a></li><li><a href="../../guides/create-a-font-online-free/">Create a font online free</a></li><li><a href="../../guides/make-a-font-from-svg/">Make a font from SVG</a></li><li><a href="../../guides/icon-font-generator/">Icon font generator</a></li><li><a href="../../guides/variable-font-tutorial/">Variable font tutorial</a></li><li><a href="../../guides/font-hinting-explained/">Font hinting explained</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">More from kwy404</h2>
+      <ul class="foot-list foot-more"><li><a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a><small>CSS framework with no build step</small></li><li><a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a><small>reactive HTML attributes</small></li><li><a href="https://kwy404.github.io/breakhound/" rel="noopener">breakhound</a><small>finds bugs in any JS library</small></li><li><a href="https://kwy404.github.io/cookieowl/" rel="noopener">cookieowl</a><small>cookie consent for LGPD and GDPR</small></li><li><a href="https://kwy404.github.io/installkite/" rel="noopener">installkite</a><small>make any site an installable PWA</small></li><li><a href="https://kwy404.github.io/a11ymedic/" rel="noopener">a11ymedic</a><small>accessibility checker with fixes</small></li><li><a href="https://kwy404.github.io/graphemely/" rel="noopener">graphemely</a><small>emoji safe string utilities</small></li><li><a href="https://kwy404.github.io/numberparrot/" rel="noopener">numberparrot</a><small>parse localized numbers</small></li><li><a href="https://kwy404.github.io/edgegoat/" rel="noopener">edgegoat</a><small>edge case test inputs</small></li><li><a href="https://kwy404.github.io/vueleap/" rel="noopener">vueleap</a><small>migrate Vue 2 to Vue 3</small></li></ul>
+    </div>
+  </div>
+  <p class="foot-legal">MIT License. Fonts you make are yours. <span>fontsketch 0.1.0</span></p>
+</footer>
+</body>
+</html>

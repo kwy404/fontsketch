@@ -43,6 +43,9 @@ export function buildArt() {
     write(`assets/illustrations/${n}-dark.svg`, artSVG(n, 'dark'));
   }
   write('docs/favicon.svg', faviconSVG());
+  write('docs/assets/art/quill-head.svg', headSVG('light'));
+  write('docs/assets/art/quill.svg', mascotSVG('light'));
+  write('docs/assets/art/quill-dark.svg', mascotSVG('dark'));
   return Object.keys(ART);
 }
 

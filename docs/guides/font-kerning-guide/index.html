@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
+<title>What Is Kerning and How to Kern a Font, With Examples</title>
+<meta name="description" content="What is kerning and how to kern a font well. Learn spacing first, then pairs like AV, To and Ty, kerning classes, test strings and how to avoid over kerning.">
+<link rel="canonical" href="https://kwy404.github.io/fontsketch/guides/font-kerning-guide/">
+<link rel="alternate" hreflang="en" href="https://kwy404.github.io/fontsketch/guides/font-kerning-guide/">
+<link rel="alternate" hreflang="x-default" href="https://kwy404.github.io/fontsketch/guides/font-kerning-guide/">
+<meta name="author" content="Alexandre Kohler">
+<meta name="theme-color" content="#FBF4E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121132" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="fontsketch">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="What Is Kerning and How to Kern a Font, With Examples">
+<meta property="og:description" content="What is kerning and how to kern a font well. Learn spacing first, then pairs like AV, To and Ty, kerning classes, test strings and how to avoid over kerning.">
+<meta property="og:url" content="https://kwy404.github.io/fontsketch/guides/font-kerning-guide/">
+<meta property="og:image" content="https://kwy404.github.io/fontsketch/assets/og/font-kerning-guide.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The pair A V shown before and after kerning, with the gap between the diagonals reduced and measured in font units">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What Is Kerning and How to Kern a Font, With Examples">
+<meta name="twitter:description" content="What is kerning and how to kern a font well. Learn spacing first, then pairs like AV, To and Ty, kerning classes, test strings and how to avoid over kerning.">
+<meta name="twitter:image" content="https://kwy404.github.io/fontsketch/assets/og/font-kerning-guide.png">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="../../assets/fonts/quill-hand.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;1,9..144,600&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monsooncss@0.2.0/dist/monsoon.min.css">
+<link rel="stylesheet" href="../../assets/site/site.css">
+<script src="https://cdn.jsdelivr.net/npm/voodoojs@1.0.0/dist/voodoo.full.min.js" data-manual defer></script>
+<script type="module" src="../../assets/site/site.js"></script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "TechArticle",
+   "@id": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/#article",
+   "headline": "What is kerning, and how to kern a font step by step",
+   "description": "What is kerning and how to kern a font well. Learn spacing first, then pairs like AV, To and Ty, kerning classes, test strings and how to avoid over kerning.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/font-kerning-guide.png",
+   "inLanguage": "en",
+   "datePublished": "2026-10-13",
+   "dateModified": "2026-10-13",
+   "wordCount": 1089,
+   "keywords": "how to kern a font",
+   "author": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "mainEntityOfPage": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/",
+   "about": {
+    "@type": "SoftwareApplication",
+    "name": "fontsketch",
+    "url": "https://kwy404.github.io/fontsketch/"
+   }
+  },
+  {
+   "@type": "HowTo",
+   "@id": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/#howto",
+   "name": "How to kern a font with pairs and classes in fontsketch",
+   "description": "What is kerning and how to kern a font well. Learn spacing first, then pairs like AV, To and Ty, kerning classes, test strings and how to avoid over kerning.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/font-kerning-guide.png",
+   "inLanguage": "en",
+   "totalTime": "PT1H30M",
+   "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+   },
+   "tool": [
+    {
+     "@type": "HowToTool",
+     "name": "fontsketch (free, in the browser)"
+    }
+   ],
+   "step": [
+    {
+     "@type": "HowToStep",
+     "position": 1,
+     "name": "Finish spacing first",
+     "text": "Set side bearings with strings like nnonnoon and HHOHHOOH until text has an even rhythm without any kerning.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/#step-1"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 2,
+     "name": "Create kerning classes",
+     "text": "Group letters with the same left or right shape, for example O C G Q on the left side and o c d e q on the right.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/#step-2"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 3,
+     "name": "Kern the critical pairs",
+     "text": "Work through capitals with diagonals and overhangs such as AV, To, Ty, LT, Yo and P followed by a period.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/#step-3"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 4,
+     "name": "Add exceptions",
+     "text": "Where one letter in a class needs a different value, add a specific pair that overrides the class value.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/#step-4"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 5,
+     "name": "Test in real text",
+     "text": "Export and set real words, headlines and paragraphs at several sizes, then fix pairs that look too tight or too loose.",
+     "url": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/#step-5"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/#faq",
+   "inLanguage": "en",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the difference between kerning and tracking?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kerning adjusts the space between one specific pair of letters and is stored inside the font. Tracking, or letter spacing, adds the same space between all letters in a piece of text and is set in the app or CSS."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between kerning and spacing?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Spacing is the side bearings built into every glyph, which decide the basic rhythm of text. Kerning corrects specific pairs that spacing cannot fix. A well spaced font needs fewer kerning pairs."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which letter pairs need kerning the most?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Pairs combining diagonals and overhangs, such as AV, AW, AY, To, Ta, Ty, Va, Yo, LT, LY, FA, PA, and capitals followed by periods or commas. Quote marks next to letters are also common."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How many kerning pairs does a font need?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It depends on the design and character set. A display font for basic Latin may work well with a few hundred pairs when using classes, while large text families can have thousands. Quality matters more than count."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does CSS apply the kerning in my font?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Browsers apply font kerning by default for most text, controlled by the font-kerning property. You can force it with font-kerning normal if needed."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://kwy404.github.io/fontsketch/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Guides",
+     "item": "https://kwy404.github.io/fontsketch/guides/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "What is kerning, and how to kern a font step by step",
+     "item": "https://kwy404.github.io/fontsketch/guides/font-kerning-guide/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body class="guide" data-root="../../">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol><symbol id="i-npm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 17V7h10v10h-3V10h-2v7Z"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></symbol><symbol id="i-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></symbol><symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16Z"/><path d="M14 6l3 3"/></symbol><symbol id="i-points" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18C8 6 16 6 19 18"/><rect x="3" y="16" width="4" height="4"/><rect x="17" y="16" width="4" height="4"/><circle cx="12" cy="9" r="2"/></symbol><symbol id="i-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12M5 15l9-9 5 5-8 8H8Z"/><path d="M10 10l5 5"/></symbol><symbol id="i-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></symbol><symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></symbol><symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 4 13 8-13 8Z"/></symbol><symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M13 6l6 6-6 6"/></symbol><symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h13"/></symbol><symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18"/></symbol></svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar" v-data="{ open: false }" @keydown.escape="open = false">
+  <div class="topbar-in">
+    <a class="brand" href="../../" aria-label="fontsketch home"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+    <nav id="topnav" class="topnav" :class="open ? 'is-open' : ''" aria-label="Main">
+      <a href="../../#studio">Studio</a>
+      <a href="../../#story">How it works</a>
+      <a href="../../gallery/">Gallery</a>
+      <a href="../../guides/" aria-current="page">Guides</a>
+      <a class="topnav-cta btn btn-primary btn-sm" href="../../app/"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Open the editor</a>
+    </nav>
+    <div class="topbar-tools">
+      <a class="icon-btn lang-btn" href="../../pt/" hreflang="pt-BR" lang="pt-BR" title="Português"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg><span>PT</span></a>
+      <a class="icon-btn" href="https://github.com/kwy404/fontsketch" rel="noopener" aria-label="fontsketch on GitHub"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg></a>
+      <button type="button" class="icon-btn theme-btn" v-theme-toggle.cycle aria-label="Theme: system, light or dark" title="Theme: system, light or dark"><svg class="ic ti-system" aria-hidden="true"><use href="#i-system"/></svg><svg class="ic ti-light" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ic ti-dark" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button type="button" class="icon-btn nav-btn" aria-controls="topnav" :aria-expanded="open ? 'true' : 'false'" aria-expanded="false" @click="open = !open" aria-label="Menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="guide-wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../guides/">Guides</a></li><li aria-current="page">What is kerning, and how to kern a font step by step</li></ol></nav>
+<header class="guide-head">
+  <div class="guide-head-text">
+    <p class="kicker">Guide · how to kern a font</p>
+    <h1>What is kerning, and how to kern a font step by step</h1>
+    <p class="guide-meta"><span>5 min read</span><span>Updated <time datetime="2026-10-13">2026-10-13</time></span></p>
+  </div>
+  <figure class="guide-art"><span class="art "><img class="art-l" src="../../assets/art/kerning-pair.svg" width="640" height="400" alt="The pair A V shown before and after kerning, with the gap between the diagonals reduced and measured in font units" fetchpriority="high"><img class="art-d" src="../../assets/art/kerning-pair-dark.svg" width="640" height="400" alt="" aria-hidden="true" fetchpriority="high"></span></figure>
+</header>
+<div class="guide-grid">
+  <aside class="guide-side" aria-label="On this page">
+    <div class="toc"><p class="toc-h">On this page</p><ol><li><a href="#why-fonts-need-kerning">Why fonts need kerning</a></li><li><a href="#spacing-first-always">Spacing first, always</a></li><li><a href="#kerning-classes-save-hours">Kerning classes save hours</a></li><li><a href="#pairs-to-check-first">Pairs to check first</a></li><li><a href="#exceptions">Exceptions</a></li><li><a href="#typical-kerning-values">Typical kerning values</a></li><li><a href="#how-much-to-kern">How much to kern</a></li><li><a href="#test-strings-that-reveal-problems">Test strings that reveal problems</a></li><li><a href="#kerning-on-the-web">Kerning on the web</a></li><li><a href="#handwriting-and-logo-fonts">Handwriting and logo fonts</a></li><li><a href="#kerning-checklist">Kerning checklist</a></li><li><a href="#next-steps">Next steps</a></li><li><a href="#steps">Step by step</a></li><li><a href="#faq">Questions people ask</a></li></ol></div>
+    <div class="try-card"><img src="../../assets/art/quill-head.svg" width="84" height="112" alt="" loading="lazy"><p class="try-h">Try it right now</p><p>Draw a letter on the stage and watch it become a real font. Free, no upload, no account.</p><a class="btn btn-primary btn-sm" href="../../#studio">Open the studio</a><a class="btn btn-ghost btn-sm" href="../../app/">Open the editor</a></div>
+  </aside>
+  <article class="prose" id="article">
+<p>Kerning is the adjustment of space between specific pairs of letters so that text looks evenly spaced. To kern a font, first set good spacing with side bearings, then group similar letters into classes, kern the problem pairs like AV, To and Ty, add exceptions and test in real words. fontsketch supports kerning pairs and classes.</p>
+<section id="why-fonts-need-kerning" class="prose-sec"><h2>Why fonts need kerning</h2>
+<p>Every glyph carries its own space on the left and right, the <strong>side bearings</strong>. Those values are chosen so that most combinations look even. But some shapes leave odd gaps whatever their side bearings are:</p>
+<ul><li><strong>A next to V</strong>: two diagonals create a big triangle of white space between them.</li><li><strong>T next to o</strong>: the crossbar of the T overhangs, leaving a gap under it.</li><li><strong>L next to T</strong>: the open right side of L meets the overhang of T.</li><li><strong>P next to a period</strong>: the bowl of P sits high, the period sits low.</li></ul>
+<p>Fixing these by changing side bearings would break every other combination with those letters. Kerning stores a correction just for the pair, usually a negative value in font units that moves the second glyph closer.</p>
+</section>
+<section id="spacing-first-always" class="prose-sec"><h2>Spacing first, always</h2>
+<p>The most common kerning mistake is to start kerning before the spacing is right. If your n and o are spaced poorly, you will end up kerning hundreds of pairs that should never need it.</p>
+<p>A classic spacing routine for lowercase:</p>
+<ol><li>Set n so <em>nnnnnn</em> has an even rhythm.</li><li>Set o so <em>nonononon</em> looks even. Round sides need less side bearing than straight ones.</li><li>Space every other lowercase letter between n and o: <em>nanbncndnenfn</em>, <em>oaobocodoeofo</em>.</li></ol>
+<p>Then the same for capitals using H and O: <em>HHOHHOOHOO</em>, then <em>HAHBHCH</em> and <em>OAOBOCO</em>.</p>
+<p>Only when this looks right do you start kerning. The <a href="../../guides/how-to-make-a-font/">how to make a font</a> guide covers spacing in the context of the whole process.</p>
+</section>
+<section id="kerning-classes-save-hours" class="prose-sec"><h2>Kerning classes save hours</h2>
+<p>Many letters share the same edge shape. O, C, G and Q have the same round left side. Letters like d, q and a can share a straight or nearly straight right side. Rather than kerning T against each round letter individually, you put them into a class and kern once.</p>
+<p>Typical classes, by the side that touches the neighbor:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Class</th><th scope="col">Members (example)</th><th scope="col">Shared shape</th></tr></thead><tbody><tr><td>Round left, capitals</td><td>C G O Q</td><td>Round left edge</td></tr><tr><td>Round right, capitals</td><td>D O Q</td><td>Round right edge</td></tr><tr><td>Diagonal, capitals</td><td>V W Y</td><td>Diagonal edges</td></tr><tr><td>Round left, lowercase</td><td>c d e o q</td><td>Round left edge</td></tr><tr><td>Round right, lowercase</td><td>b o p</td><td>Round right edge</td></tr><tr><td>Straight, lowercase</td><td>n m r u</td><td>Vertical stem</td></tr></tbody></table></div>
+<p>Your exact classes depend on the design. In a font with a flat topped a, the a may not belong with the round letters. Accented letters built from components usually belong with their base letter, so é kerns like e.</p>
+</section>
+<section id="pairs-to-check-first" class="prose-sec"><h2>Pairs to check first</h2>
+<p>Work through these combinations with the most visible problems:</p>
+<ul><li><strong>Capitals with diagonals</strong>: AV, AW, AY, AT, VA, WA, YA</li><li><strong>Overhangs</strong>: To, Ta, Te, Ty, Tr, Yo, Ya, Vo, Va, Wo, Fa, Fo, Po</li><li><strong>Open shapes</strong>: LT, LV, LY, L followed by a quote mark</li><li><strong>Punctuation</strong>: T. T, V. Y, P. F. and r. r, y. y, followed by period and comma</li><li><strong>Quotes</strong>: opening quote before A, closing quote after s, quote marks next to T</li><li><strong>Figures</strong>: 1 next to other figures can look loose, 7 next to period</li><li><strong>Lowercase</strong>: r followed by period or comma, v w y next to period, f followed by quotes or parentheses</li></ul>
+<p>Kern by eye, not by numbers. Set the pair between neutral letters, such as <em>HAVH</em> or <em>nTon</em>, and adjust until the space inside the pair feels the same as the space around it.</p>
+</section>
+<section id="exceptions" class="prose-sec"><h2>Exceptions</h2>
+<p>Classes are general rules. Sometimes one member needs something different, for example Tö where the diaeresis would collide with the crossbar if kerned as tight as To. In that case add a specific pair for that combination; specific pairs override class values.</p>
+</section>
+<section id="typical-kerning-values" class="prose-sec"><h2>Typical kerning values</h2>
+<p>Numbers only make sense relative to the em. In a 1000 unit font like those made in fontsketch, rough starting ranges for a normal weight sans are:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Pair type</th><th scope="col">Typical range in units</th></tr></thead><tbody><tr><td>AV, AW, VA</td><td>negative 50 to 100</td></tr><tr><td>To, Ta, Ty</td><td>negative 50 to 90</td></tr><tr><td>LT, LY</td><td>negative 60 to 100</td></tr><tr><td>P or F before a period</td><td>negative 60 to 120</td></tr><tr><td>r before a comma or period</td><td>negative 20 to 50</td></tr><tr><td>Round against round, such as oo</td><td>usually none</td></tr></tbody></table></div>
+<p>Treat these as a sanity check rather than a target. If you find yourself kerning a pair by 200 units, the spacing or the drawing of one of the letters is probably the real problem.</p>
+</section>
+<section id="how-much-to-kern" class="prose-sec"><h2>How much to kern</h2>
+<p>Over kerning is as bad as under kerning. Signs you went too far:</p>
+<ul><li>Letters touch or collide at small sizes</li><li>The pair looks darker than the surrounding text</li><li>Words with kerned pairs look tighter than words without</li></ul>
+<p>Ask yourself whether the gap is noticeable at the size the font will actually be used. Display fonts get more aggressive kerning; text fonts usually less.</p>
+</section>
+<section id="test-strings-that-reveal-problems" class="prose-sec"><h2>Test strings that reveal problems</h2>
+<p>Use real words and phrases, not just pairs:</p>
+<figure class="frame frame-editor" data-lang="text"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#6a66a8"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">Aa</text></svg><span>notes.txt</span></span><button type="button" class="frame-copy" v-copy-from="#g5-1" aria-label="Copy notes.txt"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g5-1"><span class="line"><span>AVATAR  WAVY  LATTE  TOYOTA  Typography</span></span>
+<span class="line"><span>Tomato. Yes, "Way." Pay. Fly. Try, Very.</span></span>
+<span class="line"><span>L'Avenir  P.S.  F.A.Q.  1977  11.1</span></span>
+<span class="line"><span>Avó, Ação, Você, Tête, Łódź, Żółw</span></span></code></pre></figure>
+<p>Include the languages you support. Portuguese, French and Polish bring accented capitals next to diagonals that standard English tests never show.</p>
+</section>
+<section id="kerning-on-the-web" class="prose-sec"><h2>Kerning on the web</h2>
+<p>Browsers apply the kerning stored in the font for most text by default. If you ever need to be explicit, CSS offers <code>font-kerning: normal</code>. Do not confuse it with <code>letter-spacing</code>, which adds uniform tracking. Large headings often look better with slightly negative letter spacing, but that is a style decision, separate from kerning. See <a href="../../guides/web-font-formats-ttf-otf-woff2/">web font formats</a> for serving the font itself.</p>
+</section>
+<section id="handwriting-and-logo-fonts" class="prose-sec"><h2>Handwriting and logo fonts</h2>
+<p>Handwriting fonts often need many kerning pairs because real handwriting is irregular. Focus on the most frequent pairs in your language. If you made a font from your writing with <a href="../../guides/turn-your-handwriting-into-a-font/">our handwriting guide</a>, start with lowercase pairs involving r, v, w, y and f. For brand lettering, see <a href="../../guides/make-a-font-for-a-logo/">make a font for a logo</a>, where wordmark spacing and font spacing need different treatment.</p>
+</section>
+<section id="kerning-checklist" class="prose-sec"><h2>Kerning checklist</h2>
+<ul><li>Spacing finished and approved before any kerning</li><li>Classes created for round, straight and diagonal edges</li><li>Critical capital pairs kerned</li><li>Punctuation and quotes kerned</li><li>Exceptions added where accents or details collide</li><li>Tested in real words in every supported language</li><li>No pairs that collide or look darker than the text around them</li></ul>
+</section>
+<section id="next-steps" class="prose-sec"><h2>Next steps</h2>
+<p>Open your project in the <a href="../../app/">fontsketch editor</a>, check spacing with <em>nonononon</em> and <em>HOHOHOH</em>, then create your first classes. Kern AV, To and Ty first; they reveal quickly whether your values are too timid or too strong.</p>
+</section>
+    <section id="steps" class="prose-sec steps-sec"><h2>Step by step</h2><ol class="steps"><li id="step-1"><span class="step-n">1</span><div><h3>Finish spacing first</h3><p>Set side bearings with strings like nnonnoon and HHOHHOOH until text has an even rhythm without any kerning.</p></div></li><li id="step-2"><span class="step-n">2</span><div><h3>Create kerning classes</h3><p>Group letters with the same left or right shape, for example O C G Q on the left side and o c d e q on the right.</p></div></li><li id="step-3"><span class="step-n">3</span><div><h3>Kern the critical pairs</h3><p>Work through capitals with diagonals and overhangs such as AV, To, Ty, LT, Yo and P followed by a period.</p></div></li><li id="step-4"><span class="step-n">4</span><div><h3>Add exceptions</h3><p>Where one letter in a class needs a different value, add a specific pair that overrides the class value.</p></div></li><li id="step-5"><span class="step-n">5</span><div><h3>Test in real text</h3><p>Export and set real words, headlines and paragraphs at several sizes, then fix pairs that look too tight or too loose.</p></div></li></ol></section>
+    <section id="faq" class="prose-sec"><h2>Questions people ask</h2><div class="faq"><details><summary>What is the difference between kerning and tracking?</summary><p>Kerning adjusts the space between one specific pair of letters and is stored inside the font. Tracking, or letter spacing, adds the same space between all letters in a piece of text and is set in the app or CSS.</p></details><details><summary>What is the difference between kerning and spacing?</summary><p>Spacing is the side bearings built into every glyph, which decide the basic rhythm of text. Kerning corrects specific pairs that spacing cannot fix. A well spaced font needs fewer kerning pairs.</p></details><details><summary>Which letter pairs need kerning the most?</summary><p>Pairs combining diagonals and overhangs, such as AV, AW, AY, To, Ta, Ty, Va, Yo, LT, LY, FA, PA, and capitals followed by periods or commas. Quote marks next to letters are also common.</p></details><details><summary>How many kerning pairs does a font need?</summary><p>It depends on the design and character set. A display font for basic Latin may work well with a few hundred pairs when using classes, while large text families can have thousands. Quality matters more than count.</p></details><details><summary>Does CSS apply the kerning in my font?</summary><p>Yes. Browsers apply font kerning by default for most text, controlled by the font-kerning property. You can force it with font-kerning normal if needed.</p></details></div></section>
+  </article>
+</div>
+<section class="related" aria-labelledby="related-h"><h2 id="related-h">Keep reading</h2><div class="cards"><a class="gcard" href="../../guides/how-to-make-a-font/"><span class="art "><img class="art-l" src="../../assets/art/metrics-ruler.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/metrics-ruler-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">how to make a font</span><span class="gcard-t">How to make a font, from first letter to finished file</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/turn-your-handwriting-into-a-font/"><span class="art "><img class="art-l" src="../../assets/art/scan-to-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/scan-to-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">turn your handwriting into a font</span><span class="gcard-t">How to turn your handwriting into a font (free, in your browser)</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/make-a-font-for-a-logo/"><span class="art "><img class="art-l" src="../../assets/art/nib-strokes.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/nib-strokes-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">make a font for a logo</span><span class="gcard-t">How to make a font for a logo, and turn custom lettering into a brand font</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/web-font-formats-ttf-otf-woff2/"><span class="art "><img class="art-l" src="../../assets/art/export-cards.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/export-cards-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">woff2 vs ttf</span><span class="gcard-t">WOFF2 vs TTF vs OTF, which font format to use for the web</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="../../"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+      <p>A free, open source font maker. Draw, import or scan your handwriting and export real TTF, OTF, WOFF and WOFF2 fonts, all in your browser.</p>
+      <p class="foot-made">Made by <strong>Alexandre Kohler</strong> (<a href="https://github.com/kwy404" rel="me noopener">GitHub</a> and <a href="https://www.linkedin.com/in/alexandre-silva-173687256/" rel="me noopener">LinkedIn</a>).</p>
+      <p class="foot-built">Built with <a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a>. Interactive parts built with <a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a>.</p>
+    </div>
+    <div>
+      <h2 class="foot-h">Product</h2>
+      <ul class="foot-list"><li><a href="../../app/">Font editor</a></li><li><a href="../../gallery/">Gallery</a></li><li><a href="../../guides/">All guides</a></li><li><a href="https://www.npmjs.com/package/fontsketch" rel="noopener">npm package</a></li><li><a href="https://github.com/kwy404/fontsketch" rel="noopener">Source on GitHub</a></li><li><a href="https://github.com/kwy404/fontsketch/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">Popular guides</h2>
+      <ul class="foot-list"><li><a href="../../guides/turn-your-handwriting-into-a-font/">Turn your handwriting into a font</a></li><li><a href="../../guides/create-a-font-online-free/">Create a font online free</a></li><li><a href="../../guides/make-a-font-from-svg/">Make a font from SVG</a></li><li><a href="../../guides/icon-font-generator/">Icon font generator</a></li><li><a href="../../guides/variable-font-tutorial/">Variable font tutorial</a></li><li><a href="../../guides/font-hinting-explained/">Font hinting explained</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">More from kwy404</h2>
+      <ul class="foot-list foot-more"><li><a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a><small>CSS framework with no build step</small></li><li><a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a><small>reactive HTML attributes</small></li><li><a href="https://kwy404.github.io/breakhound/" rel="noopener">breakhound</a><small>finds bugs in any JS library</small></li><li><a href="https://kwy404.github.io/cookieowl/" rel="noopener">cookieowl</a><small>cookie consent for LGPD and GDPR</small></li><li><a href="https://kwy404.github.io/installkite/" rel="noopener">installkite</a><small>make any site an installable PWA</small></li><li><a href="https://kwy404.github.io/a11ymedic/" rel="noopener">a11ymedic</a><small>accessibility checker with fixes</small></li><li><a href="https://kwy404.github.io/graphemely/" rel="noopener">graphemely</a><small>emoji safe string utilities</small></li><li><a href="https://kwy404.github.io/numberparrot/" rel="noopener">numberparrot</a><small>parse localized numbers</small></li><li><a href="https://kwy404.github.io/edgegoat/" rel="noopener">edgegoat</a><small>edge case test inputs</small></li><li><a href="https://kwy404.github.io/vueleap/" rel="noopener">vueleap</a><small>migrate Vue 2 to Vue 3</small></li></ul>
+    </div>
+  </div>
+  <p class="foot-legal">MIT License. Fonts you make are yours. <span>fontsketch 0.1.0</span></p>
+</footer>
+</body>
+</html>

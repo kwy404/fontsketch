@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
+<title>How to Make a Font, a Complete Beginner Guide</title>
+<meta name="description" content="How to make a font from scratch, step by step. Plan the character set, set metrics, draw consistent glyphs, space and kern, then export TTF, OTF or WOFF2.">
+<link rel="canonical" href="https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/">
+<link rel="alternate" hreflang="en" href="https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/">
+<link rel="alternate" hreflang="pt-BR" href="https://kwy404.github.io/fontsketch/pt/guias/como-criar-uma-fonte/">
+<link rel="alternate" hreflang="x-default" href="https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/">
+<meta name="author" content="Alexandre Kohler">
+<meta name="theme-color" content="#FBF4E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121132" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="fontsketch">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How to Make a Font, a Complete Beginner Guide">
+<meta property="og:description" content="How to make a font from scratch, step by step. Plan the character set, set metrics, draw consistent glyphs, space and kern, then export TTF, OTF or WOFF2.">
+<meta property="og:url" content="https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/">
+<meta property="og:image" content="https://kwy404.github.io/fontsketch/assets/og/how-to-make-a-font.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The letters H, n, o and p on a ruler showing baseline, x-height, cap height, ascender and descender lines">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Make a Font, a Complete Beginner Guide">
+<meta name="twitter:description" content="How to make a font from scratch, step by step. Plan the character set, set metrics, draw consistent glyphs, space and kern, then export TTF, OTF or WOFF2.">
+<meta name="twitter:image" content="https://kwy404.github.io/fontsketch/assets/og/how-to-make-a-font.png">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="../../assets/fonts/quill-hand.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;1,9..144,600&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monsooncss@0.2.0/dist/monsoon.min.css">
+<link rel="stylesheet" href="../../assets/site/site.css">
+<script src="https://cdn.jsdelivr.net/npm/voodoojs@1.0.0/dist/voodoo.full.min.js" data-manual defer></script>
+<script type="module" src="../../assets/site/site.js"></script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "TechArticle",
+   "@id": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#article",
+   "headline": "How to make a font, from first letter to finished file",
+   "description": "How to make a font from scratch, step by step. Plan the character set, set metrics, draw consistent glyphs, space and kern, then export TTF, OTF or WOFF2.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/how-to-make-a-font.png",
+   "inLanguage": "en",
+   "datePublished": "2026-10-13",
+   "dateModified": "2026-10-13",
+   "wordCount": 1109,
+   "keywords": "how to make a font",
+   "author": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "mainEntityOfPage": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/",
+   "about": {
+    "@type": "SoftwareApplication",
+    "name": "fontsketch",
+    "url": "https://kwy404.github.io/fontsketch/"
+   }
+  },
+  {
+   "@type": "HowTo",
+   "@id": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#howto",
+   "name": "How to make a font from scratch with fontsketch",
+   "description": "How to make a font from scratch, step by step. Plan the character set, set metrics, draw consistent glyphs, space and kern, then export TTF, OTF or WOFF2.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/how-to-make-a-font.png",
+   "inLanguage": "en",
+   "totalTime": "PT3H",
+   "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+   },
+   "tool": [
+    {
+     "@type": "HowToTool",
+     "name": "fontsketch (free, in the browser)"
+    }
+   ],
+   "step": [
+    {
+     "@type": "HowToStep",
+     "position": 1,
+     "name": "Define the purpose and character set",
+     "text": "Decide what the font is for and list every character it needs, including punctuation, digits and accented letters.",
+     "url": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#step-1"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 2,
+     "name": "Set the metrics",
+     "text": "In the 1000 unit em, choose x-height, cap height, ascender and descender values that suit the style.",
+     "url": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#step-2"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 3,
+     "name": "Draw the control letters",
+     "text": "Draw n, o, H and O first to fix stem thickness, curves, overshoot and proportions.",
+     "url": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#step-3"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 4,
+     "name": "Build the rest of the alphabet",
+     "text": "Derive related letters from the control letters, reusing stems, bowls and serifs for consistency.",
+     "url": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#step-4"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 5,
+     "name": "Space and kern",
+     "text": "Set side bearings with test strings like nnonnoon, then add kerning pairs and classes for problem combinations.",
+     "url": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#step-5"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 6,
+     "name": "Test in real text",
+     "text": "Export, install and set paragraphs at several sizes, then fix what looks wrong and repeat.",
+     "url": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#step-6"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 7,
+     "name": "Export the final files",
+     "text": "Export TTF or OTF for desktop and WOFF2 with CSS for the web, with suitable hinting.",
+     "url": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#step-7"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/#faq",
+   "inLanguage": "en",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How long does it take to make a font?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A handwriting font can be ready in under an hour. A carefully drawn display font for basic Latin usually takes a few days, and a text family with several weights can take months."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do I need to know how to draw to make a font?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not much. You can scan your handwriting, trace existing lettering you own, or build geometric letters from simple shapes with the pen tool. What matters most is consistency and spacing, which you learn by testing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which letters should I draw first when making a font?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Start with n and o for lowercase and H and O for capitals. They establish stem width, curve weight, overshoot and spacing, and most other letters are built from those parts."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How many characters does a font need?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For basic English, about 95 printable ASCII characters. For western European languages, add accented letters, which fontsketch builds automatically from base letters and marks."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I make a font without paying for software?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. fontsketch is free and open source and covers drawing, importing, spacing, kerning, hinting and export to TTF, OTF, WOFF and WOFF2."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://kwy404.github.io/fontsketch/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Guides",
+     "item": "https://kwy404.github.io/fontsketch/guides/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "How to make a font, from first letter to finished file",
+     "item": "https://kwy404.github.io/fontsketch/guides/how-to-make-a-font/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body class="guide" data-root="../../">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol><symbol id="i-npm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 17V7h10v10h-3V10h-2v7Z"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></symbol><symbol id="i-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></symbol><symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16Z"/><path d="M14 6l3 3"/></symbol><symbol id="i-points" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18C8 6 16 6 19 18"/><rect x="3" y="16" width="4" height="4"/><rect x="17" y="16" width="4" height="4"/><circle cx="12" cy="9" r="2"/></symbol><symbol id="i-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12M5 15l9-9 5 5-8 8H8Z"/><path d="M10 10l5 5"/></symbol><symbol id="i-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></symbol><symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></symbol><symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 4 13 8-13 8Z"/></symbol><symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M13 6l6 6-6 6"/></symbol><symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h13"/></symbol><symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18"/></symbol></svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar" v-data="{ open: false }" @keydown.escape="open = false">
+  <div class="topbar-in">
+    <a class="brand" href="../../" aria-label="fontsketch home"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+    <nav id="topnav" class="topnav" :class="open ? 'is-open' : ''" aria-label="Main">
+      <a href="../../#studio">Studio</a>
+      <a href="../../#story">How it works</a>
+      <a href="../../gallery/">Gallery</a>
+      <a href="../../guides/" aria-current="page">Guides</a>
+      <a class="topnav-cta btn btn-primary btn-sm" href="../../app/"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Open the editor</a>
+    </nav>
+    <div class="topbar-tools">
+      <a class="icon-btn lang-btn" href="../../pt/guias/como-criar-uma-fonte/" hreflang="pt-BR" lang="pt-BR" title="Português"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg><span>PT</span></a>
+      <a class="icon-btn" href="https://github.com/kwy404/fontsketch" rel="noopener" aria-label="fontsketch on GitHub"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg></a>
+      <button type="button" class="icon-btn theme-btn" v-theme-toggle.cycle aria-label="Theme: system, light or dark" title="Theme: system, light or dark"><svg class="ic ti-system" aria-hidden="true"><use href="#i-system"/></svg><svg class="ic ti-light" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ic ti-dark" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button type="button" class="icon-btn nav-btn" aria-controls="topnav" :aria-expanded="open ? 'true' : 'false'" aria-expanded="false" @click="open = !open" aria-label="Menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="guide-wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../guides/">Guides</a></li><li aria-current="page">How to make a font, from first letter to finished file</li></ol></nav>
+<header class="guide-head">
+  <div class="guide-head-text">
+    <p class="kicker">Guide · how to make a font</p>
+    <h1>How to make a font, from first letter to finished file</h1>
+    <p class="guide-meta"><span>5 min read</span><span>Updated <time datetime="2026-10-13">2026-10-13</time></span><a href="../../pt/guias/como-criar-uma-fonte/" hreflang="pt-BR" lang="pt-BR">Leia em português</a></p>
+  </div>
+  <figure class="guide-art"><span class="art "><img class="art-l" src="../../assets/art/metrics-ruler.svg" width="640" height="400" alt="The letters H, n, o and p on a ruler showing baseline, x-height, cap height, ascender and descender lines" fetchpriority="high"><img class="art-d" src="../../assets/art/metrics-ruler-dark.svg" width="640" height="400" alt="" aria-hidden="true" fetchpriority="high"></span></figure>
+</header>
+<div class="guide-grid">
+  <aside class="guide-side" aria-label="On this page">
+    <div class="toc"><p class="toc-h">On this page</p><ol><li><a href="#step-1-decide-what-the-font-is-for">Step 1: decide what the font is for</a></li><li><a href="#step-2-plan-the-character-set">Step 2: plan the character set</a></li><li><a href="#step-3-set-the-metrics">Step 3: set the metrics</a></li><li><a href="#step-4-draw-the-control-letters">Step 4: draw the control letters</a></li><li><a href="#step-5-build-the-rest-from-parts">Step 5: build the rest from parts</a></li><li><a href="#step-6-clean-the-outlines">Step 6: clean the outlines</a></li><li><a href="#step-7-spacing-comes-before-kerning">Step 7: spacing comes before kerning</a></li><li><a href="#step-8-test-in-real-text">Step 8: test in real text</a></li><li><a href="#step-9-export">Step 9: export</a></li><li><a href="#common-beginner-mistakes">Common beginner mistakes</a></li><li><a href="#beginner-checklist">Beginner checklist</a></li><li><a href="#next-steps">Next steps</a></li><li><a href="#steps">Step by step</a></li><li><a href="#faq">Questions people ask</a></li></ol></div>
+    <div class="try-card"><img src="../../assets/art/quill-head.svg" width="84" height="112" alt="" loading="lazy"><p class="try-h">Try it right now</p><p>Draw a letter on the stage and watch it become a real font. Free, no upload, no account.</p><a class="btn btn-primary btn-sm" href="../../#studio">Open the studio</a><a class="btn btn-ghost btn-sm" href="../../app/">Open the editor</a></div>
+  </aside>
+  <article class="prose" id="article">
+<p>To make a font, decide what it is for, list the characters you need, set metrics such as x-height and cap height, draw a few control letters, build the rest from them, then space, kern, test and export. You can do all of this for free in fontsketch, a browser font editor that exports TTF, OTF, WOFF and WOFF2.</p>
+<p>This guide is the full beginner path. Each section links to a deeper guide when you want more detail.</p>
+<section id="step-1-decide-what-the-font-is-for" class="prose-sec"><h2>Step 1: decide what the font is for</h2>
+<p>Purpose drives every later decision. A font for long paragraphs needs open shapes, a generous x-height and calm spacing. A display font for posters can be quirky and tightly spaced. A handwriting font should feel natural. An icon font follows entirely different rules.</p>
+<p>Write one sentence describing the use, for example: <em>a friendly rounded sans for headings on my bakery website</em>. Keep it visible while you work.</p>
+</section>
+<section id="step-2-plan-the-character-set" class="prose-sec"><h2>Step 2: plan the character set</h2>
+<p>List the characters before drawing so you never discover a missing apostrophe after launch.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Group</th><th scope="col">Characters</th></tr></thead><tbody><tr><td>Uppercase</td><td>A to Z</td></tr><tr><td>Lowercase</td><td>a to z</td></tr><tr><td>Figures</td><td>0 to 9</td></tr><tr><td>Punctuation</td><td>. , : ; ' &quot; ? ! ( ) hyphen and slash</td></tr><tr><td>Symbols</td><td>@ &amp; % # and your currency sign</td></tr><tr><td>Accented</td><td>built from base letters plus marks</td></tr></tbody></table></div>
+<p>fontsketch composes accented letters from components, so for á, ç, ñ, ö and the rest you only draw the marks: acute, grave, circumflex, tilde, diaeresis, cedilla, ring, caron and so on. Coverage spans Latin-1 Supplement and Latin Extended-A, which handles most European languages that use the Latin script.</p>
+</section>
+<section id="step-3-set-the-metrics" class="prose-sec"><h2>Step 3: set the metrics</h2>
+<p>fontsketch uses <strong>1000 units per em</strong>. Within that space you define:</p>
+<ul><li><strong>Baseline</strong> at 0, where letters sit</li><li><strong>x-height</strong>, the height of lowercase letters without ascenders, usually 450 to 550</li><li><strong>Cap height</strong>, usually 650 to 720</li><li><strong>Ascender</strong>, the top of b, d, h, k and l, often slightly above cap height</li><li><strong>Descender</strong>, the bottom of g, j, p, q and y, often around negative 200</li></ul>
+<p>A larger x-height makes text easier to read at small sizes. A smaller one feels more classical. Ascender and descender together also influence default line spacing in many apps, so avoid extreme values.</p>
+</section>
+<section id="step-4-draw-the-control-letters" class="prose-sec"><h2>Step 4: draw the control letters</h2>
+<p>Type designers start with a few letters that contain the DNA of the whole font:</p>
+<ul><li><strong>n</strong>: stem thickness, the arch, the shoulder join</li><li><strong>o</strong>: curve thickness, overshoot, the shape of round letters</li><li><strong>H</strong>: capital stem and crossbar</li><li><strong>O</strong>: capital round shape</li></ul>
+<p>Get these right before going further. Some principles:</p>
+<ul><li><strong>Stems</strong>: vertical strokes should share one thickness across lowercase, and capitals are usually slightly heavier.</li><li><strong>Optical correction</strong>: horizontal strokes look heavier than vertical strokes of the same thickness, so crossbars are drawn a little thinner.</li><li><strong>Overshoot</strong>: round and pointed letters extend 10 to 15 units past the baseline and x-height, otherwise they look too small.</li><li><strong>Counters</strong>: the inner spaces should feel balanced across letters, since readers perceive the white as much as the black.</li></ul>
+<p>You can draw with the bezier pen tool, import SVG, trace images or scan handwriting. Mixing methods is fine. See <a href="../../guides/create-a-font-online-free/">create a font online free</a> for an overview of each route.</p>
+</section>
+<section id="step-5-build-the-rest-from-parts" class="prose-sec"><h2>Step 5: build the rest from parts</h2>
+<p>Most letters share parts with the control letters:</p>
+<ul><li>From <strong>n</strong>: h, m, u (rotated), r</li><li>From <strong>o</strong>: c, e, b, d, p, q</li><li>From <strong>H</strong>: E, F, I, L, T</li><li>From <strong>O</strong>: C, G, Q</li></ul>
+<p>Copy and adapt rather than redrawing from scratch. Consistency is what makes a typeface look intentional. Draw capitals and figures with the same stroke logic, and keep figures at a height close to cap height unless you want old style figures.</p>
+</section>
+<section id="step-6-clean-the-outlines" class="prose-sec"><h2>Step 6: clean the outlines</h2>
+<p>Before spacing, tidy every glyph:</p>
+<ul><li><strong>Overlap removal</strong>, so crossing strokes become a single contour</li><li><strong>Contour direction correction</strong>, so counters stay hollow</li><li><strong>Simplify</strong> traced or messy outlines so curves are smooth and point counts low</li><li>Points at curve extremes, with horizontal or vertical handles</li></ul>
+</section>
+<section id="step-7-spacing-comes-before-kerning" class="prose-sec"><h2>Step 7: spacing comes before kerning</h2>
+<p>Spacing is the distance built into each glyph through its <strong>side bearings</strong>. Kerning is a correction for specific pairs. Always space first.</p>
+<p>A classic method:</p>
+<ol><li>Set the side bearings of <strong>n</strong> so <em>nnnnn</em> looks even.</li><li>Set <strong>o</strong> so <em>nonono</em> looks even. Round sides need less space than straight sides.</li><li>Space other lowercase letters between n and o, for example <em>nanbncndn</em>.</li><li>Repeat with <strong>H</strong> and <strong>O</strong> for capitals: <em>HHOHHOOH</em>.</li></ol>
+<p>Then add kerning pairs for combinations spacing cannot fix: AV, To, Ty, Yo, LT, P followed by a period, quotes next to letters. Classes let you kern groups at once, such as all round lowercase letters after T. The <a href="../../guides/font-kerning-guide/">font kerning guide</a> explains this in depth.</p>
+</section>
+<section id="step-8-test-in-real-text" class="prose-sec"><h2>Step 8: test in real text</h2>
+<p>Looking at an alphabet tells you little. Test in context:</p>
+<ul><li>Export, install and set paragraphs in a word processor at 12, 16 and 24 points.</li><li>Use pangrams and real sentences in the languages you support.</li><li>Print a page. Problems that hide on screen show up on paper.</li><li>Look at the text from a distance or squint: dark spots mean spacing is too tight or strokes too heavy.</li></ul>
+<p>Fix, re-export, repeat. Every font goes through several rounds of this.</p>
+</section>
+<section id="step-9-export" class="prose-sec"><h2>Step 9: export</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Use</th><th scope="col">Format</th></tr></thead><tbody><tr><td>Install on desktop</td><td>TTF or OTF (CFF)</td></tr><tr><td>Websites</td><td>WOFF2 plus the CSS @font-face snippet</td></tr><tr><td>Legacy fallback</td><td>WOFF</td></tr></tbody></table></div>
+<p>Choose automatic TrueType hinting for fonts that will be read at small sizes on Windows, manual stem hints if you want control, or none for large display use. The <a href="../../guides/web-font-formats-ttf-otf-woff2/">web font formats guide</a> explains which file to use where.</p>
+</section>
+<section id="common-beginner-mistakes" class="prose-sec"><h2>Common beginner mistakes</h2>
+<ul><li><strong>Drawing every letter in isolation.</strong> Letters that look perfect alone often clash in words. Test combinations early, not at the end.</li><li><strong>Inconsistent stems.</strong> A stem that is 85 units in n and 95 units in h makes text look blotchy. Measure and reuse.</li><li><strong>No overshoot.</strong> Without it, o and s look shrunken next to n and x.</li><li><strong>Too many points.</strong> Extra nodes create wobbly curves and make later edits painful.</li><li><strong>Tight spacing.</strong> Display spacing looks stylish in a single word but suffocates paragraphs. Space for the intended size.</li><li><strong>Forgetting punctuation and figures.</strong> These appear in almost every sentence.</li><li><strong>Skipping backups.</strong> Save a <code>.fontsketch.json</code> project file at milestones so you can return to an earlier state.</li></ul>
+</section>
+<section id="beginner-checklist" class="prose-sec"><h2>Beginner checklist</h2>
+<ul><li>Purpose written down</li><li>Character set listed, including punctuation and marks</li><li>Metrics chosen and respected</li><li>Control letters n, o, H, O approved first</li><li>Overlaps removed, directions corrected, outlines simplified</li><li>Spacing tested before kerning</li><li>Tested in real paragraphs, on screen and on paper</li><li>Project file saved</li></ul>
+</section>
+<section id="next-steps" class="prose-sec"><h2>Next steps</h2>
+<p>Open the <a href="../../app/">fontsketch editor</a>, set your metrics and draw n, o, H and O today. If drawing from scratch feels like too much, start with <a href="../../guides/turn-your-handwriting-into-a-font/">your own handwriting</a> and learn spacing and kerning on letters you already have.</p>
+</section>
+    <section id="steps" class="prose-sec steps-sec"><h2>Step by step</h2><ol class="steps"><li id="step-1"><span class="step-n">1</span><div><h3>Define the purpose and character set</h3><p>Decide what the font is for and list every character it needs, including punctuation, digits and accented letters.</p></div></li><li id="step-2"><span class="step-n">2</span><div><h3>Set the metrics</h3><p>In the 1000 unit em, choose x-height, cap height, ascender and descender values that suit the style.</p></div></li><li id="step-3"><span class="step-n">3</span><div><h3>Draw the control letters</h3><p>Draw n, o, H and O first to fix stem thickness, curves, overshoot and proportions.</p></div></li><li id="step-4"><span class="step-n">4</span><div><h3>Build the rest of the alphabet</h3><p>Derive related letters from the control letters, reusing stems, bowls and serifs for consistency.</p></div></li><li id="step-5"><span class="step-n">5</span><div><h3>Space and kern</h3><p>Set side bearings with test strings like nnonnoon, then add kerning pairs and classes for problem combinations.</p></div></li><li id="step-6"><span class="step-n">6</span><div><h3>Test in real text</h3><p>Export, install and set paragraphs at several sizes, then fix what looks wrong and repeat.</p></div></li><li id="step-7"><span class="step-n">7</span><div><h3>Export the final files</h3><p>Export TTF or OTF for desktop and WOFF2 with CSS for the web, with suitable hinting.</p></div></li></ol></section>
+    <section id="faq" class="prose-sec"><h2>Questions people ask</h2><div class="faq"><details><summary>How long does it take to make a font?</summary><p>A handwriting font can be ready in under an hour. A carefully drawn display font for basic Latin usually takes a few days, and a text family with several weights can take months.</p></details><details><summary>Do I need to know how to draw to make a font?</summary><p>Not much. You can scan your handwriting, trace existing lettering you own, or build geometric letters from simple shapes with the pen tool. What matters most is consistency and spacing, which you learn by testing.</p></details><details><summary>Which letters should I draw first when making a font?</summary><p>Start with n and o for lowercase and H and O for capitals. They establish stem width, curve weight, overshoot and spacing, and most other letters are built from those parts.</p></details><details><summary>How many characters does a font need?</summary><p>For basic English, about 95 printable ASCII characters. For western European languages, add accented letters, which fontsketch builds automatically from base letters and marks.</p></details><details><summary>Can I make a font without paying for software?</summary><p>Yes. fontsketch is free and open source and covers drawing, importing, spacing, kerning, hinting and export to TTF, OTF, WOFF and WOFF2.</p></details></div></section>
+  </article>
+</div>
+<section class="related" aria-labelledby="related-h"><h2 id="related-h">Keep reading</h2><div class="cards"><a class="gcard" href="../../guides/create-a-font-online-free/"><span class="art "><img class="art-l" src="../../assets/art/pen-tool.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/pen-tool-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">create a font online free</span><span class="gcard-t">How to create a font online for free</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/font-kerning-guide/"><span class="art "><img class="art-l" src="../../assets/art/kerning-pair.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/kerning-pair-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">how to kern a font</span><span class="gcard-t">What is kerning, and how to kern a font step by step</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/turn-your-handwriting-into-a-font/"><span class="art "><img class="art-l" src="../../assets/art/scan-to-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/scan-to-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">turn your handwriting into a font</span><span class="gcard-t">How to turn your handwriting into a font (free, in your browser)</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/web-font-formats-ttf-otf-woff2/"><span class="art "><img class="art-l" src="../../assets/art/export-cards.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/export-cards-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">woff2 vs ttf</span><span class="gcard-t">WOFF2 vs TTF vs OTF, which font format to use for the web</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="../../"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+      <p>A free, open source font maker. Draw, import or scan your handwriting and export real TTF, OTF, WOFF and WOFF2 fonts, all in your browser.</p>
+      <p class="foot-made">Made by <strong>Alexandre Kohler</strong> (<a href="https://github.com/kwy404" rel="me noopener">GitHub</a> and <a href="https://www.linkedin.com/in/alexandre-silva-173687256/" rel="me noopener">LinkedIn</a>).</p>
+      <p class="foot-built">Built with <a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a>. Interactive parts built with <a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a>.</p>
+    </div>
+    <div>
+      <h2 class="foot-h">Product</h2>
+      <ul class="foot-list"><li><a href="../../app/">Font editor</a></li><li><a href="../../gallery/">Gallery</a></li><li><a href="../../guides/">All guides</a></li><li><a href="https://www.npmjs.com/package/fontsketch" rel="noopener">npm package</a></li><li><a href="https://github.com/kwy404/fontsketch" rel="noopener">Source on GitHub</a></li><li><a href="https://github.com/kwy404/fontsketch/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">Popular guides</h2>
+      <ul class="foot-list"><li><a href="../../guides/turn-your-handwriting-into-a-font/">Turn your handwriting into a font</a></li><li><a href="../../guides/create-a-font-online-free/">Create a font online free</a></li><li><a href="../../guides/make-a-font-from-svg/">Make a font from SVG</a></li><li><a href="../../guides/icon-font-generator/">Icon font generator</a></li><li><a href="../../guides/variable-font-tutorial/">Variable font tutorial</a></li><li><a href="../../guides/font-hinting-explained/">Font hinting explained</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">More from kwy404</h2>
+      <ul class="foot-list foot-more"><li><a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a><small>CSS framework with no build step</small></li><li><a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a><small>reactive HTML attributes</small></li><li><a href="https://kwy404.github.io/breakhound/" rel="noopener">breakhound</a><small>finds bugs in any JS library</small></li><li><a href="https://kwy404.github.io/cookieowl/" rel="noopener">cookieowl</a><small>cookie consent for LGPD and GDPR</small></li><li><a href="https://kwy404.github.io/installkite/" rel="noopener">installkite</a><small>make any site an installable PWA</small></li><li><a href="https://kwy404.github.io/a11ymedic/" rel="noopener">a11ymedic</a><small>accessibility checker with fixes</small></li><li><a href="https://kwy404.github.io/graphemely/" rel="noopener">graphemely</a><small>emoji safe string utilities</small></li><li><a href="https://kwy404.github.io/numberparrot/" rel="noopener">numberparrot</a><small>parse localized numbers</small></li><li><a href="https://kwy404.github.io/edgegoat/" rel="noopener">edgegoat</a><small>edge case test inputs</small></li><li><a href="https://kwy404.github.io/vueleap/" rel="noopener">vueleap</a><small>migrate Vue 2 to Vue 3</small></li></ul>
+    </div>
+  </div>
+  <p class="foot-legal">MIT License. Fonts you make are yours. <span>fontsketch 0.1.0</span></p>
+</footer>
+</body>
+</html>

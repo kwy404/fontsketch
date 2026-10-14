@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
+<title>Variable Font Tutorial, Build a Weight Axis From Masters</title>
+<meta name="description" content="Variable font tutorial for beginners. Draw compatible Regular and Bold masters, build a wght axis, export one file and use it in CSS with font-weight ranges.">
+<link rel="canonical" href="https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/">
+<link rel="alternate" hreflang="en" href="https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/">
+<link rel="alternate" hreflang="x-default" href="https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/">
+<meta name="author" content="Alexandre Kohler">
+<meta name="theme-color" content="#FBF4E4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121132" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="fontsketch">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Variable Font Tutorial, Build a Weight Axis From Masters">
+<meta property="og:description" content="Variable font tutorial for beginners. Draw compatible Regular and Bold masters, build a wght axis, export one file and use it in CSS with font-weight ranges.">
+<meta property="og:url" content="https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/">
+<meta property="og:image" content="https://kwy404.github.io/fontsketch/assets/og/variable-font-tutorial.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The letter a shown in five weights interpolated between a thin Regular master and a heavy Bold master along a slider">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Variable Font Tutorial, Build a Weight Axis From Masters">
+<meta name="twitter:description" content="Variable font tutorial for beginners. Draw compatible Regular and Bold masters, build a wght axis, export one file and use it in CSS with font-weight ranges.">
+<meta name="twitter:image" content="https://kwy404.github.io/fontsketch/assets/og/variable-font-tutorial.png">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="../../assets/fonts/quill-hand.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;1,9..144,600&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monsooncss@0.2.0/dist/monsoon.min.css">
+<link rel="stylesheet" href="../../assets/site/site.css">
+<script src="https://cdn.jsdelivr.net/npm/voodoojs@1.0.0/dist/voodoo.full.min.js" data-manual defer></script>
+<script type="module" src="../../assets/site/site.js"></script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "TechArticle",
+   "@id": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/#article",
+   "headline": "Variable font tutorial, from two masters to one flexible file",
+   "description": "Variable font tutorial for beginners. Draw compatible Regular and Bold masters, build a wght axis, export one file and use it in CSS with font-weight ranges.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/variable-font-tutorial.png",
+   "inLanguage": "en",
+   "datePublished": "2026-10-13",
+   "dateModified": "2026-10-13",
+   "wordCount": 1148,
+   "keywords": "variable font tutorial",
+   "author": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "Alexandre Kohler",
+    "url": "https://github.com/kwy404"
+   },
+   "mainEntityOfPage": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/",
+   "about": {
+    "@type": "SoftwareApplication",
+    "name": "fontsketch",
+    "url": "https://kwy404.github.io/fontsketch/"
+   }
+  },
+  {
+   "@type": "HowTo",
+   "@id": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/#howto",
+   "name": "How to make a variable font with a weight axis in fontsketch",
+   "description": "Variable font tutorial for beginners. Draw compatible Regular and Bold masters, build a wght axis, export one file and use it in CSS with font-weight ranges.",
+   "image": "https://kwy404.github.io/fontsketch/assets/og/variable-font-tutorial.png",
+   "inLanguage": "en",
+   "totalTime": "PT2H",
+   "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+   },
+   "tool": [
+    {
+     "@type": "HowToTool",
+     "name": "fontsketch (free, in the browser)"
+    }
+   ],
+   "step": [
+    {
+     "@type": "HowToStep",
+     "position": 1,
+     "name": "Finish the Regular master",
+     "text": "Draw, clean and simplify all Regular glyphs first, with overlaps removed and contour directions corrected.",
+     "url": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/#step-1"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 2,
+     "name": "Duplicate it as the Bold master",
+     "text": "Copy the Regular outlines to start the Bold master so every glyph keeps the same contours and point order.",
+     "url": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/#step-2"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 3,
+     "name": "Make the Bold drawings by moving points",
+     "text": "Thicken stems and curves by moving existing points only. Do not add, delete or reorder points.",
+     "url": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/#step-3"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 4,
+     "name": "Check compatibility",
+     "text": "Confirm each glyph has the same number of contours and points, in the same order and direction, in both masters.",
+     "url": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/#step-4"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 5,
+     "name": "Export a variable font",
+     "text": "Export with the variable option to get one font file with a wght axis between the Regular and Bold weights.",
+     "url": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/#step-5"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 6,
+     "name": "Use it in CSS",
+     "text": "Declare a font-weight range in @font-face and pick any weight in between with font-weight.",
+     "url": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/#step-6"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/#faq",
+   "inLanguage": "en",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is a variable font in simple terms?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is a single font file that contains a range of styles instead of one. A weight axis lets you pick any weight between the lightest and heaviest master, such as 400, 523 or 700, from the same file."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my variable font export fail or look broken?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Almost always the masters are not compatible. Each glyph must have the same number of contours and points, in the same order, with the same start point and direction in every master."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Are variable fonts smaller than static fonts?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "One variable file is larger than one static file, but usually much smaller than several static weights together. If you only ever use one weight, a static font is lighter."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Should I use font-weight or font-variation-settings in CSS?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Use font-weight for the wght axis. It works with the cascade, bold elements and fallbacks. Keep font-variation-settings for custom axes or special cases."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do all browsers support variable fonts?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "All current major browsers support variable fonts in WOFF2 and TTF. Very old browsers fall back to the next font in your font-family stack."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://kwy404.github.io/fontsketch/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Guides",
+     "item": "https://kwy404.github.io/fontsketch/guides/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Variable font tutorial, from two masters to one flexible file",
+     "item": "https://kwy404.github.io/fontsketch/guides/variable-font-tutorial/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body class="guide" data-root="../../">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol><symbol id="i-npm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 17V7h10v10h-3V10h-2v7Z"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></symbol><symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></symbol><symbol id="i-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></symbol><symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16Z"/><path d="M14 6l3 3"/></symbol><symbol id="i-points" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18C8 6 16 6 19 18"/><rect x="3" y="16" width="4" height="4"/><rect x="17" y="16" width="4" height="4"/><circle cx="12" cy="9" r="2"/></symbol><symbol id="i-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20h12M5 15l9-9 5 5-8 8H8Z"/><path d="M10 10l5 5"/></symbol><symbol id="i-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></symbol><symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></symbol><symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 4 13 8-13 8Z"/></symbol><symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M13 6l6 6-6 6"/></symbol><symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h13"/></symbol><symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18"/></symbol></svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar" v-data="{ open: false }" @keydown.escape="open = false">
+  <div class="topbar-in">
+    <a class="brand" href="../../" aria-label="fontsketch home"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+    <nav id="topnav" class="topnav" :class="open ? 'is-open' : ''" aria-label="Main">
+      <a href="../../#studio">Studio</a>
+      <a href="../../#story">How it works</a>
+      <a href="../../gallery/">Gallery</a>
+      <a href="../../guides/" aria-current="page">Guides</a>
+      <a class="topnav-cta btn btn-primary btn-sm" href="../../app/"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Open the editor</a>
+    </nav>
+    <div class="topbar-tools">
+      <a class="icon-btn lang-btn" href="../../pt/" hreflang="pt-BR" lang="pt-BR" title="Português"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg><span>PT</span></a>
+      <a class="icon-btn" href="https://github.com/kwy404/fontsketch" rel="noopener" aria-label="fontsketch on GitHub"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg></a>
+      <button type="button" class="icon-btn theme-btn" v-theme-toggle.cycle aria-label="Theme: system, light or dark" title="Theme: system, light or dark"><svg class="ic ti-system" aria-hidden="true"><use href="#i-system"/></svg><svg class="ic ti-light" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ic ti-dark" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button type="button" class="icon-btn nav-btn" aria-controls="topnav" :aria-expanded="open ? 'true' : 'false'" aria-expanded="false" @click="open = !open" aria-label="Menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="guide-wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../guides/">Guides</a></li><li aria-current="page">Variable font tutorial, from two masters to one flexible file</li></ol></nav>
+<header class="guide-head">
+  <div class="guide-head-text">
+    <p class="kicker">Guide · variable font tutorial</p>
+    <h1>Variable font tutorial, from two masters to one flexible file</h1>
+    <p class="guide-meta"><span>5 min read</span><span>Updated <time datetime="2026-10-13">2026-10-13</time></span></p>
+  </div>
+  <figure class="guide-art"><span class="art "><img class="art-l" src="../../assets/art/variable-weight.svg" width="640" height="400" alt="The letter a shown in five weights interpolated between a thin Regular master and a heavy Bold master along a slider" fetchpriority="high"><img class="art-d" src="../../assets/art/variable-weight-dark.svg" width="640" height="400" alt="" aria-hidden="true" fetchpriority="high"></span></figure>
+</header>
+<div class="guide-grid">
+  <aside class="guide-side" aria-label="On this page">
+    <div class="toc"><p class="toc-h">On this page</p><ol><li><a href="#how-interpolation-works">How interpolation works</a></li><li><a href="#step-1-finish-the-regular-master-completely">Step 1: finish the Regular master completely</a></li><li><a href="#step-2-create-the-bold-master-from-a-copy">Step 2: create the Bold master from a copy</a></li><li><a href="#step-3-check-compatibility-before-export">Step 3: check compatibility before export</a></li><li><a href="#step-4-choose-the-axis-range">Step 4: choose the axis range</a></li><li><a href="#step-5-export-one-variable-font-file">Step 5: export one variable font file</a></li><li><a href="#step-6-use-the-variable-font-in-css">Step 6: use the variable font in CSS</a></li><li><a href="#providing-a-fallback-for-older-browsers">Providing a fallback for older browsers</a></li><li><a href="#when-a-variable-font-is-worth-it">When a variable font is worth it</a></li><li><a href="#hinting-and-variable-fonts">Hinting and variable fonts</a></li><li><a href="#variable-font-checklist">Variable font checklist</a></li><li><a href="#next-steps">Next steps</a></li><li><a href="#steps">Step by step</a></li><li><a href="#faq">Questions people ask</a></li></ol></div>
+    <div class="try-card"><img src="../../assets/art/quill-head.svg" width="84" height="112" alt="" loading="lazy"><p class="try-h">Try it right now</p><p>Draw a letter on the stage and watch it become a real font. Free, no upload, no account.</p><a class="btn btn-primary btn-sm" href="../../#studio">Open the studio</a><a class="btn btn-ghost btn-sm" href="../../app/">Open the editor</a></div>
+  </aside>
+  <article class="prose" id="article">
+<p>A variable font is one font file that contains a continuous range of styles. To make one with a weight axis, you draw two masters, for example Regular and Bold, with exactly the same point structure, then export them together. The font interpolates between the masters, so CSS can request any weight in the range, such as 450 or 620.</p>
+<section id="how-interpolation-works" class="prose-sec"><h2>How interpolation works</h2>
+<p>Think of each point in a glyph as having two positions: one in the Regular master and one in the Bold master. A variable font stores the Regular outline plus, for every point, how far it moves to reach the Bold position. At weight 550, halfway between 400 and 700, each point sits halfway along its path.</p>
+<p>That simple idea explains the main rule: <strong>the masters must be point compatible</strong>. The font can only move points that exist in both masters. If the Bold n has one more point than the Regular n, there is no way to pair them up.</p>
+<p>Compatibility means, for every glyph:</p>
+<ul><li>The same number of contours</li><li>The same number of points in each contour</li><li>The same order of contours</li><li>The same start point on each contour</li><li>The same point types, so a smooth point stays smooth and a corner stays a corner</li><li>The same contour direction</li></ul>
+</section>
+<section id="step-1-finish-the-regular-master-completely" class="prose-sec"><h2>Step 1: finish the Regular master completely</h2>
+<p>The most reliable workflow is to fully finish one master before starting the other. Draw or import every glyph, then:</p>
+<ul><li>Run <strong>simplify</strong> and curve fitting so the point count is final</li><li>Run <strong>overlap removal</strong> so each letter has its final contour structure</li><li>Run <strong>contour direction correction</strong></li></ul>
+<p>Do these operations <em>before</em> creating the second master. If you simplify the Bold master later, the algorithm may remove different points than it did in the Regular, and compatibility breaks.</p>
+<p>If you are new to drawing the base font, start with <a href="../../guides/how-to-make-a-font/">how to make a font</a> and come back once the Regular is solid.</p>
+</section>
+<section id="step-2-create-the-bold-master-from-a-copy" class="prose-sec"><h2>Step 2: create the Bold master from a copy</h2>
+<p>Start the Bold master as a duplicate of the Regular. Now every glyph is compatible by definition. Your job is to make it heavier <strong>only by moving existing points and handles</strong>.</p>
+<p>Practical tips for drawing weight:</p>
+<ul><li><strong>Stems grow mostly outward.</strong> When a stem gets thicker, move both sides, but also widen the glyph so counters do not close up.</li><li><strong>Counters shrink, but must not vanish.</strong> The inside of e, a and s fills up quickly. Keep enough white space for the bold weight to stay readable.</li><li><strong>Horizontals grow less than verticals.</strong> Crossbars and the tops of arches gain less weight, or the letter becomes a blob.</li><li><strong>Joins get notches.</strong> Where an arch meets a stem in n, m or h, bold weights often need the join thinned to stay open.</li><li><strong>Spacing changes.</strong> Bold glyphs are usually wider, and their side bearings may need adjusting so text keeps an even rhythm.</li></ul>
+<aside class="tip"><p>Tip: if a bold letter really needs a different structure, such as a dollar sign whose stroke breaks in heavy weights, keep the same points anyway and let some of them overlap or collapse together.</p></aside>
+</section>
+<section id="step-3-check-compatibility-before-export" class="prose-sec"><h2>Step 3: check compatibility before export</h2>
+<p>Go through the glyphs and compare masters. Watch especially for:</p>
+<ul><li>Letters you redrew from scratch in one master</li><li>Accented letters, which are fine if they come from components in both masters</li><li>Glyphs where overlap removal was run in one master only</li><li>Contours whose start point moved</li></ul>
+<p>A good final check is to export a test build and set text at weight 550 in a browser page. If a glyph twists, flips or develops a loop at 550, the start point or point order differs between masters.</p>
+</section>
+<section id="step-4-choose-the-axis-range" class="prose-sec"><h2>Step 4: choose the axis range</h2>
+<p>The wght axis uses the standard CSS weight scale:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Value</th><th scope="col">Common name</th></tr></thead><tbody><tr><td>100</td><td>Thin</td></tr><tr><td>300</td><td>Light</td></tr><tr><td>400</td><td>Regular</td></tr><tr><td>500</td><td>Medium</td></tr><tr><td>600</td><td>Semibold</td></tr><tr><td>700</td><td>Bold</td></tr><tr><td>900</td><td>Black</td></tr></tbody></table></div>
+<p>With a Regular and a Bold master, your font covers 400 to 700. Everything in between comes from interpolation, so Medium and Semibold are free. If you want the range to reach Light, you need a Light master as well; extrapolating beyond the masters is not part of the format.</p>
+</section>
+<section id="step-5-export-one-variable-font-file" class="prose-sec"><h2>Step 5: export one variable font file</h2>
+<p>Export with the variable option enabled. fontsketch writes one font with a wght axis built from your masters. WOFF2 is the best choice for the web, and TTF works for desktop apps that support variable fonts.</p>
+<p>From Node, the same option exists in the API:</p>
+<figure class="frame frame-editor" data-lang="js"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#c9a400"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">JS</text></svg><span>font.mjs</span></span><button type="button" class="frame-copy" v-copy-from="#g14-1" aria-label="Copy font.mjs"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g14-1"><span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">writeFile</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> } </span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">from</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> 'node:fs/promises'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">import</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">exportFont</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> } </span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">from</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> 'fontsketch'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#008000;--shiki-dark:#6A9955">// font is a project with Regular and Bold masters</span></span>
+<span class="line"><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6">const</span><span style="--shiki-light:#0070C1;--shiki-dark:#4FC1FF"> bytes</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> = </span><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">await</span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA"> exportFont</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">font</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, { </span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">format:</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178"> 'woff2'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">variable:</span><span style="--shiki-light:#0000FF;--shiki-dark:#569CD6"> true</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> });</span></span>
+<span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">await</span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA"> writeFile</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">'MySans-VF.woff2'</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#001080;--shiki-dark:#9CDCFE">bytes</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span></code></pre></figure>
+</section>
+<section id="step-6-use-the-variable-font-in-css" class="prose-sec"><h2>Step 6: use the variable font in CSS</h2>
+<p>Declare the weight range in <code>@font-face</code> so the browser knows the file covers it:</p>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g14-2" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g14-2"><span class="line"><span style="--shiki-light:#AF00DB;--shiki-dark:#C586C0">@font-face</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> {</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MySans"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  src</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"/fonts/MySans-VF.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2-variations"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">),</span></span>
+<span class="line"><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">       url</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"/fonts/MySans-VF.woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">) </span><span style="--shiki-light:#795E26;--shiki-dark:#DCDCAA">format</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">(</span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"woff2"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">);</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-weight</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">400</span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8"> 700</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">  font-display</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">swap</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">;</span></span>
+<span class="line"><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">body</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-family</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"MySans"</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">system-ui</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">, </span><span style="--shiki-light:#0451A5;--shiki-dark:#CE9178">sans-serif</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-weight</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">400</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; }</span></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">h1</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-weight</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">680</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; }</span></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">strong</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-weight</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8">600</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; }</span></span></code></pre></figure>
+<p>Use <strong>font-weight</strong> for the wght axis. It cascades properly, works with <code>bold</code> and <code>bolder</code>, and the browser never fakes a bold when the weight is inside the declared range. Reserve <code>font-variation-settings</code> for custom axes, because it overrides inheritance in ways that are easy to get wrong:</p>
+<figure class="frame frame-editor" data-lang="css"><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-tab"><svg class="file-ic" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect width="16" height="16" rx="3" fill="#663399"/><text x="8" y="11" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="6.4" font-weight="700" fill="#fff">#</text></svg><span>styles.css</span></span><button type="button" class="frame-copy" v-copy-from="#g14-3" aria-label="Copy styles.css"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre class="shiki" tabindex="0"><code id="g14-3"><span class="line"><span style="--shiki-light:#008000;--shiki-dark:#6A9955">/* Works, but prefer font-weight for wght */</span></span>
+<span class="line"><span style="--shiki-light:#800000;--shiki-dark:#D7BA7D">.special</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4"> { </span><span style="--shiki-light:#E50000;--shiki-dark:#9CDCFE">font-variation-settings</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">: </span><span style="--shiki-light:#A31515;--shiki-dark:#CE9178">"wght"</span><span style="--shiki-light:#098658;--shiki-dark:#B5CEA8"> 550</span><span style="--shiki-light:#000000;--shiki-dark:#D4D4D4">; }</span></span></code></pre></figure>
+<p>Variable weights can also be animated with a CSS transition on font-weight, which is useful for hover states. Use it sparingly, since changing weight changes width and can shift layout.</p>
+<p>For more on loading the file efficiently, read <a href="../../guides/web-font-formats-ttf-otf-woff2/">web font formats explained</a> and <a href="../../guides/use-a-custom-font-on-your-website/">use a custom font on your website</a>.</p>
+</section>
+<section id="providing-a-fallback-for-older-browsers" class="prose-sec"><h2>Providing a fallback for older browsers</h2>
+<p>Almost every browser in use today understands variable fonts, but a defensive setup costs little. Keep a sensible system font later in the <code>font-family</code> stack so that if the variable file fails to load, the page stays readable. If you must support a specific old environment, you can also export static Regular and Bold files from the same masters and declare them in separate <code>@font-face</code> rules inside an <code>@supports not (font-variation-settings: normal)</code> block. For most sites this is unnecessary.</p>
+</section>
+<section id="when-a-variable-font-is-worth-it" class="prose-sec"><h2>When a variable font is worth it</h2>
+<p>A variable font pays off when a design uses three or more weights, or when you want fine control such as a heading weight of 650 that no static file offers. If your site only ever uses Regular and Bold, two small static files can be lighter than one variable file. Measure both before deciding.</p>
+</section>
+<section id="hinting-and-variable-fonts" class="prose-sec"><h2>Hinting and variable fonts</h2>
+<p>Variable fonts are mostly used on high resolution screens where hinting matters less, but small UI text on Windows can still benefit. Test the exported font at 12 to 16 px at several weights. The <a href="../../guides/font-hinting-explained/">font hinting guide</a> explains the options.</p>
+</section>
+<section id="variable-font-checklist" class="prose-sec"><h2>Variable font checklist</h2>
+<ul><li>Regular master finished, simplified, overlaps removed, directions corrected</li><li>Bold master created as a copy, edited only by moving points</li><li>Every glyph checked for matching contours, points, order and start points</li><li>Test build checked at an intermediate weight for twists or loops</li><li>Spacing reviewed at both ends and in the middle of the range</li><li>@font-face declares font-weight 400 700</li></ul>
+</section>
+<section id="next-steps" class="prose-sec"><h2>Next steps</h2>
+<p>Open the <a href="../../app/">fontsketch editor</a>, finish your Regular master, and duplicate it to start the Bold. Begin with n, o and H in bold before touching the rest, exactly as in the <a href="../../guides/how-to-make-a-font/">how to make a font</a> workflow.</p>
+</section>
+    <section id="steps" class="prose-sec steps-sec"><h2>Step by step</h2><ol class="steps"><li id="step-1"><span class="step-n">1</span><div><h3>Finish the Regular master</h3><p>Draw, clean and simplify all Regular glyphs first, with overlaps removed and contour directions corrected.</p></div></li><li id="step-2"><span class="step-n">2</span><div><h3>Duplicate it as the Bold master</h3><p>Copy the Regular outlines to start the Bold master so every glyph keeps the same contours and point order.</p></div></li><li id="step-3"><span class="step-n">3</span><div><h3>Make the Bold drawings by moving points</h3><p>Thicken stems and curves by moving existing points only. Do not add, delete or reorder points.</p></div></li><li id="step-4"><span class="step-n">4</span><div><h3>Check compatibility</h3><p>Confirm each glyph has the same number of contours and points, in the same order and direction, in both masters.</p></div></li><li id="step-5"><span class="step-n">5</span><div><h3>Export a variable font</h3><p>Export with the variable option to get one font file with a wght axis between the Regular and Bold weights.</p></div></li><li id="step-6"><span class="step-n">6</span><div><h3>Use it in CSS</h3><p>Declare a font-weight range in @font-face and pick any weight in between with font-weight.</p></div></li></ol></section>
+    <section id="faq" class="prose-sec"><h2>Questions people ask</h2><div class="faq"><details><summary>What is a variable font in simple terms?</summary><p>It is a single font file that contains a range of styles instead of one. A weight axis lets you pick any weight between the lightest and heaviest master, such as 400, 523 or 700, from the same file.</p></details><details><summary>Why does my variable font export fail or look broken?</summary><p>Almost always the masters are not compatible. Each glyph must have the same number of contours and points, in the same order, with the same start point and direction in every master.</p></details><details><summary>Are variable fonts smaller than static fonts?</summary><p>One variable file is larger than one static file, but usually much smaller than several static weights together. If you only ever use one weight, a static font is lighter.</p></details><details><summary>Should I use font-weight or font-variation-settings in CSS?</summary><p>Use font-weight for the wght axis. It works with the cascade, bold elements and fallbacks. Keep font-variation-settings for custom axes or special cases.</p></details><details><summary>Do all browsers support variable fonts?</summary><p>All current major browsers support variable fonts in WOFF2 and TTF. Very old browsers fall back to the next font in your font-family stack.</p></details></div></section>
+  </article>
+</div>
+<section class="related" aria-labelledby="related-h"><h2 id="related-h">Keep reading</h2><div class="cards"><a class="gcard" href="../../guides/how-to-make-a-font/"><span class="art "><img class="art-l" src="../../assets/art/metrics-ruler.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/metrics-ruler-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">how to make a font</span><span class="gcard-t">How to make a font, from first letter to finished file</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/web-font-formats-ttf-otf-woff2/"><span class="art "><img class="art-l" src="../../assets/art/export-cards.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/export-cards-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">woff2 vs ttf</span><span class="gcard-t">WOFF2 vs TTF vs OTF, which font format to use for the web</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/use-a-custom-font-on-your-website/"><span class="art "><img class="art-l" src="../../assets/art/type-case.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/type-case-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">add custom font to website</span><span class="gcard-t">How to add a custom font to your website</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/font-hinting-explained/"><span class="art "><img class="art-l" src="../../assets/art/hinting-grid.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/hinting-grid-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">font hinting explained</span><span class="gcard-t">Font hinting explained, and when TrueType hinting matters</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <a class="brand" href="../../"><img src="../../favicon.svg" width="34" height="34" alt=""><span class="brand-word"><span>font</span><span class="brand-ver">sketch</span></span></a>
+      <p>A free, open source font maker. Draw, import or scan your handwriting and export real TTF, OTF, WOFF and WOFF2 fonts, all in your browser.</p>
+      <p class="foot-made">Made by <strong>Alexandre Kohler</strong> (<a href="https://github.com/kwy404" rel="me noopener">GitHub</a> and <a href="https://www.linkedin.com/in/alexandre-silva-173687256/" rel="me noopener">LinkedIn</a>).</p>
+      <p class="foot-built">Built with <a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a>. Interactive parts built with <a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a>.</p>
+    </div>
+    <div>
+      <h2 class="foot-h">Product</h2>
+      <ul class="foot-list"><li><a href="../../app/">Font editor</a></li><li><a href="../../gallery/">Gallery</a></li><li><a href="../../guides/">All guides</a></li><li><a href="https://www.npmjs.com/package/fontsketch" rel="noopener">npm package</a></li><li><a href="https://github.com/kwy404/fontsketch" rel="noopener">Source on GitHub</a></li><li><a href="https://github.com/kwy404/fontsketch/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">Popular guides</h2>
+      <ul class="foot-list"><li><a href="../../guides/turn-your-handwriting-into-a-font/">Turn your handwriting into a font</a></li><li><a href="../../guides/create-a-font-online-free/">Create a font online free</a></li><li><a href="../../guides/make-a-font-from-svg/">Make a font from SVG</a></li><li><a href="../../guides/icon-font-generator/">Icon font generator</a></li><li><a href="../../guides/variable-font-tutorial/">Variable font tutorial</a></li><li><a href="../../guides/font-hinting-explained/">Font hinting explained</a></li></ul>
+    </div>
+    <div>
+      <h2 class="foot-h">More from kwy404</h2>
+      <ul class="foot-list foot-more"><li><a href="https://kwy404.github.io/monsoon/" rel="noopener">Monsoon</a><small>CSS framework with no build step</small></li><li><a href="https://kwy404.github.io/Voodoo.js/" rel="noopener">Voodoo.js</a><small>reactive HTML attributes</small></li><li><a href="https://kwy404.github.io/breakhound/" rel="noopener">breakhound</a><small>finds bugs in any JS library</small></li><li><a href="https://kwy404.github.io/cookieowl/" rel="noopener">cookieowl</a><small>cookie consent for LGPD and GDPR</small></li><li><a href="https://kwy404.github.io/installkite/" rel="noopener">installkite</a><small>make any site an installable PWA</small></li><li><a href="https://kwy404.github.io/a11ymedic/" rel="noopener">a11ymedic</a><small>accessibility checker with fixes</small></li><li><a href="https://kwy404.github.io/graphemely/" rel="noopener">graphemely</a><small>emoji safe string utilities</small></li><li><a href="https://kwy404.github.io/numberparrot/" rel="noopener">numberparrot</a><small>parse localized numbers</small></li><li><a href="https://kwy404.github.io/edgegoat/" rel="noopener">edgegoat</a><small>edge case test inputs</small></li><li><a href="https://kwy404.github.io/vueleap/" rel="noopener">vueleap</a><small>migrate Vue 2 to Vue 3</small></li></ul>
+    </div>
+  </div>
+  <p class="foot-legal">MIT License. Fonts you make are yours. <span>fontsketch 0.1.0</span></p>
+</footer>
+</body>
+</html>
