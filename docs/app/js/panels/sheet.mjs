@@ -342,6 +342,12 @@ export function installSheet(ctx) {
       c.lineTo(w, base - y * s + 0.5);
       c.stroke();
     }
+    if (!strokes.length && !live && S.sheet.cur) {
+      c.fillStyle = css('--line-2') || '#ccc';
+      c.font = `${Math.round(RM.capHeight * s * 1.05)}px Georgia, serif`;
+      c.textAlign = 'center';
+      c.fillText(S.sheet.cur, w / 2, base);
+    }
     c.fillStyle = css('--ink') || '#222';
     for (const st of [...strokes, ...(live ? [live] : [])]) {
       for (const ct of outline(st)) {

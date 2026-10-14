@@ -224,7 +224,7 @@ export function installSpacing(ctx) {
   kcv.addEventListener('pointermove', (e) => {
     if (!drag) return;
     const { s } = layoutPair();
-    S.kern.value = Math.round((drag.v0 + (e.clientX - drag.x) / s) / 5) * 5;
+    S.kern.value = Math.round((drag.v0 + ((e.clientX - drag.x) * 0.5) / s) / 5) * 5;
     drawKern();
   });
   const endDrag = () => {

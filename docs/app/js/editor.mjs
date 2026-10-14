@@ -353,7 +353,8 @@ export class Editor {
     // Mouse reports 0.5 while pressed; treat it as full pressure so mouse
     // strokes have the chosen width.
     const p = e.pointerType === 'mouse' || !e.pressure ? 0.7 : e.pressure;
-    const tilt = e.tiltX || e.tiltY ? Math.atan2(e.tiltY || 0, e.tiltX || 0) : null;
+    // Tilting a pen (Apple Pencil, Wacom) widens the mark like shading with a pencil side.
+    const tilt = e.pointerType === 'pen' ? Math.min(1, Math.hypot(e.tiltX || 0, e.tiltY || 0) / 60) : 0;
     return { x: f.x, y: f.y, p, tilt, t: e.timeStamp };
   }
 
@@ -386,11 +387,17 @@ export class Editor {
         this.onView();
         return;
       }
-      case 'pan':
+      case 'pan': {
+        const now = performance.now();
+        const dt = Math.max(1, now - (d.t || now - 16));
+        d.vx = (0.7 * (sx - d.sx)) / dt * 16 + 0.3 * (d.vx || 0);
+        d.vy = (0.7 * (sy - d.sy)) / dt * 16 + 0.3 * (d.vy || 0);
+        d.t = now;
         this.panBy(sx - d.sx, sy - d.sy);
         d.sx = sx;
         d.sy = sy;
         return;
+      }
       case 'stroke': {
         const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
         for (const ev of evs.length ? evs : [e]) {
@@ -436,6 +443,7 @@ export class Editor {
       return;
     }
     this.drag = null;
+    if (d.kind === 'pan' && !cancelled) this.glide(d);
     if (cancelled) {
       if (d.kind === 'stroke') this.stroke = null;
       history.cancel();
@@ -465,8 +473,24 @@ export class Editor {
     this.redraw();
   }
 
+  /** Inertia after a pan: keeps sliding and slows down. */
+  glide(d) {
+    let vx = d.vx || 0;
+    let vy = d.vy || 0;
+    if (performance.now() - (d.t || 0) > 80 || Math.hypot(vx, vy) < 1.5 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const step = () => {
+      if (this.drag) return;
+      vx *= 0.92;
+      vy *= 0.92;
+      this.panBy(vx, vy);
+      if (Math.hypot(vx, vy) > 0.4) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
   abortDrag() {
     if (this.drag && this.drag.kind !== 'pan' && this.drag.kind !== 'pinch') history.cancel();
+    if (this.drag?.kind === 'penHandle') this.penDraft = null;
     this.stroke = null;
     this.drag = null;
   }
@@ -915,13 +939,14 @@ export class Editor {
       const n = sm.length;
       const width = (p, i) => {
         let w = o.pressure ? o.size * (0.3 + 0.7 * Math.min(1, p.pressure ?? 0.7)) : o.size;
+        w *= 1 + 0.6 * (p.tilt || 0);
         if (o.taper > 0) {
           const t = Math.min(i, n - 1 - i) / Math.max(1, Math.min(n / 2, 12));
           w *= Math.min(1, 1 - o.taper + o.taper * t);
         }
         return Math.max(2, w);
       };
-      made = core.strokeToOutline(sm.map((p) => ({ x: p.x, y: p.y, pressure: p.p })), width, { error: Math.max(0.8, o.size / 50), smoothing: 1 });
+      made = core.strokeToOutline(sm.map((p) => ({ x: p.x, y: p.y, pressure: p.p, tilt: p.tilt })), width, { error: Math.max(0.8, o.size / 50), smoothing: 1 });
     } else {
       const c = polygonToContour(poly, core, Math.max(1, +b.size / 40));
       made = c ? safeUnion([orient(c, true)]) : [];
@@ -1402,6 +1427,32 @@ export class Editor {
       ctx.strokeStyle = C.ink;
       ctx.lineWidth = 1.25;
       ctx.stroke();
+    }
+
+    // Fresh ink: a glossy highlight sweeps across and fades as it dries.
+    const fresh = this.inkFresh;
+    if (fresh && !preview) {
+      const age = performance.now() - fresh.at;
+      if (age < 800) {
+        const k = age / 800;
+        ctx.save();
+        ctx.beginPath();
+        tracePath(ctx, contours, tf);
+        ctx.clip('nonzero');
+        ctx.fillStyle = C.ink;
+        ctx.globalAlpha = 0.55 * (1 - k);
+        ctx.fill();
+        const gx = w * (k * 1.4 - 0.2);
+        const g = ctx.createLinearGradient(gx - 160, 0, gx + 160, h);
+        g.addColorStop(0, 'rgba(255,255,255,0)');
+        g.addColorStop(0.5, `rgba(255,255,255,${0.32 * (1 - k)})`);
+        g.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, w, h);
+        ctx.restore();
+        this.redraw();
+      } else this.inkFresh = null;
     }
 
     // Live stroke

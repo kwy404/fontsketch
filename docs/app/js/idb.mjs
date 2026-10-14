@@ -44,7 +44,7 @@ async function openWith(name, stores) {
 }
 
 function open() {
-  if (!dbp) dbp = openWith(DB, [[STORE, { keyPath: 'id' }], ['settings', undefined]]);
+  if (!dbp) dbp = openWith(DB, [[STORE, { keyPath: 'id' }], ['meta', { keyPath: 'id' }], ['settings', undefined]]);
   return dbp;
 }
 const openHandoff = () => openWith(HANDOFF_DB, [['handoff', undefined]]);
@@ -113,13 +113,41 @@ function tx(db, mode, fn) {
   });
 }
 
-/** @returns {Promise<Array<{ id: string, name: string, updated: number, glyphs: number, sample: string }>>} */
+const metaOf = ({ id, name, updated, glyphs, sample }) => ({ id, name, updated, glyphs, sample });
+
+function txStore(db, store, mode, fn) {
+  return new Promise((resolve, reject) => {
+    const t = db.transaction(store, mode);
+    const req = fn(t.objectStore(store));
+    t.oncomplete = () => resolve(req && req.result);
+    t.onerror = () => reject(t.error);
+    t.onabort = () => reject(t.error);
+  });
+}
+
+/**
+ * The project list comes from a small `meta` store so the start screen does
+ * not read every project's data. Older databases are indexed once.
+ * @returns {Promise<Array<{ id: string, name: string, updated: number, glyphs: number, sample: string }>>}
+ */
 export async function listProjects() {
   const db = await open();
-  const all = db ? await tx(db, 'readonly', (s) => s.getAll()) : [...memory.values()];
-  return (all || [])
-    .map(({ id, name, updated, glyphs, sample }) => ({ id, name, updated, glyphs, sample }))
-    .sort((a, b) => b.updated - a.updated);
+  let all;
+  if (!db) all = [...memory.values()].map(metaOf);
+  else {
+    all = (await txStore(db, 'meta', 'readonly', (s) => s.getAll())) || [];
+    if (!all.length) {
+      const keys = (await txStore(db, STORE, 'readonly', (s) => s.getAllKeys())) || [];
+      if (keys.length) {
+        const full = (await tx(db, 'readonly', (s) => s.getAll())) || [];
+        all = full.map(metaOf);
+        await txStore(db, 'meta', 'readwrite', (s) => {
+          for (const m of all) s.put(m);
+        });
+      }
+    }
+  }
+  return all.sort((a, b) => b.updated - a.updated);
 }
 
 export async function loadProject(id) {
@@ -134,6 +162,7 @@ export async function saveProject(record) {
     return;
   }
   await tx(db, 'readwrite', (s) => s.put(record));
+  await txStore(db, 'meta', 'readwrite', (s) => s.put(metaOf(record)));
 }
 
 export async function deleteProject(id) {
@@ -143,6 +172,7 @@ export async function deleteProject(id) {
     return;
   }
   await tx(db, 'readwrite', (s) => s.delete(id));
+  await txStore(db, 'meta', 'readwrite', (s) => s.delete(id));
 }
 
 export const newId = () => `p${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`;

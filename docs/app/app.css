@@ -220,7 +220,8 @@ button { font: inherit; }
 .camera video { width: 100%; border-radius: 12px; background: #000; aspect-ratio: 3 / 4; object-fit: cover; }
 .camera-frame { position: absolute; inset: 6% 8% calc(6% + 44px); border: 2px dashed rgb(255 255 255 / .7); border-radius: 8px; pointer-events: none; }
 .sheet-shot { border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
-.sheet-shot canvas { width: 100%; display: block; }
+.sheet-shot { display: grid; place-items: center; }
+.sheet-shot canvas { max-width: 100%; max-height: 42vh; width: auto; height: auto; display: block; }
 .cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(54px, 1fr)); gap: 6px; }
 .panel-wide .cells { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); }
 .cell { position: relative; display: flex; flex-direction: column; align-items: center; padding: 4px 2px 3px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); cursor: pointer; color: var(--ink); }

@@ -422,7 +422,7 @@ export function strokeOutline(raw, o) {
   const taper = o.taper ?? 0;
   const widthAt = (i) => {
     const pr = usePressure ? 0.3 + 0.7 * Math.min(1, Math.max(0, pts[i].p)) : 1;
-    let w = size * pr;
+    let w = size * pr * (1 + 0.6 * (pts[i].tilt || 0));
     if (taper > 0) {
       const t = Math.min(i, n - 1 - i) / Math.max(1, Math.min(n / 2, 12));
       w *= Math.min(1, 1 - taper + taper * t);

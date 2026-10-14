@@ -319,7 +319,6 @@
           <div class="sheet-shot" id="sheet-shot" v-ignore></div>
           <p class="pane-note"><b v-text="S.sheet.found"></b> letters found, <b v-text="S.sheet.low"></b> need a look. Click a letter to fix it.</p>
           <ul class="pane-note warn-list" v-show="S.sheet.warnings.length"><li v-for="(w, i) in S.sheet.warnings" :key="i" v-text="w"></li></ul>
-          <div class="cells" id="cells" v-ignore></div>
           <div class="pane-card cell-fix" v-show="S.sheet.cur">
             <div class="row"><b class="cell-fix-char" v-text="S.sheet.cur"></b><span class="badge" :class="S.sheet.curConf >= 70 ? 'badge-success' : S.sheet.curConf >= 40 ? 'badge-warning' : 'badge-danger'" v-text="S.sheet.curConf + '% sure'"></span></div>
             <label class="fg"><span>Ink threshold <b v-text="S.sheet.threshold + '%'"></b></span><input type="range" class="range range-sm" min="10" max="90" v-model="S.sheet.threshold" @change="A.retraceCell()"></label>
@@ -328,6 +327,7 @@
               <button type="button" class="btn btn-sm btn-ghost" @click="A.toggleSkipCell()" v-text="S.sheet.curSkip ? 'Use it' : 'Skip it'"></button>
             </div>
           </div>
+          <div class="cells" id="cells" v-ignore></div>
           <div class="row sticky-actions">
             <button type="button" class="btn btn-sm btn-primary grow" @click="A.acceptSheet()"><svg class="ic"><use href="#i-check"/></svg>Add <span v-text="S.sheet.accepting"></span> letters to my font</button>
           </div>
@@ -471,7 +471,8 @@
           <button type="button" class="exp-card" :disabled="!S.variable.has" @click="A.download('ttf', true)"><b>Variable TTF</b><span v-text="S.variable.has ? 'One file, every weight' : 'Add a weight axis in Font first'"></span></button>
           <button type="button" class="exp-card" :disabled="!S.variable.has" @click="A.download('woff2', true)"><b>Variable WOFF2</b><span v-text="S.variable.has ? 'Every weight for the web' : 'Add a weight axis in Font first'"></span></button>
         </div>
-        <button type="button" class="btn btn-primary btn-block" @click="A.downloadKit()"><svg class="ic"><use href="#i-download"/></svg>Web font kit (.zip with CSS and sample page)</button>
+        <button type="button" class="btn btn-primary btn-block" @click="A.downloadKit()"><svg class="ic"><use href="#i-download"/></svg>Web font kit (.zip)</button>
+        <p class="pane-note">WOFF2, WOFF and TTF files, a ready @font-face stylesheet and a specimen page.</p>
         <label class="fg"><span>Hinting</span><select class="select select-sm" v-model="S.hint.mode" @change="A.savePrefs()"><option value="auto">Auto hinting</option><option value="manual">Manual stems</option><option value="none">No hinting</option></select></label>
         <div class="alert alert-warning alert-soft" v-show="S.problems.length" role="alert"><div class="alert-content"><b>Check before export</b><ul><li v-for="(p, i) in S.problems" :key="i" v-text="p"></li></ul></div></div>
         <h3 class="pane-h">Project file</h3>
@@ -500,7 +501,7 @@
       <div class="ob-group" v-show="S.tool === 'brush'">
         <label class="ob"><span>Size</span><input type="range" class="range range-xs" min="6" max="240" v-model="S.brush.size" aria-label="Brush size"><b v-text="S.brush.size"></b></label>
         <label class="ob hide-sm"><span>Smooth</span><input type="range" class="range range-xs" min="0" max="100" v-model="S.brush.smoothing" aria-label="Smoothing"><b v-text="S.brush.smoothing"></b></label>
-        <select class="select select-xs" v-model="S.brush.shape" aria-label="Brush shape"><option value="round">Round</option><option value="chisel">Chisel</option><option value="calligraphy">Calligraphy</option></select>
+        <select class="select select-xs hide-sm" v-model="S.brush.shape" aria-label="Brush shape"><option value="round">Round</option><option value="chisel">Chisel</option><option value="calligraphy">Calligraphy</option></select>
       </div>
       <div class="ob-group" v-show="S.tool === 'eraser'">
         <label class="ob"><span>Size</span><input type="range" class="range range-xs" min="6" max="300" v-model="S.brush.eraserSize" aria-label="Eraser size"><b v-text="S.brush.eraserSize"></b></label>

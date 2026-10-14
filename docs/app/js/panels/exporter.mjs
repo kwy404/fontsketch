@@ -146,7 +146,12 @@ export function installExport(ctx) {
     const m = P.font.meta;
     let css = '';
     try {
-      css = lib.cssFontFace(P.font, `fonts/${base}.woff2`);
+      // The static files carry one weight; the variable rule is added below.
+      const plain = { ...P.font };
+      delete plain.axes;
+      delete plain.masters;
+      delete plain.instances;
+      css = lib.cssFontFace(plain, `fonts/${base}.woff2`);
     } catch {
       css = '';
     }

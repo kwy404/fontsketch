@@ -141,7 +141,8 @@ export function installImports(ctx) {
     history.run('Import SVG', [g.name], () => {
       g.contours = contours.map((c) => ({ ...c, points: c.points.map((p) => ({ ...p, x: Math.round(p.x), y: Math.round(p.y) })) }));
       g.components = [];
-      g.advanceWidth = Math.round(Math.max(width, ib ? ib.xMax + Math.max(40, ib.xMin) : width));
+      // Side bearings follow the drawing: the left margin is mirrored on the right.
+      g.advanceWidth = Math.round(ib ? ib.xMax + Math.max(30, Math.min(ib.xMin, 120)) : width);
       for (const m of P.font.masters || []) delete m.glyphs[g.name];
     });
     editor.fit();

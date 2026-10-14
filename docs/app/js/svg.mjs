@@ -328,7 +328,8 @@ export function attachSvg(text) {
   root.querySelectorAll('script, foreignObject').forEach((n) => n.remove());
   for (const el of [root, ...root.querySelectorAll('*')]) for (const a of [...el.attributes]) if (/^on/i.test(a.name)) el.removeAttribute(a.name);
   const host = document.createElement('div');
-  host.style.cssText = 'position:absolute;left:-10000px;top:0;width:1000px;height:1000px;overflow:hidden;visibility:hidden';
+  host.style.cssText = 'position:absolute;left:-10000px;top:0;width:1000px;height:1000px;overflow:hidden;opacity:0;pointer-events:none';
+  host.setAttribute('aria-hidden', 'true');
   const svg = document.importNode(root, true);
   host.append(svg);
   document.body.append(host);
