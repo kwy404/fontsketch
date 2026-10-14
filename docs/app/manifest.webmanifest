@@ -1,0 +1,10 @@
+{
+  "name": "fontsketch editor",
+  "short_name": "fontsketch",
+  "description": "Draw, scan or import letters and download a real font file.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ece5d8",
+  "theme_color": "#fbf8f2",
+  "icons": [{ "src": "../favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

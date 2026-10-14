@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
+<title>fontsketch editor: draw your own font online and download TTF, OTF, WOFF2</title>
+<meta name="description" content="A free font editor in your browser. Draw letters with a pen, finger or mouse, scan your handwriting, import SVG, image or font files, then download a real TTF, OTF, WOFF or WOFF2 font.">
+<link rel="canonical" href="https://kwy404.github.io/fontsketch/app/">
+<meta name="author" content="Alexandre Kohler">
+<meta name="theme-color" content="#f6f2ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16151b" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="fontsketch">
+<meta property="og:title" content="fontsketch editor: draw your own font online">
+<meta property="og:description" content="Draw, scan or import letters and download a real font file. Free, private, runs in your browser.">
+<meta property="og:url" content="https://kwy404.github.io/fontsketch/app/">
+<meta property="og:image" content="https://kwy404.github.io/fontsketch/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="modulepreload" href="lib/fontsketch.mjs">
+<link rel="modulepreload" href="js/main.mjs">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monsooncss@0.2.0/dist/monsoon.min.css">
+<link rel="stylesheet" href="app.css">
+<script src="https://cdn.jsdelivr.net/npm/voodoojs@1.0.0/dist/voodoo.full.min.js" data-manual defer></script>
+<script type="module" src="js/main.mjs"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "fontsketch editor",
+  "url": "https://kwy404.github.io/fontsketch/app/",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Any (web browser)",
+  "description": "Free online font editor: draw letters, scan handwriting, import SVG and fonts, export TTF, OTF, WOFF and WOFF2.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "Alexandre Kohler", "url": "https://github.com/kwy404" }
+}
+</script>
+</head>
+<body class="app antialiased" :class="{ 'is-pro': S.pro, 'is-ready': S.ready }">
+<svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="i-select" viewBox="0 0 24 24"><path d="M5.5 3.5 18.5 11l-5.6 1.7L10 18.5z"/><path d="m12.9 12.7 4.3 6"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 3c-2.8 3.4-5 7-5 10.4L12 21l5-7.6C17 10 14.8 6.4 12 3z"/><circle cx="12" cy="12.6" r="1.6"/><path d="M12 3v8"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 24 24"><path d="M20.3 3.7a1.7 1.7 0 0 0-2.4 0l-8.6 8.6 2.4 2.4 8.6-8.6a1.7 1.7 0 0 0 0-2.4z"/><path d="M9.2 12.4c-2.6-.4-4.5 1.3-4.6 3.6-.1 2-1 3.2-2.6 3.8 3.6 1.4 8.3.9 9.4-2.3.6-1.7.1-3.6-2.2-5.1z"/></symbol>
+    <symbol id="i-eraser" viewBox="0 0 24 24"><path d="M9 20h11"/><path d="m4.6 14.6 9.5-9.5a2 2 0 0 1 2.8 0l2.5 2.5a2 2 0 0 1 0 2.8L11 18.8H8.8z"/><path d="m9.4 9.8 5.3 5.3"/></symbol>
+    <symbol id="i-rect" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="1.5"/></symbol>
+    <symbol id="i-ellipse" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8.5" ry="7.5"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 12V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M14 10.5V6a1.5 1.5 0 0 1 3 0v5"/><path d="M17 9.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7h-1.5a6 6 0 0 1-4.6-2.2L4 15.5a1.6 1.6 0 0 1 2.4-2.1L8 15"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></symbol>
+    <symbol id="i-templates" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="9" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.5"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.5"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.5"/></symbol>
+    <symbol id="i-letters" viewBox="0 0 24 24"><path d="M3 17 7 6l4 11M4.5 13h5"/><path d="M14 9.5c.6-1 1.6-1.5 2.8-1.5 1.8 0 3.2 1 3.2 3v6"/><path d="M20 13.2c-1.2-.6-2.4-.7-3.6-.4-1.6.4-2.6 1.2-2.6 2.4 0 1.2 1 1.9 2.3 1.9 1.8 0 3.2-1 3.9-2.3"/></symbol>
+    <symbol id="i-shapes" viewBox="0 0 24 24"><circle cx="7.5" cy="7.5" r="4"/><rect x="13" y="13" width="7.5" height="7.5" rx="1"/><path d="M17 3.5 21 10h-8z"/><path d="M3.5 19c2-3 4-3 5.5-1s2.5 2 4 0"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></symbol>
+    <symbol id="i-sheet" viewBox="0 0 24 24"><path d="M6 2.5h9l4 4v15H6z"/><path d="M15 2.5v4h4"/><path d="M9 11h7M9 14.5h7M9 18h4"/><path d="M8.5 11.5c.8-1 1.5-.9 2 .3"/></symbol>
+    <symbol id="i-kerning" viewBox="0 0 24 24"><path d="M2.5 18 6 6l3.5 12"/><path d="M14.5 6 18 18l3.5-12"/><path d="M9 21h6M10.5 19.5 9 21l1.5 1.5M13.5 19.5 15 21l-1.5 1.5"/></symbol>
+    <symbol id="i-test" viewBox="0 0 24 24"><path d="M3 19 8 5l5 14M5 14h6"/><path d="M15 19v-7"/><path d="M15 15.5c0-2 1-3.5 3-3.5s3 1.5 3 3.5-1 3.5-3 3.5-3-1.5-3-3.5z"/></symbol>
+    <symbol id="i-font" viewBox="0 0 24 24"><path d="M4 7V5h16v2"/><path d="M12 5v14M9 19h6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5"/><path d="M4 17v1.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V17"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-system" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.6 2.6 0 0 1 5 1c0 1.8-2.5 2.2-2.5 3.8"/><path d="M12 17.2h.01"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-fit" viewBox="0 0 24 24"><path d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4"/></symbol>
+    <symbol id="i-flip-h" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M8.5 7 3.5 17h5z"/><path d="M15.5 7l5 10h-5z"/></symbol>
+    <symbol id="i-flip-v" viewBox="0 0 24 24"><path d="M3 12h18"/><path d="M7 8.5 17 3.5v5z"/><path d="M7 15.5l10 5v-5z"/></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4.5V11h-6.5"/></symbol>
+    <symbol id="i-union" viewBox="0 0 24 24"><path d="M4 4h10v6h6v10H10v-6H4z"/></symbol>
+    <symbol id="i-subtract" viewBox="0 0 24 24"><path d="M4 4h10v6h-4v4H4z"/><rect x="10" y="10" width="10" height="10" rx="1" stroke-dasharray="2.5 2"/></symbol>
+    <symbol id="i-simplify" viewBox="0 0 24 24"><path d="M3 17c3-1 3-8 6-9s3.5 7 6.5 7S19 9 21 7"/><circle cx="3" cy="17" r="1.2"/><circle cx="21" cy="7" r="1.2"/><circle cx="12" cy="11.5" r="1.2"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6"/><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4.5h6V7"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3.5 8.5A1.5 1.5 0 0 1 5 7h2.5l1.5-2.5h6L16.5 7H19a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5z"/><circle cx="12" cy="12.5" r="3.5"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m20.5 16-4.5-4.5L7 19.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></symbol>
+    <symbol id="i-wand" viewBox="0 0 24 24"><path d="m4 20 11-11 2 2L6 22z" transform="translate(0 -2)"/><path d="M15 4v2M19 6.5l-1.4 1.4M20 11h-2M12.5 6.5 11 5"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></symbol>
+    <symbol id="i-collapse" viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M10 14l-7 7M14 10l7-7"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M3.5 9h17M3.5 15h17M9 3.5v17M15 3.5v17"/><rect x="3.5" y="3.5" width="17" height="17" rx="2"/></symbol>
+    <symbol id="i-magnet" viewBox="0 0 24 24"><path d="M5 4h4v8a3 3 0 0 0 6 0V4h4v8a7 7 0 0 1-14 0z"/><path d="M5 8h4M15 8h4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.5 7.5A1.5 1.5 0 0 1 5 6h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5v7.5A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5z"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 3.5h11l3.5 3.5v12a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V5A1.5 1.5 0 0 1 5 3.5z"/><path d="M7.5 3.5v5h8v-5M7.5 20.5v-6h9v6"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3.5 13.8 10l6.7 2-6.7 2L12 20.5 10.2 14l-6.7-2 6.7-2z"/></symbol>
+    <symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7.5 14h9"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3.5 9 4.5-9 4.5L3 8z"/><path d="m3 12 9 4.5 9-4.5M3 16l9 4.5 9-4.5"/></symbol>
+    <symbol id="i-pixel" viewBox="0 0 24 24"><path d="M4 4h4v4H4zM10 4h4v4h-4zM4 10h4v4H4zM16 10h4v4h-4zM10 16h4v4h-4z"/></symbol>
+    <symbol id="i-weight" viewBox="0 0 24 24"><path d="M3 18 6.5 6 10 18M4.2 14h4.6"/><path d="M13 18 16.8 6 20.5 18M13.9 14h5.7" stroke-width="3"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 4 4 7l3 3M4 7h12M17 14l3 3-3 3M20 17H8"/></symbol>
+  </defs>
+</svg>
+
+<a href="#cv" class="skip-link">Skip to the drawing canvas</a>
+
+<!-- ============ Top bar ============ -->
+<header class="appbar">
+  <a href="../" class="brand" aria-label="fontsketch home">
+    <img src="../assets/art/quill-head.svg" width="30" height="30" alt="">
+    <span class="brand-name">fontsketch</span>
+  </a>
+  <div class="proj">
+    <label class="sr-only" for="proj-name">Font name</label>
+    <input id="proj-name" class="proj-name" :value="S.font.family" @change="A.setMeta('family', $event.target.value)" spellcheck="false" autocomplete="off">
+    <span class="proj-status" role="status" aria-live="polite" v-text="S.status.saved"></span>
+  </div>
+  <div class="appbar-mid">
+    <button type="button" class="ib" @click="A.undo()" :disabled="!S.canUndo" aria-label="Undo" title="Undo (Ctrl Z)"><svg class="ic"><use href="#i-undo"/></svg></button>
+    <button type="button" class="ib" @click="A.redo()" :disabled="!S.canRedo" aria-label="Redo" title="Redo (Ctrl Shift Z)"><svg class="ic"><use href="#i-redo"/></svg></button>
+  </div>
+  <div class="appbar-end">
+    <label class="pro-switch" title="Pro mode shows points, hinting, kerning tables and variable axes">
+      <input type="checkbox" class="toggle toggle-sm" role="switch" v-model="S.pro" @change="A.savePrefs()">
+      <span>Pro</span>
+    </label>
+    <button type="button" class="ib hide-sm" @click="A.openStart()" aria-label="Projects and templates" title="Projects and templates"><svg class="ic"><use href="#i-folder"/></svg></button>
+    <button type="button" class="ib hide-sm" @click="A.showShortcuts()" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (?)"><svg class="ic"><use href="#i-keyboard"/></svg></button>
+    <button type="button" class="ib theme-btn" v-theme-toggle.cycle aria-label="Switch theme" title="Theme: system, light or dark"><svg class="ic ti-system"><use href="#i-system"/></svg><svg class="ic ti-light"><use href="#i-sun"/></svg><svg class="ic ti-dark"><use href="#i-moon"/></svg></button>
+    <div class="dl-split" data-tour="download">
+      <button type="button" class="btn btn-primary dl-main" @click="A.quickDownload()" :disabled="S.exporting" title="Download your font (Ctrl E)">
+        <svg class="ic"><use href="#i-download"/></svg><span>Download font</span>
+      </button>
+      <button type="button" class="btn btn-primary dl-more" @click="A.openPanel('export')" aria-label="More export formats"><svg class="ic"><use href="#i-down"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="shell" :class="{ 'has-panel': S.panel, 'panel-wide': S.panel && S.wide, 'has-inspector': S.inspector }">
+
+  <!-- ============ Rail ============ -->
+  <nav class="rail" aria-label="Panels" data-tour="rail">
+    <button type="button" class="rail-btn" @click="A.togglePanel('templates')" :aria-pressed="S.panel === 'templates' ? 'true' : 'false'"><svg class="ic"><use href="#i-templates"/></svg><span>Templates</span></button>
+    <button type="button" class="rail-btn" @click="A.togglePanel('letters')" :aria-pressed="S.panel === 'letters' ? 'true' : 'false'"><svg class="ic"><use href="#i-letters"/></svg><span>Letters</span></button>
+    <button type="button" class="rail-btn" @click="A.togglePanel('draw')" :aria-pressed="S.panel === 'draw' ? 'true' : 'false'"><svg class="ic"><use href="#i-shapes"/></svg><span>Draw</span></button>
+    <button type="button" class="rail-btn" @click="A.togglePanel('uploads')" :aria-pressed="S.panel === 'uploads' ? 'true' : 'false'"><svg class="ic"><use href="#i-upload"/></svg><span>Uploads</span></button>
+    <button type="button" class="rail-btn" @click="A.togglePanel('sheet')" :aria-pressed="S.panel === 'sheet' ? 'true' : 'false'"><svg class="ic"><use href="#i-sheet"/></svg><span>Handwriting</span></button>
+    <button type="button" class="rail-btn" @click="A.togglePanel('spacing')" :aria-pressed="S.panel === 'spacing' ? 'true' : 'false'"><svg class="ic"><use href="#i-kerning"/></svg><span>Spacing</span></button>
+    <button type="button" class="rail-btn" @click="A.togglePanel('test')" :aria-pressed="S.panel === 'test' ? 'true' : 'false'"><svg class="ic"><use href="#i-test"/></svg><span>Test</span></button>
+    <button type="button" class="rail-btn" @click="A.togglePanel('font')" :aria-pressed="S.panel === 'font' ? 'true' : 'false'"><svg class="ic"><use href="#i-sliders"/></svg><span>Font</span></button>
+    <button type="button" class="rail-btn" @click="A.togglePanel('export')" :aria-pressed="S.panel === 'export' ? 'true' : 'false'"><svg class="ic"><use href="#i-download"/></svg><span>Export</span></button>
+  </nav>
+
+  <!-- ============ Panel ============ -->
+  <aside class="panel" id="panel" aria-labelledby="panel-title" v-show="S.panel">
+    <div class="panel-head">
+      <h2 id="panel-title" class="panel-title" v-text="A.panelTitle(S.panel)"></h2>
+      <button type="button" class="ib ib-sm hide-sm" @click="S.wide = !S.wide" :aria-label="S.wide ? 'Shrink panel' : 'Expand panel'" :title="S.wide ? 'Shrink panel' : 'Expand panel'"><svg class="ic" v-show="!S.wide"><use href="#i-expand"/></svg><svg class="ic" v-show="S.wide"><use href="#i-collapse"/></svg></button>
+      <button type="button" class="ib ib-sm" @click="A.closePanel()" aria-label="Close panel"><svg class="ic"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="panel-body">
+
+      <!-- Templates -->
+      <section v-show="S.panel === 'templates'" class="pane">
+        <p class="pane-lead">Start from a complete font and make it yours, or fill only the letters you have not drawn yet.</p>
+        <div class="tpl-grid" id="tpl-grid" v-ignore></div>
+        <div class="pane-card">
+          <h3 class="pane-h">Fill the gaps</h3>
+          <p class="pane-note">Copies letters you have not drawn yet from a template, scaled to your metrics. Your own letters are never touched.</p>
+          <div class="row">
+            <select class="select select-sm" v-model="S.fillFrom" aria-label="Template to fill from">
+              <option value="quill-hand">Quill Hand</option>
+              <option value="geometric">Geometric display</option>
+              <option value="rounded">Rounded</option>
+              <option value="mono">Monospace</option>
+            </select>
+            <button type="button" class="btn btn-sm btn-soft" @click="A.fillMissing()"><svg class="ic"><use href="#i-wand"/></svg>Auto fill missing</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Letters -->
+      <section v-show="S.panel === 'letters'" class="pane">
+        <div class="row">
+          <select class="select select-sm grow" v-model="S.letters.charset" @change="A.setCharset()" aria-label="Character set">
+            <option value="basic">Basic Latin</option>
+            <option value="letters">Letters only</option>
+            <option value="pt">Portuguese accents</option>
+            <option value="latin1">Western European</option>
+            <option value="digits">Digits and punctuation</option>
+            <option value="all">Every glyph in the font</option>
+          </select>
+        </div>
+        <div class="row">
+          <input class="input input-sm grow" type="search" placeholder="Find a letter or name" v-model="S.letters.q" @input="A.renderLetters()" aria-label="Find a letter">
+        </div>
+        <div class="segmented segmented-sm segmented-block" role="radiogroup" aria-label="Show">
+          <label class="segmented-item"><input type="radio" name="lst" value="all" v-model="S.letters.status" @change="A.renderLetters()"> All</label>
+          <label class="segmented-item"><input type="radio" name="lst" value="empty" v-model="S.letters.status" @change="A.renderLetters()"> Empty</label>
+          <label class="segmented-item"><input type="radio" name="lst" value="drawn" v-model="S.letters.status" @change="A.renderLetters()"> Drawn</label>
+          <label class="segmented-item"><input type="radio" name="lst" value="composed" v-model="S.letters.status" @change="A.renderLetters()"> Composed</label>
+        </div>
+        <p class="pane-note"><span v-text="S.font.drawn"></span> of <span v-text="S.font.total"></span> drawn. Drop an SVG or image on a letter to fill it.</p>
+        <div class="letters" id="letters" v-ignore role="listbox" aria-label="Letters"></div>
+        <div class="row">
+          <input class="input input-sm grow" placeholder="Add characters, for example ñ ß €" v-model="S.letters.add" @keydown.enter="A.addChars()" aria-label="Characters to add">
+          <button type="button" class="btn btn-sm btn-soft" @click="A.addChars()"><svg class="ic"><use href="#i-plus"/></svg>Add</button>
+        </div>
+        <div class="row">
+          <button type="button" class="btn btn-sm btn-soft grow" @click="A.autoAccents()" title="Build accented letters from base letters and marks"><svg class="ic"><use href="#i-sparkle"/></svg>Auto accents</button>
+          <button type="button" class="btn btn-sm btn-soft grow" @click="A.openPanel('templates')"><svg class="ic"><use href="#i-wand"/></svg>Fill missing</button>
+        </div>
+      </section>
+
+      <!-- Draw: brushes, shapes, swashes -->
+      <section v-show="S.panel === 'draw'" class="pane">
+        <h3 class="pane-h">Brushes</h3>
+        <div class="presets" id="presets" v-ignore></div>
+        <div class="field-grid">
+          <label class="fg"><span>Size <b v-text="S.brush.size"></b></span><input type="range" class="range range-sm" min="6" max="240" v-model="S.brush.size"></label>
+          <label class="fg"><span>Smoothing <b v-text="S.brush.smoothing + '%'"></b></span><input type="range" class="range range-sm" min="0" max="100" v-model="S.brush.smoothing"></label>
+          <label class="fg"><span>Taper <b v-text="S.brush.taper + '%'"></b></span><input type="range" class="range range-sm" min="0" max="100" v-model="S.brush.taper"></label>
+          <label class="fg" v-show="S.brush.shape !== 'round'"><span>Nib angle <b v-text="S.brush.angle + '°'"></b></span><input type="range" class="range range-sm" min="-90" max="90" v-model="S.brush.angle"></label>
+          <label class="fg-inline"><input type="checkbox" class="toggle toggle-sm" role="switch" v-model="S.brush.pressure"> Pen pressure</label>
+          <label class="fg-inline"><input type="checkbox" class="toggle toggle-sm" role="switch" v-model="S.brush.merge"> Merge strokes</label>
+        </div>
+        <h3 class="pane-h">Shapes</h3>
+        <div class="chips" id="shape-chips" v-ignore></div>
+        <h3 class="pane-h">Swashes and marks</h3>
+        <div class="chips" id="swash-chips" v-ignore></div>
+        <h3 class="pane-h">Reference image</h3>
+        <p class="pane-note">Put a photo or sketch behind the current letter and draw over it.</p>
+        <div class="row">
+          <label class="btn btn-sm btn-soft grow"><svg class="ic"><use href="#i-image"/></svg>Choose image<input type="file" accept="image/*" class="sr-only" @change="A.setBackground($event)"></label>
+          <button type="button" class="btn btn-sm btn-ghost" v-show="S.glyph.bg" @click="A.clearBackground()">Remove</button>
+        </div>
+        <label class="fg" v-show="S.glyph.bg"><span>Opacity <b v-text="S.glyph.bgOpacity + '%'"></b></span><input type="range" class="range range-sm" min="5" max="100" :value="S.glyph.bgOpacity" @input="A.setBackgroundProp('opacity', $event.target.value / 100)"></label>
+        <label class="fg" v-show="S.glyph.bg"><span>Scale <b v-text="S.glyph.bgScale + '%'"></b></span><input type="range" class="range range-sm" min="20" max="300" :value="S.glyph.bgScale" @input="A.setBackgroundProp('scale', $event.target.value / 100)"></label>
+      </section>
+
+      <!-- Uploads -->
+      <section v-show="S.panel === 'uploads'" class="pane">
+        <label class="drop" id="drop-uploads">
+          <input type="file" multiple accept=".svg,image/*,.ttf,.otf,.woff,.woff2,.json,application/json" class="sr-only" @change="A.importFiles($event.target.files); $event.target.value = ''">
+          <svg class="ic drop-ic"><use href="#i-upload"/></svg>
+          <span class="drop-title">Drop files or <u>browse</u></span>
+          <span class="drop-hint">SVG, PNG, JPG, TTF, OTF, WOFF, WOFF2 or a .fontsketch.json project</span>
+        </label>
+        <div class="up-list">
+          <div class="up-item"><svg class="ic"><use href="#i-shapes"/></svg><div><b>SVG</b><span>One drawing fills the current letter. A sheet with elements named after letters (id="A", data-char="b" or an SVG font) fills many at once.</span></div></div>
+          <div class="up-item"><svg class="ic"><use href="#i-image"/></svg><div><b>Image</b><span>Traced into the current letter. Adjust the threshold below and trace again.</span></div></div>
+          <div class="up-item"><svg class="ic"><use href="#i-font"/></svg><div><b>Font file</b><span>Opens TTF, OTF, WOFF and WOFF2 fonts for editing.</span></div></div>
+          <div class="up-item"><svg class="ic"><use href="#i-sheet"/></svg><div><b>Handwriting sheet</b><span>Print the template, write, take a photo. <button type="button" class="btn-link" @click="A.openPanel('sheet')">Open the sheet flow</button></span></div></div>
+        </div>
+        <div class="pane-card" v-show="S.trace.has">
+          <h3 class="pane-h">Trace settings</h3>
+          <label class="fg"><span>Threshold <b v-text="S.trace.threshold + '%'"></b></span><input type="range" class="range range-sm" min="5" max="95" v-model="S.trace.threshold"></label>
+          <label class="fg-inline"><input type="checkbox" class="toggle toggle-sm" role="switch" v-model="S.trace.invert"> Light ink on dark paper</label>
+          <button type="button" class="btn btn-sm btn-soft" @click="A.retrace()">Trace again into “<span v-text="S.glyph.char || S.glyph.name"></span>”</button>
+        </div>
+        <div class="pane-card" v-show="S.svgSheet.length">
+          <h3 class="pane-h">SVG sheet: <span v-text="S.svgSheet.length"></span> drawings</h3>
+          <p class="pane-note">Each drawing goes to the letter shown. Change a letter by typing in its box.</p>
+          <div class="svg-sheet">
+            <label class="svg-cell" v-for="(c, i) in S.svgSheet" :key="i"><img :src="c.thumb" alt=""><input class="input input-xs" :value="c.char" @change="A.setSheetChar(i, $event.target.value)" :aria-label="'Letter for drawing ' + (i + 1)"></label>
+          </div>
+          <div class="row"><button type="button" class="btn btn-sm btn-primary" @click="A.acceptSvgSheet()">Add to font</button><button type="button" class="btn btn-sm btn-ghost" @click="S.svgSheet = []">Discard</button></div>
+        </div>
+      </section>
+
+      <!-- Handwriting sheet -->
+      <section v-show="S.panel === 'sheet'" class="pane">
+        <ol class="steps steps-sm sheet-steps">
+          <li class="step" :class="{ 'step-done': S.sheet.step > 1, 'step-current': S.sheet.step === 1 }"><button type="button" class="step-btn" @click="S.sheet.step = 1">Print</button></li>
+          <li class="step" :class="{ 'step-done': S.sheet.step > 2, 'step-current': S.sheet.step === 2 }"><button type="button" class="step-btn" @click="S.sheet.step = 2">Photo</button></li>
+          <li class="step" :class="{ 'step-done': S.sheet.step > 3, 'step-current': S.sheet.step === 3 }"><button type="button" class="step-btn" @click="S.sheet.cells.length && (S.sheet.step = 3)">Review</button></li>
+        </ol>
+        <div v-show="S.sheet.step === 1" class="sheet-step">
+          <p class="pane-lead">Print the template, write one character in each box with a dark pen, then take a photo or scan it.</p>
+          <label class="fg"><span>Characters</span>
+            <select class="select select-sm" v-model="S.sheet.set" @change="A.sheetPreview()">
+              <option value="upper-lower">Uppercase and lowercase</option>
+              <option value="full">Letters, digits and punctuation</option>
+              <option value="pt">Portuguese with accents</option>
+              <option value="lower">Lowercase only</option>
+            </select>
+          </label>
+          <label class="fg"><span>Paper</span>
+            <select class="select select-sm" v-model="S.sheet.page" @change="A.sheetPreview()"><option value="A4">A4</option><option value="Letter">US Letter</option></select>
+          </label>
+          <label class="fg-inline"><input type="checkbox" class="toggle toggle-sm" role="switch" v-model="S.sheet.guides" @change="A.sheetPreview()"> Writing guides (baseline and x-height)</label>
+          <div class="sheet-preview" id="sheet-preview" v-ignore></div>
+          <div class="row">
+            <button type="button" class="btn btn-sm btn-primary grow" @click="A.downloadTemplate('pdf')"><svg class="ic"><use href="#i-download"/></svg>Template PDF</button>
+            <button type="button" class="btn btn-sm btn-soft" @click="A.downloadTemplate('svg')">SVG</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-ghost" @click="S.sheet.step = 2">I already have a filled sheet<svg class="ic"><use href="#i-right"/></svg></button>
+        </div>
+        <div v-show="S.sheet.step === 2" class="sheet-step">
+          <p class="pane-lead">Lay the sheet flat in good light. All four corner markers must be visible.</p>
+          <label class="drop">
+            <input type="file" accept="image/*" capture="environment" class="sr-only" @change="A.scanFile($event.target.files[0]); $event.target.value = ''">
+            <svg class="ic drop-ic"><use href="#i-image"/></svg>
+            <span class="drop-title">Upload a photo or scan</span>
+            <span class="drop-hint">JPG or PNG, or drop it here</span>
+          </label>
+          <button type="button" class="btn btn-sm btn-soft" @click="A.startCamera()" v-show="!S.sheet.camera"><svg class="ic"><use href="#i-camera"/></svg>Use the camera</button>
+          <div class="camera" v-show="S.sheet.camera">
+            <video id="camera-video" playsinline muted v-ignore></video>
+            <div class="camera-frame" aria-hidden="true"></div>
+            <div class="row"><button type="button" class="btn btn-sm btn-primary grow" @click="A.capture()"><svg class="ic"><use href="#i-camera"/></svg>Take photo</button><button type="button" class="btn btn-sm btn-ghost" @click="A.stopCamera()">Cancel</button></div>
+          </div>
+          <p class="pane-note" v-show="S.sheet.busy"><span class="spinner spinner-sm"></span> <span v-text="S.sheet.busy"></span></p>
+          <div class="alert alert-warning alert-soft" v-show="S.sheet.error" role="alert"><div class="alert-content" v-text="S.sheet.error"></div></div>
+        </div>
+        <div v-show="S.sheet.step === 3" class="sheet-step">
+          <div class="sheet-shot" id="sheet-shot" v-ignore></div>
+          <p class="pane-note"><b v-text="S.sheet.found"></b> letters found, <b v-text="S.sheet.low"></b> need a look. Click a letter to fix it.</p>
+          <ul class="pane-note warn-list" v-show="S.sheet.warnings.length"><li v-for="(w, i) in S.sheet.warnings" :key="i" v-text="w"></li></ul>
+          <div class="cells" id="cells" v-ignore></div>
+          <div class="pane-card cell-fix" v-show="S.sheet.cur">
+            <div class="row"><b class="cell-fix-char" v-text="S.sheet.cur"></b><span class="badge" :class="S.sheet.curConf >= 70 ? 'badge-success' : S.sheet.curConf >= 40 ? 'badge-warning' : 'badge-danger'" v-text="S.sheet.curConf + '% sure'"></span></div>
+            <label class="fg"><span>Ink threshold <b v-text="S.sheet.threshold + '%'"></b></span><input type="range" class="range range-sm" min="10" max="90" v-model="S.sheet.threshold" @change="A.retraceCell()"></label>
+            <div class="row">
+              <button type="button" class="btn btn-sm btn-soft" @click="A.redrawCell()">Redraw it</button>
+              <button type="button" class="btn btn-sm btn-ghost" @click="A.toggleSkipCell()" v-text="S.sheet.curSkip ? 'Use it' : 'Skip it'"></button>
+            </div>
+          </div>
+          <div class="row sticky-actions">
+            <button type="button" class="btn btn-sm btn-primary grow" @click="A.acceptSheet()"><svg class="ic"><use href="#i-check"/></svg>Add <span v-text="S.sheet.accepting"></span> letters to my font</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Spacing and kerning -->
+      <section v-show="S.panel === 'spacing'" class="pane">
+        <div class="pane-card">
+          <h3 class="pane-h">Auto spacing</h3>
+          <p class="pane-note">Sets the space on both sides of every drawn letter from its shape, so words look even.</p>
+          <label class="fg"><span>Looseness <b v-text="S.spacing.amount"></b></span><input type="range" class="range range-sm" min="10" max="120" v-model="S.spacing.amount"></label>
+          <button type="button" class="btn btn-sm btn-soft" @click="A.autoSpace()"><svg class="ic"><use href="#i-wand"/></svg>Auto spacing</button>
+        </div>
+        <h3 class="pane-h">Kerning</h3>
+        <p class="pane-note">Pick a pair and drag the right letter to tighten or loosen it.</p>
+        <div class="row">
+          <input class="input input-sm kern-in" maxlength="2" :value="S.kern.leftChar" @input="A.setKernSide('left', $event.target.value)" aria-label="Left letter">
+          <input class="input input-sm kern-in" maxlength="2" :value="S.kern.rightChar" @input="A.setKernSide('right', $event.target.value)" aria-label="Right letter">
+          <input class="input input-sm kern-val" type="number" step="5" :value="S.kern.value" @change="A.setKernValue($event.target.value)" aria-label="Kerning value">
+          <button type="button" class="ib ib-sm" @click="A.setKernValue(0)" aria-label="Reset pair"><svg class="ic"><use href="#i-x"/></svg></button>
+        </div>
+        <canvas class="kern-canvas" id="kern-canvas" v-ignore tabindex="0" aria-label="Kerning pair preview. Drag the right letter or use the arrow keys."></canvas>
+        <div class="chips">
+          <button type="button" class="chip chip-sm" v-for="(p, i) in S.kern.suggest" :key="p" @click="A.pickPair(p)" v-text="p"></button>
+        </div>
+        <div v-show="S.pro">
+          <h3 class="pane-h">Pairs <span class="badge badge-sm" v-text="S.kern.pairs.length"></span></h3>
+          <div class="kern-list">
+            <div class="kern-row" v-for="(p, i) in S.kern.pairs" :key="p.key"><button type="button" class="btn-link" @click="A.pickPair(p.label)" v-text="p.label"></button><span v-text="p.value"></span><button type="button" class="ib ib-xs" @click="A.deletePair(p.key)" :aria-label="'Delete pair ' + p.label"><svg class="ic"><use href="#i-trash"/></svg></button></div>
+            <p class="pane-note" v-show="!S.kern.pairs.length">No pairs yet.</p>
+          </div>
+          <h3 class="pane-h">Classes</h3>
+          <p class="pane-note">A class kerns many letters at once, for example @round = O C G Q. Use @name on either side of a pair.</p>
+          <div class="kern-list">
+            <div class="kern-row" v-for="(c, i) in S.kern.classes" :key="c.name"><b v-text="c.name"></b><input class="input input-xs grow" :value="c.members" @change="A.setClass(c.name, $event.target.value)" :aria-label="'Members of ' + c.name"><button type="button" class="ib ib-xs" @click="A.deleteClass(c.name)" :aria-label="'Delete class ' + c.name"><svg class="ic"><use href="#i-trash"/></svg></button></div>
+          </div>
+          <div class="row"><input class="input input-sm grow" placeholder="@name: A À Á Â" v-model="S.kern.newClass" @keydown.enter="A.addClass()" aria-label="New class"><button type="button" class="btn btn-sm btn-soft" @click="A.addClass()">Add class</button></div>
+          <h3 class="pane-h">Metrics table</h3>
+          <div class="metrics-table" id="metrics-table" v-ignore></div>
+        </div>
+      </section>
+
+      <!-- Test -->
+      <section v-show="S.panel === 'test'" class="pane test-pane" :class="{ 'test-dark': S.test.dark }">
+        <div class="row wrap">
+          <div class="segmented segmented-sm" role="radiogroup" aria-label="Preview mode">
+            <label class="segmented-item"><input type="radio" name="tm" value="type" v-model="S.test.mode"> Type</label>
+            <label class="segmented-item"><input type="radio" name="tm" value="waterfall" v-model="S.test.mode"> Waterfall</label>
+            <label class="segmented-item"><input type="radio" name="tm" value="paragraph" v-model="S.test.mode"> Paragraph</label>
+          </div>
+          <label class="fg-inline"><input type="checkbox" class="toggle toggle-sm" role="switch" v-model="S.test.dark"> Dark</label>
+        </div>
+        <textarea class="textarea textarea-sm" rows="2" v-model="S.test.text" aria-label="Text to preview"></textarea>
+        <div class="chips">
+          <button type="button" class="chip chip-sm" @click="A.sample('pangram')">Pangram</button>
+          <button type="button" class="chip chip-sm" @click="A.sample('pt')">Português</button>
+          <button type="button" class="chip chip-sm" @click="A.sample('alphabet')">Alphabet</button>
+          <button type="button" class="chip chip-sm" @click="A.sample('paragraph')">Paragraph</button>
+        </div>
+        <div class="field-grid">
+          <label class="fg"><span>Size <b v-text="S.test.size + ' px'"></b></span><input type="range" class="range range-sm" min="8" max="200" v-model="S.test.size"></label>
+          <label class="fg"><span>Line height <b v-text="(S.test.lh / 100).toFixed(2)"></b></span><input type="range" class="range range-sm" min="80" max="220" v-model="S.test.lh"></label>
+          <label class="fg"><span>Letter spacing <b v-text="S.test.ls"></b></span><input type="range" class="range range-sm" min="-50" max="200" v-model="S.test.ls"></label>
+          <label class="fg" v-show="S.variable.has"><span>Weight <b v-text="S.test.weight"></b></span><input type="range" class="range range-sm" :min="S.variable.min" :max="S.variable.max" v-model="S.test.weight"></label>
+        </div>
+        <p class="pane-note" v-show="S.test.error" role="alert" v-text="S.test.error"></p>
+        <div class="test-out" id="test-out" v-ignore aria-live="off"></div>
+      </section>
+
+      <!-- Font: info, metrics, hinting, variable -->
+      <section v-show="S.panel === 'font'" class="pane">
+        <h3 class="pane-h">Font info</h3>
+        <div class="field-grid two">
+          <label class="fg"><span>Family</span><input class="input input-sm" :value="S.font.family" @change="A.setMeta('family', $event.target.value)"></label>
+          <label class="fg"><span>Style</span><input class="input input-sm" :value="S.font.style" @change="A.setMeta('style', $event.target.value)"></label>
+          <label class="fg"><span>Designer</span><input class="input input-sm" :value="S.font.designer" @change="A.setMeta('designer', $event.target.value)"></label>
+          <label class="fg"><span>Version</span><input class="input input-sm" :value="S.font.version" @change="A.setMeta('version', $event.target.value)"></label>
+          <label class="fg span2"><span>License</span><input class="input input-sm" :value="S.font.license" @change="A.setMeta('license', $event.target.value)" placeholder="For example: SIL Open Font License 1.1"></label>
+        </div>
+        <h3 class="pane-h">Vertical metrics</h3>
+        <div class="field-grid two">
+          <label class="fg"><span>Ascender</span><input class="input input-sm" type="number" :value="S.font.ascender" @change="A.setMeta('ascender', +$event.target.value)"></label>
+          <label class="fg"><span>Descender</span><input class="input input-sm" type="number" :value="S.font.descender" @change="A.setMeta('descender', +$event.target.value)"></label>
+          <label class="fg"><span>Cap height</span><input class="input input-sm" type="number" :value="S.font.capHeight" @change="A.setMeta('capHeight', +$event.target.value)"></label>
+          <label class="fg"><span>x-height</span><input class="input input-sm" type="number" :value="S.font.xHeight" @change="A.setMeta('xHeight', +$event.target.value)"></label>
+        </div>
+        <p class="pane-note">Units per em: <span v-text="S.font.upm"></span>. <span v-text="S.font.total"></span> glyphs.</p>
+
+        <div v-show="S.pro">
+          <h3 class="pane-h"><svg class="ic"><use href="#i-pixel"/></svg> Hinting</h3>
+          <p class="pane-note">Hints help small sizes on Windows screens snap stems to whole pixels. Auto works for most fonts.</p>
+          <div class="segmented segmented-sm" role="radiogroup" aria-label="Hinting">
+            <label class="segmented-item"><input type="radio" name="hm" value="auto" v-model="S.hint.mode" @change="A.savePrefs()"> Auto</label>
+            <label class="segmented-item"><input type="radio" name="hm" value="manual" v-model="S.hint.mode" @change="A.savePrefs()"> Manual</label>
+            <label class="segmented-item"><input type="radio" name="hm" value="none" v-model="S.hint.mode" @change="A.savePrefs()"> None</label>
+          </div>
+          <label class="fg-inline"><input type="checkbox" class="toggle toggle-sm" role="switch" v-model="S.opts.stems" @change="A.redraw()"> Show stems on the canvas</label>
+          <div class="row"><button type="button" class="btn btn-sm btn-soft" @click="A.detectStems(false)">Detect stems in this letter</button><button type="button" class="btn btn-sm btn-ghost" @click="A.detectStems(true)">All letters</button></div>
+          <div v-show="S.hint.mode === 'manual'">
+            <div class="kern-list">
+              <div class="kern-row" v-for="(st, i) in S.hint.stems" :key="i"><b v-text="st.dir === 'v' ? 'Vertical' : 'Horizontal'"></b><input class="input input-xs" type="number" :value="st.pos" @change="A.setStem(i, 'pos', +$event.target.value)" aria-label="Stem position"><input class="input input-xs" type="number" :value="st.width" @change="A.setStem(i, 'width', +$event.target.value)" aria-label="Stem width"><button type="button" class="ib ib-xs" @click="A.deleteStem(i)" aria-label="Delete stem"><svg class="ic"><use href="#i-trash"/></svg></button></div>
+            </div>
+            <div class="row"><button type="button" class="btn btn-sm btn-soft" @click="A.addStem('v')">Add vertical stem from selection</button><button type="button" class="btn btn-sm btn-soft" @click="A.addStem('h')">Horizontal</button></div>
+          </div>
+          <div class="hint-preview" id="hint-preview" v-ignore></div>
+
+          <h3 class="pane-h"><svg class="ic"><use href="#i-weight"/></svg> Variable weight</h3>
+          <div v-show="!S.variable.has">
+            <p class="pane-note">Add a weight axis to ship Regular, Bold and every weight in between as one variable font.</p>
+            <div class="field-grid three">
+              <label class="fg"><span>Min</span><input class="input input-sm" type="number" v-model="S.variable.min"></label>
+              <label class="fg"><span>Default</span><input class="input input-sm" type="number" v-model="S.variable.def"></label>
+              <label class="fg"><span>Max</span><input class="input input-sm" type="number" v-model="S.variable.max"></label>
+            </div>
+            <label class="fg"><span>Auto embolden <b v-text="S.variable.embolden + ' units'"></b></span><input type="range" class="range range-sm" min="0" max="120" v-model="S.variable.embolden"></label>
+            <div class="row"><button type="button" class="btn btn-sm btn-primary" @click="A.addWeightAxis(true)">Create Bold master (auto)</button><button type="button" class="btn btn-sm btn-soft" @click="A.addWeightAxis(false)">Duplicate to edit by hand</button></div>
+          </div>
+          <div v-show="S.variable.has">
+            <p class="pane-note">Axis wght <span v-text="S.variable.min"></span> to <span v-text="S.variable.max"></span>, default <span v-text="S.variable.def"></span>. Edit the Bold master by switching below; only point moves are allowed so the masters stay compatible.</p>
+            <div class="segmented segmented-sm" role="radiogroup" aria-label="Master to edit">
+              <label class="segmented-item"><input type="radio" name="ms" :value="0" :checked="S.master === 0" @change="A.setMaster(0)"> Regular</label>
+              <label class="segmented-item"><input type="radio" name="ms" :value="1" :checked="S.master === 1" @change="A.setMaster(1)"> Bold</label>
+            </div>
+            <label class="fg"><span>Preview weight <b v-text="S.variable.preview"></b></span><input type="range" class="range range-sm" :min="S.variable.min" :max="S.variable.max" v-model="S.variable.preview" @input="A.drawWeightPreview()"></label>
+            <canvas class="weight-canvas" id="weight-canvas" v-ignore aria-label="Weight preview"></canvas>
+            <div class="row"><button type="button" class="btn btn-sm btn-soft" @click="A.reembolden()">Re-embolden Bold</button><button type="button" class="btn btn-sm btn-ghost" @click="A.removeAxis()">Remove axis</button></div>
+          </div>
+        </div>
+        <p class="pane-note" v-show="!S.pro">Turn on <b>Pro</b> in the top bar for hinting and variable weight.</p>
+      </section>
+
+      <!-- Export -->
+      <section v-show="S.panel === 'export'" class="pane">
+        <p class="pane-lead">Your font is built right here in the browser. Nothing is uploaded.</p>
+        <div class="exp-grid">
+          <button type="button" class="exp-card" @click="A.download('ttf')"><b>TTF</b><span>Install on Windows, macOS, Linux, Cricut, Office</span></button>
+          <button type="button" class="exp-card" @click="A.download('otf')"><b>OTF</b><span>OpenType with PostScript outlines, for design apps</span></button>
+          <button type="button" class="exp-card" @click="A.download('woff2')"><b>WOFF2</b><span>Smallest web font for every modern browser</span></button>
+          <button type="button" class="exp-card" @click="A.download('woff')"><b>WOFF</b><span>Web font for older browsers</span></button>
+          <button type="button" class="exp-card" :disabled="!S.variable.has" @click="A.download('ttf', true)"><b>Variable TTF</b><span v-text="S.variable.has ? 'One file, every weight' : 'Add a weight axis in Font first'"></span></button>
+          <button type="button" class="exp-card" :disabled="!S.variable.has" @click="A.download('woff2', true)"><b>Variable WOFF2</b><span v-text="S.variable.has ? 'Every weight for the web' : 'Add a weight axis in Font first'"></span></button>
+        </div>
+        <button type="button" class="btn btn-primary btn-block" @click="A.downloadKit()"><svg class="ic"><use href="#i-download"/></svg>Web font kit (.zip with CSS and sample page)</button>
+        <label class="fg"><span>Hinting</span><select class="select select-sm" v-model="S.hint.mode" @change="A.savePrefs()"><option value="auto">Auto hinting</option><option value="manual">Manual stems</option><option value="none">No hinting</option></select></label>
+        <div class="alert alert-warning alert-soft" v-show="S.problems.length" role="alert"><div class="alert-content"><b>Check before export</b><ul><li v-for="(p, i) in S.problems" :key="i" v-text="p"></li></ul></div></div>
+        <h3 class="pane-h">Project file</h3>
+        <p class="pane-note">Projects save automatically in this browser. Keep a copy or move it to another device as a .fontsketch.json file.</p>
+        <div class="row">
+          <button type="button" class="btn btn-sm btn-soft grow" @click="A.saveProjectFile()"><svg class="ic"><use href="#i-save"/></svg>Save project</button>
+          <label class="btn btn-sm btn-soft grow"><svg class="ic"><use href="#i-folder"/></svg>Open project<input type="file" accept=".json,application/json" class="sr-only" @change="A.importFiles($event.target.files); $event.target.value = ''"></label>
+        </div>
+      </section>
+    </div>
+  </aside>
+
+  <!-- ============ Stage ============ -->
+  <main class="stage" id="stage" data-tour="canvas">
+    <div class="toolbox" role="toolbar" aria-label="Tools" aria-orientation="vertical">
+      <button type="button" class="tool" @click="A.setTool('brush')" :aria-pressed="S.tool === 'brush' ? 'true' : 'false'" title="Brush (B)" aria-label="Brush"><svg class="ic"><use href="#i-brush"/></svg></button>
+      <button type="button" class="tool" @click="A.setTool('eraser')" :aria-pressed="S.tool === 'eraser' ? 'true' : 'false'" title="Eraser (E)" aria-label="Eraser"><svg class="ic"><use href="#i-eraser"/></svg></button>
+      <button type="button" class="tool" @click="A.setTool('select')" :aria-pressed="S.tool === 'select' ? 'true' : 'false'" title="Select and transform (V)" aria-label="Select"><svg class="ic"><use href="#i-select"/></svg></button>
+      <button type="button" class="tool pro-only" @click="A.setTool('pen')" :aria-pressed="S.tool === 'pen' ? 'true' : 'false'" title="Pen: click for corners, drag for curves (P)" aria-label="Pen"><svg class="ic"><use href="#i-pen"/></svg></button>
+      <button type="button" class="tool" @click="A.setTool('rect')" :aria-pressed="S.tool === 'rect' ? 'true' : 'false'" title="Rectangle (R)" aria-label="Rectangle"><svg class="ic"><use href="#i-rect"/></svg></button>
+      <button type="button" class="tool" @click="A.setTool('ellipse')" :aria-pressed="S.tool === 'ellipse' ? 'true' : 'false'" title="Ellipse (O)" aria-label="Ellipse"><svg class="ic"><use href="#i-ellipse"/></svg></button>
+      <button type="button" class="tool" @click="A.setTool('hand')" :aria-pressed="S.tool === 'hand' ? 'true' : 'false'" title="Hand: pan the canvas (H or hold Space)" aria-label="Hand"><svg class="ic"><use href="#i-hand"/></svg></button>
+    </div>
+
+    <div class="optbar" role="group" aria-label="Tool options">
+      <div class="ob-group" v-show="S.tool === 'brush'">
+        <label class="ob"><span>Size</span><input type="range" class="range range-xs" min="6" max="240" v-model="S.brush.size" aria-label="Brush size"><b v-text="S.brush.size"></b></label>
+        <label class="ob hide-sm"><span>Smooth</span><input type="range" class="range range-xs" min="0" max="100" v-model="S.brush.smoothing" aria-label="Smoothing"><b v-text="S.brush.smoothing"></b></label>
+        <select class="select select-xs" v-model="S.brush.shape" aria-label="Brush shape"><option value="round">Round</option><option value="chisel">Chisel</option><option value="calligraphy">Calligraphy</option></select>
+      </div>
+      <div class="ob-group" v-show="S.tool === 'eraser'">
+        <label class="ob"><span>Size</span><input type="range" class="range range-xs" min="6" max="300" v-model="S.brush.eraserSize" aria-label="Eraser size"><b v-text="S.brush.eraserSize"></b></label>
+      </div>
+      <div class="ob-group" v-show="S.tool === 'select' || S.tool === 'pen'">
+        <span class="ob-note" v-text="S.sel.label"></span>
+      </div>
+      <div class="ob-group" v-show="S.tool === 'rect' || S.tool === 'ellipse'">
+        <span class="ob-note">Drag to draw. Shift keeps it square, Alt draws from the center.</span>
+      </div>
+      <span class="ob-sep"></span>
+      <button type="button" class="ib ib-sm" @click="S.opts.grid = !S.opts.grid; A.redraw()" :aria-pressed="S.opts.grid ? 'true' : 'false'" title="Grid (G)" aria-label="Grid"><svg class="ic"><use href="#i-grid"/></svg></button>
+      <button type="button" class="ib ib-sm" @click="S.opts.snap = !S.opts.snap" :aria-pressed="S.opts.snap ? 'true' : 'false'" title="Snap to grid" aria-label="Snap to grid"><svg class="ic"><use href="#i-magnet"/></svg></button>
+      <button type="button" class="ib ib-sm" @click="S.opts.preview = !S.opts.preview; A.redraw()" :aria-pressed="S.opts.preview ? 'true' : 'false'" title="Preview the filled letter (F)" aria-label="Preview fill"><svg class="ic"><use href="#i-eye"/></svg></button>
+    </div>
+
+    <canvas id="cv" class="cv" tabindex="0" role="img" aria-roledescription="drawing canvas" :aria-label="'Canvas for ' + S.glyph.label + '. Draw with the brush, or press V for select, B for brush, E for eraser.'"></canvas>
+
+    <div class="ctxbar" id="ctxbar" role="toolbar" aria-label="Selection actions" hidden>
+      <button type="button" class="ib ib-sm" data-act="flipH" title="Flip horizontally" aria-label="Flip horizontally"><svg class="ic"><use href="#i-flip-h"/></svg></button>
+      <button type="button" class="ib ib-sm" data-act="flipV" title="Flip vertically" aria-label="Flip vertically"><svg class="ic"><use href="#i-flip-v"/></svg></button>
+      <button type="button" class="ib ib-sm" data-act="rotate" title="Rotate 90 degrees" aria-label="Rotate 90 degrees"><svg class="ic"><use href="#i-rotate"/></svg></button>
+      <span class="ctx-sep"></span>
+      <button type="button" class="ib ib-sm" data-act="union" title="Merge overlapping shapes" aria-label="Merge shapes"><svg class="ic"><use href="#i-union"/></svg></button>
+      <button type="button" class="ib ib-sm" data-act="subtract" title="Cut the top shape out of the others" aria-label="Subtract"><svg class="ic"><use href="#i-subtract"/></svg></button>
+      <button type="button" class="ib ib-sm" data-act="simplify" title="Simplify: fewer points, smoother curves" aria-label="Simplify"><svg class="ic"><use href="#i-simplify"/></svg></button>
+      <span class="ctx-sep"></span>
+      <button type="button" class="ib ib-sm" data-act="duplicate" title="Copy to another letter" aria-label="Copy to another letter"><svg class="ic"><use href="#i-copy"/></svg></button>
+      <button type="button" class="ib ib-sm" data-act="delete" title="Delete (Del)" aria-label="Delete"><svg class="ic"><use href="#i-trash"/></svg></button>
+    </div>
+
+    <div class="glyph-badge" aria-live="polite">
+      <button type="button" class="ib ib-sm" @click="A.step(-1)" aria-label="Previous letter" title="Previous letter (Alt Left)"><svg class="ic"><use href="#i-left"/></svg></button>
+      <span class="gb-char" v-text="S.glyph.char"></span>
+      <span class="gb-meta"><b v-text="S.glyph.name"></b><small v-text="S.glyph.code"></small></span>
+      <button type="button" class="ib ib-sm" @click="A.step(1)" aria-label="Next letter" title="Next letter (Alt Right)"><svg class="ic"><use href="#i-right"/></svg></button>
+    </div>
+    <div class="master-badge" v-show="S.master === 1">Editing the Bold master</div>
+
+    <div class="zoombar">
+      <button type="button" class="ib ib-sm" @click="A.zoom(1 / 1.25)" aria-label="Zoom out" title="Zoom out (Ctrl -)"><svg class="ic"><use href="#i-minus"/></svg></button>
+      <button type="button" class="zoom-val" @click="A.fit()" title="Fit (Ctrl 0)" v-text="S.zoom + '%'"></button>
+      <button type="button" class="ib ib-sm" @click="A.zoom(1.25)" aria-label="Zoom in" title="Zoom in (Ctrl +)"><svg class="ic"><use href="#i-plus"/></svg></button>
+      <button type="button" class="ib ib-sm" @click="A.fit()" aria-label="Fit letter" title="Fit (Ctrl 0)"><svg class="ic"><use href="#i-fit"/></svg></button>
+    </div>
+    <div class="pos-readout" aria-hidden="true" v-text="S.status.pos"></div>
+    <div class="empty-hint" v-show="S.glyph.status === 'empty' && S.tool === 'brush'" aria-hidden="true">Draw “<span v-text="S.glyph.char"></span>” here</div>
+    <div class="dropveil" id="dropveil" aria-hidden="true"><div class="dropveil-card"><svg class="ic"><use href="#i-upload"/></svg><span id="dropveil-text">Drop to add</span></div></div>
+  </main>
+
+  <!-- ============ Inspector ============ -->
+  <aside class="inspector" aria-label="Letter properties">
+    <section class="insp">
+      <h2 class="insp-h">Letter</h2>
+      <div class="insp-glyph"><span class="insp-char" v-text="S.glyph.char"></span><span><b v-text="S.glyph.name"></b><small v-text="S.glyph.code"></small><span class="badge badge-xs" :class="'st-' + S.glyph.status" v-text="S.glyph.status"></span></span></div>
+      <div class="field-grid three">
+        <label class="fg"><span>Width</span><input class="input input-xs" type="number" :value="S.glyph.adv" @change="A.setMetric('adv', +$event.target.value)"></label>
+        <label class="fg"><span>Left</span><input class="input input-xs" type="number" :value="S.glyph.lsb" @change="A.setMetric('lsb', +$event.target.value)"></label>
+        <label class="fg"><span>Right</span><input class="input input-xs" type="number" :value="S.glyph.rsb" @change="A.setMetric('rsb', +$event.target.value)"></label>
+      </div>
+      <div class="row"><button type="button" class="btn btn-xs btn-soft grow" @click="A.autoSpaceGlyph()">Auto space</button><button type="button" class="btn btn-xs btn-ghost grow" @click="A.clearGlyph()">Clear letter</button></div>
+    </section>
+    <section class="insp" v-show="S.sel.count">
+      <h2 class="insp-h">Selection</h2>
+      <div class="field-grid three">
+        <label class="fg"><span>X</span><input class="input input-xs" type="number" :value="S.sel.x" @change="A.setSelBox('x', +$event.target.value)"></label>
+        <label class="fg"><span>Y</span><input class="input input-xs" type="number" :value="S.sel.y" @change="A.setSelBox('y', +$event.target.value)"></label>
+        <label class="fg"><span>Rotate</span><input class="input input-xs" type="number" value="0" @change="A.rotateBy(+$event.target.value); $event.target.value = 0" aria-label="Rotate by degrees"></label>
+        <label class="fg"><span>W</span><input class="input input-xs" type="number" :value="S.sel.w" @change="A.setSelBox('w', +$event.target.value)"></label>
+        <label class="fg"><span>H</span><input class="input input-xs" type="number" :value="S.sel.h" @change="A.setSelBox('h', +$event.target.value)"></label>
+      </div>
+      <div class="row pro-only"><button type="button" class="btn btn-xs btn-soft grow" @click="A.convert('smooth')">Smooth</button><button type="button" class="btn btn-xs btn-soft grow" @click="A.convert('corner')">Corner</button><button type="button" class="btn btn-xs btn-soft grow" @click="A.convert('curve')">Curve</button><button type="button" class="btn btn-xs btn-soft grow" @click="A.convert('line')">Line</button></div>
+    </section>
+    <section class="insp">
+      <h2 class="insp-h">Outline</h2>
+      <div class="row wrap">
+        <button type="button" class="btn btn-xs btn-soft" @click="A.pathOp('union')" title="Merge overlapping shapes into one outline">Remove overlaps</button>
+        <button type="button" class="btn btn-xs btn-soft" @click="A.pathOp('direction')" title="Outer shapes clockwise, holes the other way">Fix direction</button>
+        <button type="button" class="btn btn-xs btn-soft" @click="A.pathOp('simplify')" title="Fewer points, smoother curves">Simplify</button>
+      </div>
+      <label class="fg pro-only"><span>Simplify tolerance <b v-text="S.opts.simplifyTolerance"></b></span><input type="range" class="range range-xs" min="0.5" max="10" step="0.5" v-model="S.opts.simplifyTolerance"></label>
+      <p class="pane-note"><span v-text="S.glyph.contours"></span> shapes, <span v-text="S.glyph.points"></span> points</p>
+    </section>
+    <section class="insp">
+      <h2 class="insp-h">Components</h2>
+      <p class="pane-note" v-show="!S.glyph.components.length">Reuse other letters inside this one, for example a + ´ = á.</p>
+      <div class="comp-row" v-for="(c, i) in S.glyph.components" :key="i">
+        <b v-text="c.glyph"></b>
+        <input class="input input-xs" type="number" :value="c.dx" @change="A.setComponent(i, 'dx', +$event.target.value)" aria-label="Horizontal offset">
+        <input class="input input-xs" type="number" :value="c.dy" @change="A.setComponent(i, 'dy', +$event.target.value)" aria-label="Vertical offset">
+        <button type="button" class="ib ib-xs" @click="A.removeComponent(i)" aria-label="Remove component"><svg class="ic"><use href="#i-trash"/></svg></button>
+      </div>
+      <div class="row">
+        <input class="input input-xs grow" placeholder="Letter or glyph name" v-model="S.compAdd" @keydown.enter="A.addComponent()" aria-label="Component to add">
+        <button type="button" class="btn btn-xs btn-soft" @click="A.addComponent()">Add</button>
+        <button type="button" class="btn btn-xs btn-ghost" v-show="S.glyph.components.length" @click="A.decompose()">Decompose</button>
+      </div>
+      <button type="button" class="btn btn-xs btn-soft btn-block" v-show="S.glyph.composable" @click="A.composeCurrent()"><svg class="ic"><use href="#i-sparkle"/></svg>Build from base and accent</button>
+    </section>
+    <section class="insp pro-only" v-show="S.pro && S.sel.point">
+      <h2 class="insp-h">Point</h2>
+      <div class="field-grid two">
+        <label class="fg"><span>X</span><input class="input input-xs" type="number" :value="S.sel.px" @change="A.setPoint('x', +$event.target.value)"></label>
+        <label class="fg"><span>Y</span><input class="input input-xs" type="number" :value="S.sel.py" @change="A.setPoint('y', +$event.target.value)"></label>
+      </div>
+      <p class="pane-note" v-text="S.sel.ptype"></p>
+    </section>
+  </aside>
+</div>
+
+<!-- ============ Filmstrip ============ -->
+<footer class="filmstrip" data-tour="filmstrip" aria-label="Letters">
+  <button type="button" class="ib ib-sm film-nav" @click="A.step(-1)" aria-label="Previous letter"><svg class="ic"><use href="#i-left"/></svg></button>
+  <div class="film" id="film" v-ignore role="listbox" aria-label="Choose a letter" tabindex="-1"></div>
+  <button type="button" class="ib ib-sm film-nav" @click="A.step(1)" aria-label="Next letter"><svg class="ic"><use href="#i-right"/></svg></button>
+  <div class="film-progress hide-sm" :title="S.font.drawn + ' of ' + S.font.total + ' letters ready'"><span class="film-bar"><i :style="{ width: (S.font.total ? Math.round(100 * S.font.drawn / S.font.total) : 0) + '%' }"></i></span><b v-text="S.font.drawn + '/' + S.font.total"></b></div>
+</footer>
+
+<!-- ============ Start screen ============ -->
+<dialog id="start" class="modal start-dlg" aria-labelledby="start-title">
+  <div class="modal-box start-box">
+    <div class="start-head">
+      <div>
+        <h2 id="start-title" class="start-title">Make your own font</h2>
+        <p class="start-sub">Draw, scan your handwriting or import, then download a real font file. Everything stays on your device.</p>
+      </div>
+      <button type="button" class="ib" @click="A.closeStart()" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="start-grid">
+      <button type="button" class="start-card start-continue" v-show="S.lastProject" @click="A.openProject(S.lastProject.id)">
+        <span class="sc-kicker">Continue</span>
+        <b v-text="S.lastProject ? S.lastProject.name : ''"></b>
+        <span class="sc-sample" v-text="S.lastProject ? S.lastProject.sample : ''"></span>
+        <small v-text="S.lastProject ? S.lastProject.when : ''"></small>
+      </button>
+      <button type="button" class="start-card start-default" @click="A.loadTemplate('quill-hand')">
+        <span class="sc-kicker">Edit the default font</span>
+        <b>Quill Hand</b>
+        <span class="sc-sample sc-quill">Aa Bb Gg 123</span>
+        <small>A complete handwritten font to remix</small>
+      </button>
+      <button type="button" class="start-card" @click="A.newBlank()">
+        <span class="sc-kicker">New</span>
+        <b>Blank font</b>
+        <span class="sc-plus"><svg class="ic"><use href="#i-plus"/></svg></span>
+        <small>Start from empty letters</small>
+      </button>
+    </div>
+    <h3 class="start-h">Templates</h3>
+    <div class="tpl-grid tpl-grid-start" id="tpl-start" v-ignore></div>
+    <h3 class="start-h">Import</h3>
+    <div class="start-imports">
+      <label class="start-imp"><svg class="ic"><use href="#i-font"/></svg><span>Font file<small>TTF, OTF, WOFF, WOFF2</small></span><input type="file" class="sr-only" accept=".ttf,.otf,.woff,.woff2" @change="A.closeStart(); A.importFiles($event.target.files); $event.target.value = ''"></label>
+      <label class="start-imp"><svg class="ic"><use href="#i-shapes"/></svg><span>SVG drawings<small>One letter or a sheet</small></span><input type="file" class="sr-only" accept=".svg" multiple @change="A.closeStart(); A.importFiles($event.target.files); $event.target.value = ''"></label>
+      <label class="start-imp"><svg class="ic"><use href="#i-image"/></svg><span>Image<small>Trace a letter</small></span><input type="file" class="sr-only" accept="image/*" @change="A.closeStart(); A.importFiles($event.target.files); $event.target.value = ''"></label>
+      <button type="button" class="start-imp" @click="A.closeStart(); A.openPanel('sheet')"><svg class="ic"><use href="#i-sheet"/></svg><span>Handwriting sheet<small>Print, write, photo</small></span></button>
+    </div>
+    <div v-show="S.projects.length > 1">
+      <h3 class="start-h">Your projects</h3>
+      <ul class="proj-list">
+        <li v-for="(p, i) in S.projects" :key="p.id"><button type="button" class="proj-open" @click="A.openProject(p.id)"><b v-text="p.name"></b><span v-text="p.sample"></span><small v-text="p.when"></small></button><button type="button" class="ib ib-sm" @click="A.deleteProject(p.id)" :aria-label="'Delete project ' + p.name"><svg class="ic"><use href="#i-trash"/></svg></button></li>
+      </ul>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button aria-label="Close">Close</button></form>
+</dialog>
+
+<!-- ============ Shortcuts ============ -->
+<dialog id="shortcuts" class="modal" aria-labelledby="sc-title">
+  <div class="modal-box">
+    <div class="modal-header"><h2 id="sc-title" class="modal-title">Keyboard shortcuts</h2></div>
+    <form method="dialog"><button class="modal-close" aria-label="Close"></button></form>
+    <div class="modal-body sc-grid">
+      <div><h3>Tools</h3><dl>
+        <dt><kbd class="kbd kbd-sm">B</kbd></dt><dd>Brush</dd>
+        <dt><kbd class="kbd kbd-sm">E</kbd></dt><dd>Eraser</dd>
+        <dt><kbd class="kbd kbd-sm">V</kbd></dt><dd>Select and transform</dd>
+        <dt><kbd class="kbd kbd-sm">P</kbd></dt><dd>Pen (Pro)</dd>
+        <dt><kbd class="kbd kbd-sm">R</kbd> <kbd class="kbd kbd-sm">O</kbd></dt><dd>Rectangle, ellipse</dd>
+        <dt><kbd class="kbd kbd-sm">H</kbd> or <kbd class="kbd kbd-sm">Space</kbd></dt><dd>Pan</dd>
+        <dt><kbd class="kbd kbd-sm">[</kbd> <kbd class="kbd kbd-sm">]</kbd></dt><dd>Brush size</dd>
+      </dl></div>
+      <div><h3>Edit</h3><dl>
+        <dt><kbd class="kbd kbd-sm">Ctrl Z</kbd></dt><dd>Undo</dd>
+        <dt><kbd class="kbd kbd-sm">Ctrl Shift Z</kbd></dt><dd>Redo</dd>
+        <dt><kbd class="kbd kbd-sm">Ctrl C</kbd> <kbd class="kbd kbd-sm">Ctrl V</kbd></dt><dd>Copy, paste (works across letters)</dd>
+        <dt><kbd class="kbd kbd-sm">Ctrl A</kbd></dt><dd>Select all</dd>
+        <dt><kbd class="kbd kbd-sm">Del</kbd></dt><dd>Delete selection</dd>
+        <dt><kbd class="kbd kbd-sm">Arrows</kbd></dt><dd>Nudge (Shift for 10)</dd>
+        <dt><kbd class="kbd kbd-sm">Enter</kbd></dt><dd>Finish the pen path</dd>
+      </dl></div>
+      <div><h3>View and file</h3><dl>
+        <dt><kbd class="kbd kbd-sm">Alt ←</kbd> <kbd class="kbd kbd-sm">Alt →</kbd></dt><dd>Previous, next letter</dd>
+        <dt><kbd class="kbd kbd-sm">Ctrl 0</kbd></dt><dd>Fit the letter</dd>
+        <dt><kbd class="kbd kbd-sm">Ctrl +</kbd> <kbd class="kbd kbd-sm">Ctrl -</kbd></dt><dd>Zoom</dd>
+        <dt><kbd class="kbd kbd-sm">G</kbd> <kbd class="kbd kbd-sm">F</kbd></dt><dd>Grid, filled preview</dd>
+        <dt><kbd class="kbd kbd-sm">Ctrl S</kbd></dt><dd>Save project file</dd>
+        <dt><kbd class="kbd kbd-sm">Ctrl E</kbd></dt><dd>Download font</dd>
+        <dt><kbd class="kbd kbd-sm">?</kbd></dt><dd>This list</dd>
+      </dl></div>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button aria-label="Close">Close</button></form>
+</dialog>
+
+<!-- ============ Redraw a scanned cell ============ -->
+<dialog id="redraw" class="modal" aria-labelledby="rd-title">
+  <div class="modal-box redraw-box">
+    <div class="modal-header"><h2 id="rd-title" class="modal-title">Redraw “<span v-text="S.sheet.cur"></span>”</h2></div>
+    <canvas id="redraw-canvas" class="redraw-canvas" v-ignore aria-label="Draw the letter here"></canvas>
+    <div class="modal-actions"><button type="button" class="btn btn-ghost" @click="A.redrawClear()">Clear</button><button type="button" class="btn btn-ghost" @click="A.redrawClose(false)">Cancel</button><button type="button" class="btn btn-primary" @click="A.redrawClose(true)">Use this</button></div>
+  </div>
+</dialog>
+
+<!-- ============ Tour ============ -->
+<div class="tour" id="tour" v-show="S.tour.on" role="dialog" aria-modal="false" aria-labelledby="tour-title">
+  <div class="tour-spot" id="tour-spot"></div>
+  <div class="tour-card" id="tour-card">
+    <span class="tour-step" v-text="(S.tour.i + 1) + ' of 4'"></span>
+    <h2 id="tour-title" class="tour-title" v-text="S.tour.title"></h2>
+    <p v-text="S.tour.text"></p>
+    <div class="row"><button type="button" class="btn btn-sm btn-ghost" @click="A.endTour()">Skip</button><span class="grow"></span><button type="button" class="btn btn-sm btn-soft" v-show="S.tour.i > 0" @click="A.tourGo(S.tour.i - 1)">Back</button><button type="button" class="btn btn-sm btn-primary" @click="A.tourGo(S.tour.i + 1)" v-text="S.tour.i === 3 ? 'Start drawing' : 'Next'"></button></div>
+  </div>
+</div>
+
+<!-- ============ Toasts ============ -->
+<div class="toasts" aria-live="polite" role="status">
+  <div class="toast-msg" v-for="(t, i) in S.toasts" :key="t.id" :class="'tm-' + t.kind"><span v-text="t.text"></span><button type="button" class="btn-link" v-show="t.action" @click="A.toastAction(t.id)" v-text="t.action"></button></div>
+</div>
+
+<noscript><p class="noscript">The fontsketch editor needs JavaScript to draw and build fonts in your browser.</p></noscript>
+</body>
+</html>
