@@ -25,15 +25,15 @@ function shape(font, name) {
   return { area: flat.reduce((a, c) => a + Math.abs(contourArea(c)), 0), box: flat.length ? bounds(flat) : null, count: flat.length };
 }
 
-function expectSameOutlines(a, b, tol) {
+function expectSameOutlines(a, b, tol, merged = false) {
   expect(Object.keys(b.glyphs).sort()).toEqual(Object.keys(a.glyphs).sort());
   for (const name of Object.keys(a.glyphs)) {
     const x = shape(a, name);
     const y = shape(b, name);
-    expect(y.count, name).toBe(x.count);
+    if (!merged) expect(y.count, name).toBe(x.count);
     if (!x.box) continue;
     for (const k of ['xMin', 'yMin', 'xMax', 'yMax']) expect(Math.abs(y.box[k] - x.box[k]), `${name} ${k}`).toBeLessThanOrEqual(tol);
-    expect(Math.abs(y.area - x.area) / Math.max(1, x.area), `${name} area`).toBeLessThan(0.01);
+    if (!merged) expect(Math.abs(y.area - x.area) / Math.max(1, x.area), `${name} area`).toBeLessThan(0.01);
     expect(b.glyphs[name].advanceWidth).toBe(Math.round(a.glyphs[name].advanceWidth));
     expect(b.glyphs[name].unicodes).toEqual(a.glyphs[name].unicodes);
   }
@@ -48,7 +48,8 @@ describe('export and parse round trips', () => {
       const bytes = exportFont(font, { format, timestamp: T });
       expect(detectFormat(bytes)).toBe(format);
       const back = parseFont(bytes);
-      expectSameOutlines(font, back, format === 'otf' ? 1 : 0.5);
+      expectSameOutlines(font, back, format === 'otf' ? 1 : 0.5, format === 'otf');
+      if (format === 'otf') expect(back.glyphs.H.contours).toHaveLength(1);
       expect(back.meta).toMatchObject({ family: 'Sketch Test', style: 'Regular', version: '1.200', designer: 'Test Designer', license: 'MIT', unitsPerEm: 1000, ascender: 800, descender: -200, lineGap: 0, xHeight: 500, capHeight: 700, weightClass: 400 });
       expect(flatKerning(back)).toEqual(flatKerning(font));
       if (format !== 'otf') {
