@@ -174,7 +174,7 @@ export function buildIcons() {
 
 /** Quill Hand with a weight axis: Thin and Black masters around the Regular. */
 export function buildQuillVariable() {
-  const { font, strokeData } = buildQuillHand();
+  const { font, strokeData } = buildQuillHand({ removeOverlaps: false });
   font.meta.family = 'Quill Hand Variable';
   font.axes = [{ tag: 'wght', name: 'Weight', min: 100, default: 400, max: 900 }];
   const master = (width) => {

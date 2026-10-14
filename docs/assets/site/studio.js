@@ -458,7 +458,7 @@ function start(el) {
   }
 
   // ---------- compiling the live font ----------
-  function buildFont() {
+  function buildFont({ clean = false } = {}) {
     const names = new Set([...Object.keys(data.glyphs)]);
     const font = core.createFont({ ...data.meta, family: S.mode === 'new' ? txt.myFont : 'Quill Hand', style: 'Regular' });
     const present = new Set(['space']);
@@ -476,7 +476,7 @@ function start(el) {
         strokes = strokes.map((st) => ({ ...st, pts: st.pts.map(([x, y]) => [x + dx, y]) }));
         adv = Math.round(x1 - x0 + 80 + S.pen);
       }
-      core.addGlyph(font, { name: n, unicodes: g.u || data.glyphs[n].u, advanceWidth: adv, contours: strokesToContours(strokes, pen()) });
+      core.addGlyph(font, { name: n, unicodes: g.u || data.glyphs[n].u, advanceWidth: adv, contours: clean ? core.removeOverlaps(strokesToContours(strokes, pen())) : strokesToContours(strokes, pen()) });
       present.add(n);
     }
     for (const [n, c] of Object.entries(data.composites)) {
@@ -534,7 +534,7 @@ function start(el) {
   async function download(kind) {
     if (!core) return;
     let blob;
-    const font = buildFont();
+    const font = buildFont({ clean: true });
     try {
       if (kind === 'json') blob = new Blob([core.serialize(font)], { type: 'application/json' });
       else {
@@ -561,7 +561,7 @@ function start(el) {
     }
     status.textContent = txt.saved;
     try {
-      const json = core.serialize(buildFont());
+      const json = core.serialize(buildFont({ clean: true }));
       await new Promise((resolve, reject) => {
         const req = indexedDB.open('fontsketch-handoff', 1);
         req.onupgradeneeded = () => req.result.createObjectStore('handoff');

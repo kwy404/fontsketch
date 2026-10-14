@@ -9,9 +9,11 @@
   WOFF2 file or an image. The parser validates table offsets and lengths and
   rejects malformed data instead of reading past the end of a buffer. A bug
   here is a security issue: please report it as described below.
-- SVG files are read as data. fontsketch extracts path geometry and never
-  inserts imported SVG markup into the page, so scripts inside an SVG do not
-  run.
+- SVG files are read as data. The editor parses them with the browser XML
+  parser, removes `script` and `foreignObject` elements and every event
+  handler attribute, measures the drawing in a hidden offscreen container and
+  keeps only the path geometry. The Node API (`svgToContours`) never builds a
+  DOM at all.
 - The command line tool reads the folder you point it at and writes only to
   the output folder you choose.
 

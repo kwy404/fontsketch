@@ -54,7 +54,8 @@ function spineBounds(strokes) {
   return [x0, x1];
 }
 
-export function buildQuillHand() {
+export function buildQuillHand({ removeOverlaps = true } = {}) {
+  const clean = (contours) => (removeOverlaps ? core.removeOverlaps(contours) : contours);
   const font = core.createFont({
     family: 'Quill Hand',
     style: 'Regular',
@@ -85,7 +86,7 @@ export function buildQuillHand() {
     core.addGlyph(font, {
       name,
       advanceWidth: advance,
-      contours: strokesToContours(strokes),
+      contours: clean(strokesToContours(strokes)),
       anchors: { top: { x: Math.round(cx + h * SLANT), y: h }, bottom: { x: Math.round(cx), y: 0 } },
     });
   }
@@ -95,7 +96,7 @@ export function buildQuillHand() {
     const strokes = finishStrokes(name, MARKS[`${mark}comb`], 3);
     strokeData[name] = { advance: 0, strokes };
     const anchors = mark === 'cedilla' ? { _bottom: { x: -10, y: 0 } } : { _top: { x: Math.round(XH * SLANT + 16), y: XH } };
-    core.addGlyph(font, { name, unicodes: [code], advanceWidth: 0, contours: strokesToContours(strokes), anchors });
+    core.addGlyph(font, { name, unicodes: [code], advanceWidth: 0, contours: clean(strokesToContours(strokes)), anchors });
   }
   for (const [base, , ch, mark] of ACCENTED) {
     const composed = (ch + String.fromCodePoint(MARK_CODES[mark])).normalize('NFC');
