@@ -36,12 +36,18 @@ export { inflate, deflate } from './deflate.mjs';
  *   outlines?: 'truetype' | 'cff',
  *   legacyKern?: boolean,
  *   correctDirections?: boolean,
+ *   removeOverlaps?: boolean,
  *   optimize?: boolean,
  *   timestamp?: Date | number,
  *   onWarning?: (message: string) => void,
  * }} ExportOptions
  * `outlines` picks TrueType or CFF outlines inside WOFF and WOFF2 (TTF is
  * always TrueType and OTF always CFF). Variable fonts use TrueType outlines.
+ * `removeOverlaps` merges overlapping contours; it is on by default for CFF
+ * outlines (PostScript rasterizers need it) and off for TrueType, which
+ * renders overlaps correctly. `correctDirections` (default on) fixes the
+ * direction of nested contours. `optimize` (default on) drops implied on
+ * curve points.
  */
 
 /**

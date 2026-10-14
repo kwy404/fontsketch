@@ -147,12 +147,20 @@ export function findEdges(contours, axis) {
         to = Math.max(prev[other], next[other]);
       }
       if (!points) continue;
-      const mid = (from + to) / 2;
-      const probe = (d) => (axis === 'y' ? windingNumber(mid, p.y + d, shapes) : windingNumber(p.x + d, mid, shapes)) !== 0;
-      const after = probe(0.5);
-      const before = probe(-0.5);
-      if (after === before) continue;
-      edges.push({ pos: p[axis], kind: after ? 'bottom' : 'top', points, from, to });
+      // Probe the ink on both sides at a few places along the edge; parts of
+      // an edge may touch other shapes (a crossbar meeting a stem).
+      const filled = (at, d) => (axis === 'y' ? windingNumber(at, p.y + d, shapes) : windingNumber(p.x + d, at, shapes)) !== 0;
+      let kind = null;
+      for (const f of [0.5, 0.25, 0.75, 0.1, 0.9]) {
+        const at = from + (to - from) * f;
+        const after = filled(at, 0.5);
+        if (after !== filled(at, -0.5)) {
+          kind = after ? 'bottom' : 'top';
+          break;
+        }
+      }
+      if (!kind) continue;
+      edges.push({ pos: p[axis], kind: /** @type {'top' | 'bottom'} */ (kind), points, from, to });
     }
     base += n;
   }
@@ -178,6 +186,7 @@ export function findEdges(contours, axis) {
  * @param {Edge[]} [edges]
  */
 export function findStems(contours, axis, maxWidth, edges = findEdges(contours, axis)) {
+  const shapes = contours.map((points) => ({ closed: true, points }));
   const stems = [];
   const used = new Set();
   for (const b of edges) {
@@ -185,8 +194,15 @@ export function findStems(contours, axis, maxWidth, edges = findEdges(contours, 
     let best = null;
     for (const t of edges) {
       if (t.kind !== 'top' || t.pos <= b.pos || t.pos - b.pos > maxWidth || used.has(t)) continue;
-      if (Math.min(b.to, t.to) < Math.max(b.from, t.from)) continue;
-      if (!best || t.pos < best.pos) best = t;
+      const lo = Math.max(b.from, t.from);
+      const hi = Math.min(b.to, t.to);
+      if (hi <= lo) continue;
+      if (best && t.pos >= best.pos) continue;
+      // The space between the two edges must be ink.
+      const mid = (lo + hi) / 2;
+      const center = (b.pos + t.pos) / 2;
+      if (windingNumber(axis === 'y' ? mid : center, axis === 'y' ? center : mid, shapes) === 0) continue;
+      best = t;
     }
     if (best) {
       used.add(best);

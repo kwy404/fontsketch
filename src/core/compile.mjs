@@ -1,7 +1,7 @@
 // The font compiler: turns the fontsketch model into TrueType (glyf) or
 // OpenType CFF binaries.
 
-import { correctDirection, controlBounds } from './geometry.mjs';
+import { correctDirection, controlBounds, removeOverlaps } from './geometry.mjs';
 import { notdefGlyph, validateFont } from './model.mjs';
 import { assembleSfnt } from './sfnt.mjs';
 import { buildGlyfLoca, encodeCompositeGlyph, encodeSimpleGlyph } from './glyf.mjs';
@@ -21,6 +21,7 @@ import { buildVariationTables, decomposeMixedGlyphs } from './variable.mjs';
  *   variable?: boolean,
  *   legacyKern?: boolean,
  *   correctDirections?: boolean,
+ *   removeOverlaps?: boolean,
  *   optimize?: boolean,
  *   timestamp?: Date | number,
  *   onWarning?: (message: string) => void,
@@ -79,6 +80,7 @@ export function compileSfnt(font, options = {}) {
   const glyphs = prepareGlyphs(sources, gidOf, {
     cff,
     correct: options.correctDirections !== false,
+    removeOverlaps: options.removeOverlaps,
     optimize: options.optimize !== false && !variable,
     variable,
   });
@@ -168,10 +170,10 @@ export function compileSfnt(font, options = {}) {
           g.components.map((c) => ({ glyphIndex: c.gid, dx: c.dx, dy: c.dy, transform: c.transform })),
           g.box,
           instr,
-          { useMyMetrics: useMyMetricsIndex(g, glyphs) },
+          { useMyMetrics: useMyMetricsIndex(g, glyphs), overlap: variable },
         );
       }
-      return encodeSimpleGlyph(g.contours, instr || new Uint8Array(0));
+      return encodeSimpleGlyph(g.contours, instr || new Uint8Array(0), { overlap: variable && g.contours.length > 1 });
     });
     const { glyf, loca, indexToLocFormat } = buildGlyfLoca(records);
     head.indexToLocFormat = indexToLocFormat;
@@ -366,7 +368,7 @@ function useMyMetricsIndex(g, glyphs) {
  * can express them and decomposes everything else.
  * @param {import('./model.mjs').Glyph[]} sources
  * @param {Map<string, number>} gidOf
- * @param {{ cff: boolean, correct: boolean, optimize: boolean, variable?: boolean }} opts
+ * @param {{ cff: boolean, correct: boolean, optimize: boolean, variable?: boolean, removeOverlaps?: boolean }} opts
  * @returns {PreparedGlyph[]}
  */
 export function prepareGlyphs(sources, gidOf, opts) {
@@ -410,8 +412,12 @@ export function prepareGlyphs(sources, gidOf, opts) {
     return out;
   };
   return sources.map((g) => {
-    const flat = flatten(g.name, []);
+    let flat = flatten(g.name, []);
     const comps = g.components || [];
+    // PostScript rasterizers do not cope with overlapping contours, so CFF
+    // outlines are merged (TrueType renders overlaps fine and keeps them).
+    const merge = opts.cff ? opts.removeOverlaps !== false : opts.removeOverlaps === true && !opts.variable;
+    if (merge && flat.length > 1) flat = mergeOverlaps(flat);
     const keepComposite = !opts.cff && comps.length > 0 && !(g.contours || []).some((c) => c.points && c.points.length) &&
       comps.every((c) => Number.isInteger(Math.round(c.dx)) && withinF2Dot14(componentMatrix(c)));
     const flatPS = opts.cff ? flat.map((c) => [c[0], ...c.slice(1).reverse()]) : flat;
@@ -435,6 +441,18 @@ export function prepareGlyphs(sources, gidOf, opts) {
       plan: plans.get(g.name),
     };
   });
+}
+
+/**
+ * Union of a glyph's contours (integer coordinates in, integer coordinates
+ * out). Returns the input when nothing overlaps.
+ * @param {IntPoint[][]} flat
+ */
+function mergeOverlaps(flat) {
+  const shapes = flat.map((points) => ({ closed: true, points }));
+  const merged = removeOverlaps(shapes);
+  if (!merged.length) return flat;
+  return merged.map((c) => cleanContour(c.points.map((p) => ({ x: Math.round(p.x), y: Math.round(p.y), on: p.on })), true)).filter((c) => c.length > 1);
 }
 
 /** @param {import('./model.mjs').Component & { transform?: number[] }} c @returns {[number, number, number, number]} */
