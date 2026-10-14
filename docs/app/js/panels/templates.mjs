@@ -11,7 +11,7 @@ export const TEMPLATES = [
   { id: 'geometric', name: 'Atelier Geometric', note: 'Heavy display letters from circles and bars', url: 'templates/geometric.fontsketch.json', sample: 'Bold Gg', kind: 'Display' },
   { id: 'rounded', name: 'Atelier Rounded', note: 'Soft monoline with round ends', url: 'templates/rounded.fontsketch.json', sample: 'Soft Rr', kind: 'Rounded' },
   { id: 'mono', name: 'Atelier Mono', note: 'Every letter the same width, for code', url: 'templates/mono.fontsketch.json', sample: 'f(x)=1', kind: 'Monospace' },
-  { id: 'icons', name: 'Atelier Icons', note: 'Icons in the Private Use Area, ready for your own', url: 'templates/icons.fontsketch.json', sample: '\ue000\ue001\ue002\ue00a\ue00b', kind: 'Icon font' },
+  { id: 'icons', name: 'Atelier Icons', note: 'Icons in the Private Use Area, ready for your own', url: 'templates/icons.fontsketch.json', sample: '\ue000\ue00a\ue00b', kind: 'Icon font' },
 ];
 
 const cache = new Map();

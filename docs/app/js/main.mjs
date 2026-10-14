@@ -116,7 +116,7 @@ function syncGlyph() {
     name: g.name,
     char: ch && ch.trim() ? ch : '',
     code: g.unicodes?.length ? `U+${g.unicodes[0].toString(16).toUpperCase().padStart(4, '0')}` : 'no code point',
-    label: ch && ch.trim() ? `${ch} (${g.name})` : g.name,
+    label: ch && ch.trim() && ch !== g.name ? `${ch} (${g.name})` : g.name,
     adv: g.advanceWidth,
     lsb: ib ? Math.round(ib.xMin) : 0,
     rsb: ib ? Math.round(g.advanceWidth - ib.xMax) : 0,

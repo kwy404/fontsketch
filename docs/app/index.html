@@ -549,7 +549,7 @@
       <button type="button" class="ib ib-sm" @click="A.fit()" aria-label="Fit letter" title="Fit (Ctrl 0)"><svg class="ic"><use href="#i-fit"/></svg></button>
     </div>
     <div class="pos-readout" aria-hidden="true" v-text="S.status.pos"></div>
-    <div class="empty-hint" v-show="S.glyph.status === 'empty' && S.tool === 'brush'" aria-hidden="true">Draw “<span v-text="S.glyph.char"></span>” here</div>
+    <div class="empty-hint" v-show="S.glyph.status === 'empty' && S.tool === 'brush' && S.glyph.name" aria-hidden="true">Draw “<span v-text="S.glyph.char || S.glyph.name"></span>” here</div>
     <div class="dropveil" id="dropveil" aria-hidden="true"><div class="dropveil-card"><svg class="ic"><use href="#i-upload"/></svg><span id="dropveil-text">Drop to add</span></div></div>
   </main>
 
@@ -721,7 +721,7 @@
 <dialog id="dup" class="modal" aria-labelledby="dup-title">
   <form class="modal-box dup-box" method="dialog" @submit="A.duplicateDone($event)">
     <div class="modal-header"><h2 id="dup-title" class="modal-title">Copy the selection to another letter</h2></div>
-    <label class="fg"><span>Letter</span><input id="dup-input" class="input dup-input" maxlength="2" autocomplete="off" spellcheck="false" placeholder="For example: b"></label>
+    <label class="fg"><span>Letter</span><input id="dup-input" class="input dup-input" maxlength="2" autocomplete="off" spellcheck="false" placeholder="b"></label>
     <label class="fg-inline"><input id="dup-mirror" type="checkbox" class="toggle toggle-sm" role="switch"> Mirror it (b to d, p to q)</label>
     <div class="modal-actions"><button type="button" class="btn btn-ghost" @click="A.duplicateClose()">Cancel</button><button type="submit" class="btn btn-primary">Copy</button></div>
   </form>
