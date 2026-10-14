@@ -17,19 +17,8 @@ export const exportFont = pending('exportFont');
 export const parseFont = pending('parseFont');
 /** @type {(font: import('./model.mjs').Font, url: string, options?: object) => string} */
 export const cssFontFace = pending('cssFontFace');
-/** @type {(contours: import('./model.mjs').Contour[]) => string} */
-export const pathFromPoints = pending('pathFromPoints');
-/** @type {(points: Array<{x:number,y:number}>, tolerance?: number) => Array<{x:number,y:number}>} */
-export const simplify = pending('simplify');
-/** @type {(points: Array<{x:number,y:number}>, error?: number) => Array<[{x:number,y:number},{x:number,y:number},{x:number,y:number},{x:number,y:number}]>} */
-export const fitCurves = pending('fitCurves');
-/** @type {(p0: {x:number,y:number}, p1: {x:number,y:number}, p2: {x:number,y:number}, p3: {x:number,y:number}, tolerance?: number) => Array<{x:number,y:number,on:boolean}>} */
-export const cubicToQuadratic = pending('cubicToQuadratic');
-/** @type {(contour: import('./model.mjs').Contour) => number} */
-export const contourArea = pending('contourArea');
-/** @type {(contours: import('./model.mjs').Contour[]) => import('./model.mjs').Contour[]} */
-export const correctDirection = pending('correctDirection');
-/** @type {(contours: import('./model.mjs').Contour[]) => import('./model.mjs').Contour[]} */
-export const removeOverlaps = pending('removeOverlaps');
-/** @type {(contours: import('./model.mjs').Contour[]) => { xMin: number, yMin: number, xMax: number, yMax: number }} */
-export const bounds = pending('bounds');
+export {
+  pathFromPoints, simplify, fitCurves, fitContour, cubicToQuadratic, contourFromCubics, contourArea,
+  correctDirection, reverseContour, removeOverlaps, bounds, controlBounds, strokeToOutline, circleContour,
+  flattenContour, windingNumber, transformContours, roundContours, contourSegments,
+} from './geometry.mjs';
