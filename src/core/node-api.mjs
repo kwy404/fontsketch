@@ -92,7 +92,7 @@ export function buildProject(project, options = {}) {
 export function fromSvgFolder(dir, options = {}) {
   const family = options.family || 'Icons';
   const prefix = options.prefix || 'icon';
-  const files = readdirSync(dir).filter((f) => extname(f).toLowerCase() === '.svg').sort();
+  const files = readdirSync(dir).filter((f) => extname(f).toLowerCase() === '.svg').sort((a, b) => (a.toLowerCase() < b.toLowerCase() ? -1 : a.toLowerCase() > b.toLowerCase() ? 1 : 0));
   if (!files.length) throw new Error(`${dir}: no .svg files found`);
   const font = createFont({ family, ascender: 850, descender: -150, xHeight: 500, capHeight: 700 });
   let next = options.start ?? 0xe000;

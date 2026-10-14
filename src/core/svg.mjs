@@ -79,7 +79,7 @@ export function parsePathData(d) {
   let lastQuad = null;
   let sub = null;
   const num = () => {
-    if (i >= tokens.length || /[A-Za-z]/.test(tokens[i])) throw new SyntaxError(`SVG path: expected a number after "${cmd}"`);
+    if (i >= tokens.length || /^[A-Za-z]$/.test(tokens[i])) throw new SyntaxError(`SVG path: expected a number after "${cmd}"`);
     return parseFloat(tokens[i++]);
   };
   // Arc flags may be written without separators ("a1 1 0 01 1 1").
@@ -107,7 +107,7 @@ export function parsePathData(d) {
     cur = p;
   };
   while (i < tokens.length) {
-    if (/[A-Za-z]/.test(tokens[i])) cmd = tokens[i++];
+    if (/^[A-Za-z]$/.test(tokens[i])) cmd = tokens[i++];
     else if (!cmd) throw new SyntaxError('SVG path: data must start with a command');
     const rel = cmd === cmd.toLowerCase();
     const at = (x, y) => (rel ? { x: cur.x + x, y: cur.y + y } : { x, y });
