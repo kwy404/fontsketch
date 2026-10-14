@@ -32,7 +32,7 @@ import { pathsToContours, traceMask } from './trace.mjs';
  *   contours: Contour[], advanceWidth: number, leftSideBearing: number,
  *   bbox: { xMin: number, yMin: number, xMax: number, yMax: number } | null,
  *   confidence: number, warnings: ScanWarning[], empty: boolean, shiftX?: number,
- *   stats: { coverage: number, inkArea: number, strokeWidth: number, contrast: number, noise: number, specks: number, components: number },
+ *   stats: { alignment: { dx: number, dy: number }, coverage: number, inkArea: number, strokeWidth: number, contrast: number, noise: number, specks: number, components: number },
  * }} ScannedGlyph
  * Coordinates are font units (Y up, baseline at 0) with the glyph already
  * shifted to its left side bearing; `shiftX` is that horizontal shift from
@@ -52,7 +52,9 @@ import { pathsToContours, traceMask } from './trace.mjs';
  */
 
 const DEFAULT_INSET = 0.9;
-const MARGIN = 2.5;
+const MARGIN = 3;
+// largest local correction (mm) the guide alignment may apply
+const MAX_ALIGN = 1.6;
 
 class ScanError extends Error {
   /** @param {string} code @param {string} message */
@@ -122,23 +124,32 @@ export function readPageCode(img, H, t) {
  * Pixel grid of a cell region and its warp.
  * @param {any} ctx @param {TemplateCell} cell @param {number} inset
  */
-function cellRegion(ctx, cell, inset) {
+function cellRegion(ctx, cell, inset, adj = NO_ADJ) {
   const { ppm } = ctx;
-  const x0 = cell.x + inset - MARGIN;
-  const y0 = cell.y + inset - MARGIN;
+  const o = inset - MARGIN;
+  const x0 = cell.x + o;
+  const y0 = cell.y + o;
   const wmm = cell.w - 2 * inset + 2 * MARGIN;
   const hmm = cell.h - 2 * inset + 2 * MARGIN;
   const W = Math.round(wmm * ppm);
   const Hh = Math.round(hmm * ppm);
   const m = Math.round(MARGIN * ppm);
-  // output pixel (continuous) -> page mm -> image pixel
-  const S = [1 / ppm, 0, x0, 0, 1 / ppm, y0, 0, 0, 1];
+  // output pixel (continuous) -> cell mm (u, v) -> page mm, with the local
+  // correction x += ax + bx v, y += ay + by u -> image pixel
+  const { ax, ay, bx, by } = adj;
+  const S = [
+    1 / ppm, bx / ppm, x0 + ax + bx * o,
+    by / ppm, 1 / ppm, y0 + ay + by * o,
+    0, 0, 1,
+  ];
   return { x0, y0, W, H: Hh, m, Hc: mulH(ctx.H, S) };
 }
 
+const NO_ADJ = Object.freeze({ ax: 0, ay: 0, bx: 0, by: 0 });
+
 /** Rectified, light normalized densities of a cell. */
-function cellDensities(ctx, cell, inset) {
-  const reg = cellRegion(ctx, cell, inset);
+function cellDensities(ctx, cell, inset, adj = NO_ADJ) {
+  const reg = cellRegion(ctx, cell, inset, adj);
   const planes = warpPerspective(ctx.img, reg.Hc, reg.W, reg.H, { samples: ctx.samples });
   const norm = normalizeLighting(planes, { window: Math.round(6 * ctx.ppm) });
   const D = densities(norm);
@@ -252,6 +263,185 @@ function estimateGuide(ctx, cells) {
 }
 
 /**
+ * k-th smallest of the first n values (quickselect, reorders the buffer).
+ * @param {Float32Array} a @param {number} n @param {number} k
+ */
+function select(a, n, k) {
+  let lo = 0;
+  let hi = n - 1;
+  while (hi > lo) {
+    const pivot = a[(lo + hi) >> 1];
+    let i = lo;
+    let j = hi;
+    while (i <= j) {
+      while (a[i] < pivot) i++;
+      while (a[j] > pivot) j--;
+      if (i <= j) {
+        const t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+        i++;
+        j--;
+      }
+    }
+    if (k <= j) hi = j;
+    else if (k >= i) lo = i;
+    else break;
+  }
+  return a[k];
+}
+
+/**
+ * Density planes of a cell region resampled under a local correction: the
+ * content wanted at cell point (u, v) sits at (u + ax + bx v, v + ay + by u)
+ * of the uncorrected region. Cheaper than warping the photo again; the
+ * region margin covers the shift.
+ * @param {{ dr: Float32Array, dg: Float32Array, db: Float32Array }} D
+ * @param {number} W @param {number} H @param {{ ax: number, ay: number, bx: number, by: number }} adj
+ * @param {number} ppm @param {number} o cell mm of the region's left and top edge
+ */
+function resampleDensities(D, W, H, adj, ppm, o) {
+  const out = { dr: new Float32Array(W * H), dg: new Float32Array(W * H), db: new Float32Array(W * H) };
+  const { ax, ay, bx, by } = adj;
+  for (let py = 0; py < H; py++) {
+    const v = o + (py + 0.5) / ppm;
+    for (let px = 0; px < W; px++) {
+      const u = o + (px + 0.5) / ppm;
+      let sx = (u + ax + bx * v - o) * ppm - 0.5;
+      let sy = (v + ay + by * u - o) * ppm - 0.5;
+      if (sx < 0) sx = 0;
+      else if (sx > W - 1) sx = W - 1;
+      if (sy < 0) sy = 0;
+      else if (sy > H - 1) sy = H - 1;
+      const x0 = sx | 0;
+      const y0 = sy | 0;
+      const x1 = x0 + 1 < W ? x0 + 1 : x0;
+      const y1 = y0 + 1 < H ? y0 + 1 : y0;
+      const fx = sx - x0;
+      const fy = sy - y0;
+      const a = y0 * W + x0;
+      const b = y0 * W + x1;
+      const c = y1 * W + x0;
+      const d = y1 * W + x1;
+      const w00 = (1 - fx) * (1 - fy);
+      const w10 = fx * (1 - fy);
+      const w01 = (1 - fx) * fy;
+      const w11 = fx * fy;
+      const i = py * W + px;
+      out.dr[i] = D.dr[a] * w00 + D.dr[b] * w10 + D.dr[c] * w01 + D.dr[d] * w11;
+      out.dg[i] = D.dg[a] * w00 + D.dg[b] * w10 + D.dg[c] * w01 + D.dg[d] * w11;
+      out.db[i] = D.db[a] * w00 + D.db[b] * w10 + D.db[c] * w01 + D.db[d] * w11;
+    }
+  }
+  return out;
+}
+
+/**
+ * Offset (mm) between where a cell is expected and where its printed guide
+ * lines actually are, or null when the guides are not clear enough. Rows
+ * and columns are found separately from robust projection profiles of the
+ * guide colour (a high percentile across the cell ignores handwriting).
+ * @param {any} ctx @param {TemplateCell} cell @param {any} reg @param {number} inset @param {Float32Array} guide
+ */
+function alignToGuides(ctx, cell, reg, inset, guide) {
+  const { ppm } = ctx;
+  const { W, H: Hh } = reg;
+  // profile index i holds the pixel centred at i + 0.5
+  const toPx = (mm) => (mm - inset + MARGIN) * ppm - 0.5;
+  const lines = guideLines(ctx.t).map((g) => toPx(g.y));
+  // cell borders, plus the neighbours' borders right next to them
+  const rowsExpected = lines.concat([-0.4, 0.4, cell.h - 0.4, cell.h + 0.4].map(toPx));
+  // columns: only this cell's own borders; with the neighbours' borders
+  // 0.8 mm away a blurred pair could lock half way between them
+  const colsExpected = [0.4, cell.w - 0.4].map(toPx);
+  const scratch = new Float32Array(Math.max(W, Hh));
+  const profile = (n, len, at) => {
+    const out = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      let k = 0;
+      for (let j = 0; j < len; j += 2) {
+        const v = at(i, j);
+        if (v === v) scratch[k++] = v;
+      }
+      if (k < len / 8) continue;
+      out[i] = select(scratch, k, Math.floor(k * 0.55));
+    }
+    return out;
+  };
+  const best = (raw, expected) => {
+    // work above the profile's own background level
+    const sorted = Array.from(raw).sort((a, b) => a - b);
+    const base = sorted[Math.floor(sorted.length / 2)];
+    const mad = sorted.map((v) => Math.abs(v - base)).sort((a, b) => a - b)[Math.floor(sorted.length / 2)] || 1e-4;
+    const sample = (p) => {
+      if (p < 0 || p > raw.length - 1) return 0;
+      const i = p | 0;
+      const f = p - i;
+      return raw[i] * (1 - f) + (i + 1 < raw.length ? raw[i + 1] : raw[i]) * f - base;
+    };
+    const score = (s) => expected.reduce((a, e) => a + sample(e + s), 0);
+    const R = MAX_ALIGN * ppm;
+    let bestS = 0;
+    let bestV = score(0);
+    for (let s = -R; s <= R; s += 0.25) {
+      const v = score(s);
+      if (v > bestV) {
+        bestV = v;
+        bestS = s;
+      }
+    }
+    // every expected line must stand clearly above the profile noise
+    if (!(bestV / expected.length > 6 * mad + 0.01)) return null;
+    // refine with a parabola through the neighbours
+    const a = score(bestS - 0.25);
+    const c = score(bestS + 0.25);
+    const den = a - 2 * bestV + c;
+    const off = den < 0 ? (0.25 * (a - c)) / (2 * den) : 0;
+    return (bestS + off) / ppm;
+  };
+  // rows from the left and right part of the cell, columns from the top and
+  // bottom part: a shift plus a slight shear and rotation
+  const m = reg.m;
+  const xa = m + Math.round(6 * ppm);
+  const xb = W - m;
+  const xmid = (xa + xb) >> 1;
+  const rowsIn = (x0, x1) => profile(Hh, x1 - x0, (y, j) => guide[y * W + x0 + j]);
+  const ya = 0;
+  const yb = Hh;
+  const ymid = (ya + yb) >> 1;
+  const colsIn = (y0, y1) => profile(W, y1 - y0, (x, j) => guide[(y0 + j) * W + x]);
+  const dyAll = best(rowsIn(m, xb), rowsExpected);
+  if (dyAll === null) return null;
+  const dxAll = best(colsIn(ya, yb), colsExpected) ?? 0;
+  const dyL = best(rowsIn(xa, xmid), rowsExpected);
+  const dyR = best(rowsIn(xmid, xb), rowsExpected);
+  const dxT = best(colsIn(ya, ymid), colsExpected);
+  const dxB = best(colsIn(ymid, yb), colsExpected);
+  // pixel columns/rows -> cell mm
+  const toMm = (px) => (px + 0.5) / ppm + inset - MARGIN;
+  let by = 0;
+  let ay = dyAll;
+  // halves must agree with the whole cell; handwriting lying along a guide
+  // line can pull one half away
+  const near = (v, ref) => v !== null && Math.abs(v - ref) < 0.4;
+  if (near(dyL, dyAll) && near(dyR, dyAll)) {
+    const uL = toMm((xa + xmid) / 2);
+    const uR = toMm((xmid + xb) / 2);
+    by = (dyR - dyL) / (uR - uL);
+    ay = dyL - by * uL;
+  }
+  let bx = 0;
+  let ax = dxAll;
+  if (near(dxT, dxAll) && near(dxB, dxAll)) {
+    const vT = toMm((ya + ymid) / 2);
+    const vB = toMm((ymid + yb) / 2);
+    bx = (dxB - dxT) / (vB - vT);
+    ax = dxT - bx * vT;
+  }
+  return { ax, ay, bx, by };
+}
+
+/**
  * Width of a stroke (or dot) whose blurred peak reaches `ratio` of the full
  * ink strength.
  * @param {number} ratio @param {number} sigma @param {'stroke' | 'dot'} shape
@@ -310,43 +500,105 @@ function blurAt(ctx, cell) {
 
 /**
  * Processes one cell into a glyph.
- * @param {any} ctx @param {TemplateCell} cell @param {CellOptions} [opts]
+ * @param {any} ctx @param {TemplateCell} cell @param {CellOptions & { align?: boolean }} [opts]
  * @returns {ScannedGlyph & { debug?: any }}
  */
 function processCell(ctx, cell, opts = {}) {
   const t = ctx.t;
   const inset = opts.inset ?? DEFAULT_INSET;
   const ppm = ctx.ppm;
-  const { reg, D } = cellDensities(ctx, cell, inset);
+  const base = cellDensities(ctx, cell, inset);
+  const reg = base.reg;
   const { W, H: Hh, m } = reg;
   const warnings = [];
   const warn = (code, message) => warnings.push({ code, message, char: cell.char });
 
-  // ink colour: this cell's own estimate when it has clear ink, else the page's
-  let inkDir = ctx.guideInfo.ink;
-  const own = estimateInkDirection(D, ctx.guideInfo.guide);
-  if (own && own.strength > 0.2) inkDir = own.dir;
-  let guideDir = ctx.guideInfo.guide;
-  if (guideDir && angleBetween(guideDir, inkDir) < 14) guideDir = null;
-  const { ink } = unmix(D, guideDir, inkDir);
+  let D = base.D;
+  let align = { ...NO_ADJ };
+  let inkDir;
+  let guideDir;
+  let ink;
+  for (let step = 0; ; step++) {
+    // ink colour: this cell's own estimate when it has clear ink, else the page's
+    inkDir = ctx.guideInfo.ink;
+    const own = estimateInkDirection(D, ctx.guideInfo.guide);
+    if (own && own.strength > 0.2) inkDir = own.dir;
+    guideDir = ctx.guideInfo.guide;
+    if (guideDir && angleBetween(guideDir, inkDir) < 14) guideDir = null;
+    const mixed = unmix(D, guideDir, inkDir);
+    ink = mixed.ink;
+    if (opts.align === false || step >= 2) break;
+
+    // paper that is not flat (a curled sheet, a bulge in the middle) moves
+    // cells away from where the corner markers predict: find the printed
+    // guides of this cell and resample it in the corrected position
+    let signal = mixed.guide;
+    if (!guideDir) {
+      // guide and ink colours too close to unmix: project on the guide colour
+      const g = ctx.guideInfo.rawGuide || [0.577, 0.577, 0.577];
+      signal = new Float32Array(W * Hh);
+      for (let i = 0; i < W * Hh; i++) {
+        const v = D.dr[i] * g[0] + D.dg[i] * g[1] + D.db[i] * g[2];
+        signal[i] = v > 0 ? v : 0;
+      }
+    }
+    // handwriting is left out of the guide profiles
+    const strong = Math.max(0.25, 3 * ctx.guideInfo.level);
+    for (let i = 0; i < W * Hh; i++) if (ink[i] > strong) signal[i] = NaN;
+    const adj = alignToGuides(ctx, cell, reg, inset, signal);
+    if (!adj) break;
+    // size of the correction at the cell corners
+    const at = (u, v) => Math.hypot(adj.ax + adj.bx * v, adj.ay + adj.by * u);
+    const change = Math.max(at(0, 0), at(cell.w, 0), at(0, cell.h), at(cell.w, cell.h));
+    const next = { ax: align.ax + adj.ax, ay: align.ay + adj.ay, bx: align.bx + adj.bx, by: align.by + adj.by };
+    if (!(change > 0.2 && Math.hypot(next.ax, next.ay) < 3.5 && Math.abs(next.bx) < 0.08 && Math.abs(next.by) < 0.08)) break;
+    align = next;
+    D = resampleDensities(base.D, W, Hh, align, ppm, inset - MARGIN);
+  }
 
   // guide bands: suppress whatever guide colour survives the unmixing (for
   // example chroma lost to JPEG subsampling or a gray printed sheet)
   const bands = guideBands(ctx, cell, reg, inset);
   const half = Math.max(1.2, 0.35 * ppm);
   const bandLevel = Math.max(0.06, ctx.guideInfo.level * (guideDir ? 0.6 : 1.6));
-  const bandMask = new Uint8Array(W * Hh);
+  /** @type {Array<{ vertical: boolean, a: number, b: number }>} */
+  const bandList = [];
+  const vals = [];
+  // each band gets its own level from what is printed there (the upper
+  // quartile along the line: crossing handwriting is a minority)
+  const suppress = (vertical, a, b) => {
+    vals.length = 0;
+    for (let k = a; k <= b; k++) {
+      if (vertical) for (let y = 0; y < Hh; y += 2) vals.push(ink[y * W + k]);
+      else for (let x = 0; x < W; x += 2) vals.push(ink[k * W + x]);
+    }
+    vals.sort((p, q) => p - q);
+    const level = Math.max(bandLevel, 1.8 * vals[Math.floor(vals.length * 0.75)]);
+    for (let k = a; k <= b; k++) {
+      if (vertical) {
+        for (let y = 0; y < Hh; y++) {
+          const i = y * W + k;
+          if (ink[i] < level) ink[i] = 0;
+        }
+      } else {
+        for (let x = 0; x < W; x++) {
+          const i = k * W + x;
+          if (ink[i] < level) ink[i] = 0;
+        }
+      }
+    }
+    bandList.push({ vertical, a, b });
+  };
   for (const r of bands.rows) {
     const ya = Math.max(0, Math.floor(r - half));
     const yb = Math.min(Hh - 1, Math.ceil(r + half));
-    for (let y = ya; y <= yb; y++) bandMask.fill(1, y * W, y * W + W);
+    if (yb >= ya) suppress(false, ya, yb);
   }
   for (const c of bands.cols) {
     const xa = Math.max(0, Math.floor(c - half));
     const xb = Math.min(W - 1, Math.ceil(c + half));
-    for (let y = 0; y < Hh; y++) bandMask.fill(1, y * W + xa, y * W + xb + 1);
+    if (xb >= xa) suppress(true, xa, xb);
   }
-  for (let i = 0; i < W * Hh; i++) if (bandMask[i] && ink[i] < bandLevel) ink[i] = 0;
 
   // printed reference character
   const lab = t.cell.label;
@@ -399,6 +651,25 @@ function processCell(ctx, cell, opts = {}) {
   const mask = new Uint8Array(iw * ih);
   for (let y = 0; y < ih; y++) mask.set(bin.mask.subarray((y + m) * W + m, (y + m) * W + m + iw), y * iw);
 
+  // strokes crossing a guide band may have lost the pixels on the line:
+  // bridge a band where ink continues on both sides of it
+  for (const band of bandList) {
+    const a = band.a - m;
+    const b = band.b - m;
+    if (band.vertical) {
+      if (a < 1 || b > iw - 2) continue;
+      for (let y = 0; y < ih; y++) {
+        const o = y * iw;
+        if (mask[o + a - 1] && mask[o + b + 1]) for (let x = a; x <= b; x++) mask[o + x] = 1;
+      }
+    } else {
+      if (a < 1 || b > ih - 2) continue;
+      for (let x = 0; x < iw; x++) {
+        if (mask[(a - 1) * iw + x] && mask[(b + 1) * iw + x]) for (let y = a; y <= b; y++) mask[y * iw + x] = 1;
+      }
+    }
+  }
+
   const px2 = ppm * ppm;
   const minSpeck = Math.max(3, (opts.minSpeck ?? 0.06) * px2);
   const specks = despeckle(mask, iw, ih, minSpeck, 0.04 * px2);
@@ -448,6 +719,10 @@ function processCell(ctx, cell, opts = {}) {
 
   const contrast = bin.core;
   const stats = {
+    alignment: {
+      dx: Math.round((align.ax + (align.bx * cell.h) / 2) * 100) / 100,
+      dy: Math.round((align.ay + (align.by * cell.w) / 2) * 100) / 100,
+    },
     coverage,
     inkArea: inkArea / px2,
     strokeWidth: sw / ppm,
@@ -663,7 +938,7 @@ export function scanSheets(inputs, options) {
 /** @param {any} o */
 function pickCellOptions(o) {
   const out = {};
-  for (const k of ['threshold', 'sensitivity', 'k', 'window', 'minSpeck', 'inset', 'strokeWidth']) if (o[k] !== undefined) out[k] = o[k];
+  for (const k of ['threshold', 'sensitivity', 'k', 'window', 'minSpeck', 'inset', 'strokeWidth', 'align']) if (o[k] !== undefined) out[k] = o[k];
   return out;
 }
 

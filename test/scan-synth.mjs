@@ -279,33 +279,46 @@ export function fillContours(contours, w, h, toPx) {
 /**
  * Intersection over union between recovered contours and the ground truth
  * strokes, both in font units. The ground truth (in cell units) is moved by
- * the same horizontal shift the scanner applied to place the glyph, so both
- * position and shape are checked.
+ * the shift the scanner applied to place the glyph. Vertical placement is
+ * checked strictly (the baseline comes from the template); horizontally the
+ * best offset within `slack` units is used, because where a character sits
+ * across its box does not matter for a font (glyphs are re-spaced by their
+ * side bearings).
  * @param {import('../src/core/model.mjs').Contour[]} contours
  * @param {Array<Array<[number, number]>>} strokes ground truth centre lines
  * @param {number} penUnits pen width in font units
  * @param {number} shift the glyph's `shiftX`
+ * @param {number} [slack] horizontal tolerance in font units (default 48, about 1 mm)
  */
-export function glyphIoU(contours, strokes, penUnits, shift) {
+export function glyphIoU(contours, strokes, penUnits, shift, slack = 48) {
   const gt = strokes.map((s) => s.map(([x, y]) => [x + shift, y]));
   const S = 4; // units per pixel
-  const X0 = -200;
+  const X0 = -300;
   const Y0 = -500;
-  const w = 1200 / S;
+  const w = 1400 / S;
   const h = 1600 / S;
   const toPx = (x, y) => [(x - X0) / S, (Y0 + 1600 - y) / S];
   const cov = new Float32Array(w * h);
   strokeCoverage(cov, w, h, gt, toPx, penUnits / 2 / S);
   const mine = fillContours(contours, w, h, toPx);
-  let inter = 0;
-  let uni = 0;
+  let gtArea = 0;
+  let mineArea = 0;
   for (let i = 0; i < w * h; i++) {
-    const a = cov[i] >= 0.5;
-    const b = mine[i] === 1;
-    if (a && b) inter++;
-    if (a || b) uni++;
+    if (cov[i] >= 0.5) gtArea++;
+    if (mine[i]) mineArea++;
   }
-  return uni ? inter / uni : 0;
+  if (!gtArea && !mineArea) return 0;
+  let best = 0;
+  const k = Math.round(slack / S);
+  for (let d = -k; d <= k; d++) {
+    let inter = 0;
+    for (let y = 0; y < h; y++) {
+      const o = y * w;
+      for (let x = Math.max(0, -d); x < Math.min(w, w - d); x++) if (mine[o + x] && cov[o + x + d] >= 0.5) inter++;
+    }
+    best = Math.max(best, inter / (gtArea + mineArea - inter));
+  }
+  return best;
 }
 
 // ---- sheet and photo -------------------------------------------------------
@@ -447,7 +460,10 @@ export function renderSheet(t, page, opts = {}) {
  * @param {{
  *   seed?: number, width?: number, height?: number, rotate?: number, perspective?: number, fill?: number,
  *   gradient?: number, shadow?: number, tint?: number[], blur?: number, blurRamp?: boolean, chroma?: boolean, noise?: number,
+ *   curl?: number,
  * }} o
+ *   `curl` displaces the middle of the sheet by up to that many millimetres
+ *   (paper that is not flat) while the corners stay put.
  * @returns {{ width: number, height: number, data: Uint8ClampedArray, H: number[] }}
  */
 export function photograph(sheet, o = {}) {
@@ -482,6 +498,10 @@ export function photograph(sheet, o = {}) {
   const pg = new Float32Array(n);
   const pb = new Float32Array(n);
   const samples = sc < 0.8 ? 2 : 1;
+  const curl = o.curl || 0;
+  const curlAngle = rand.range(0, Math.PI * 2);
+  const curlX = curl * R * Math.cos(curlAngle);
+  const curlY = curl * R * Math.sin(curlAngle);
   const table = [rand.range(60, 120), rand.range(50, 95), rand.range(35, 70)];
   for (let y = 0; y < PH; y++) {
     for (let x = 0; x < PW; x++) {
@@ -494,8 +514,16 @@ export function photograph(sheet, o = {}) {
           const qx = x + (i + 0.5) / samples;
           const qy = y + (j + 0.5) / samples;
           const qw = Hi[6] * qx + Hi[7] * qy + Hi[8];
-          const u = (Hi[0] * qx + Hi[1] * qy + Hi[2]) / qw;
-          const v = (Hi[3] * qx + Hi[4] * qy + Hi[5]) / qw;
+          let u = (Hi[0] * qx + Hi[1] * qy + Hi[2]) / qw;
+          let v = (Hi[3] * qx + Hi[4] * qy + Hi[5]) / qw;
+          if (curl) {
+            // a sheet that bulges in the middle: zero at the edges and corners
+            const bump = Math.sin((Math.PI * u) / SW) * Math.sin((Math.PI * v) / SH);
+            if (bump > 0) {
+              u += curlX * bump;
+              v += curlY * bump;
+            }
+          }
           if (u < 0 || v < 0 || u >= SW || v >= SH) continue;
           const fx = Math.min(SW - 1.001, Math.max(0, u - 0.5));
           const fy = Math.min(SH - 1.001, Math.max(0, v - 0.5));
@@ -685,5 +713,9 @@ export function randomCase(seed) {
     tint: r() < 0.5 ? [1, r.range(0.88, 1), r.range(0.72, 1)] : [r.range(0.85, 1), r.range(0.92, 1), 1],
     blur: r.range(0.3, 1.6), blurRamp: r() < 0.3, chroma: r() < 0.7, noise: r.range(1, 7),
   };
-  return { seed, inkName, pen, chars: chars.join(''), photo, pageSize: r() < 0.5 ? 'A4' : 'Letter', cols: r.int(5, 7) };
+  const pageSize = r() < 0.5 ? 'A4' : 'Letter';
+  const cols = r.int(5, 7);
+  // drawn last so earlier draws (and the cases they define) stay the same
+  photo.curl = r() < 0.35 ? r.range(0.5, 1.6) : 0;
+  return { seed, inkName, pen, chars: chars.join(''), photo, pageSize, cols };
 }
