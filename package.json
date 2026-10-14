@@ -1,0 +1,96 @@
+{
+  "name": "fontsketch",
+  "version": "0.1.0",
+  "description": "Create your own font in the browser or Node: draw or scan handwriting, then export TTF, OTF, WOFF and WOFF2 with kerning, accents, autohinting and variable weight axes. A font compiler, parser and font editor toolkit written in plain JavaScript.",
+  "keywords": [
+    "font",
+    "font maker",
+    "font creator",
+    "create your own font",
+    "make a font from handwriting",
+    "handwriting font",
+    "font editor",
+    "font generator",
+    "ttf",
+    "otf",
+    "woff",
+    "woff2",
+    "truetype",
+    "opentype",
+    "cff",
+    "variable font",
+    "font compiler",
+    "font parser",
+    "kerning",
+    "glyph",
+    "icon font",
+    "svg to font",
+    "autohinting",
+    "font hinting",
+    "typography",
+    "web fonts"
+  ],
+  "homepage": "https://kwy404.github.io/fontsketch/",
+  "bugs": {
+    "url": "https://github.com/kwy404/fontsketch/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwy404/fontsketch.git"
+  },
+  "license": "MIT",
+  "author": "Alexandre Kohler (https://github.com/kwy404)",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./src/index.mjs",
+  "types": "./types/index.d.mts",
+  "bin": {
+    "fontsketch": "bin/fontsketch.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./types/index.d.mts",
+      "node": "./src/node.mjs",
+      "default": "./src/index.mjs"
+    },
+    "./core": {
+      "types": "./types/core/index.d.mts",
+      "default": "./src/core/index.mjs"
+    },
+    "./node": {
+      "types": "./types/node.d.mts",
+      "default": "./src/node.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "bin",
+    "dist",
+    "types",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "SECURITY.md"
+  ],
+  "engines": {
+    "node": ">=18.18"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "node scripts/check-rules.mjs && eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^20.19.43",
+    "esbuild": "^0.25.12",
+    "eslint": "^9.39.5",
+    "globals": "^16.5.0",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.7"
+  }
+}
