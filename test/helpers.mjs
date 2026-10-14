@@ -50,3 +50,37 @@ export function sampleFont(opts = {}) {
   font.kerning.classes['@round'] = ['o', 'O', 'e', 'c'];
   return font;
 }
+
+/** The variable sample: default stems 60 (wght 400), Thin 20 (100), Black 150 (900). */
+export function sampleVariableFont() {
+  const vf = sampleFont({ weight: 60 });
+  const thin = sampleFont({ weight: 20 });
+  const black = sampleFont({ weight: 150 });
+  black.glyphs.H.advanceWidth = 700;
+  vf.axes = [{ tag: 'wght', name: 'Weight', min: 100, default: 400, max: 900 }];
+  const pick = (f) => Object.fromEntries(Object.entries(f.glyphs).map(([k, g]) => [k, { contours: g.contours, advanceWidth: g.advanceWidth }]));
+  vf.masters = [
+    { name: 'Thin', location: { wght: 100 }, glyphs: pick(thin) },
+    { name: 'Black', location: { wght: 900 }, glyphs: pick(black) },
+  ];
+  return vf;
+}
+
+/** Glyph pair to kerning value, with classes resolved like GPOS does. */
+export function flatKerning(font) {
+  const classes = font.kerning.classes;
+  const sideOf = (s) => (classes[s] ? { ids: classes[s], cls: true } : { ids: [s], cls: false });
+  const rank = (l, r) => (!l.cls && !r.cls ? 4 : !l.cls ? 3 : !r.cls ? 2 : 1);
+  const best = new Map();
+  for (const [key, v] of Object.entries(font.kerning.pairs)) {
+    const [a, b] = key.split('|');
+    const l = sideOf(a);
+    const r = sideOf(b);
+    const k = rank(l, r);
+    for (const x of l.ids) for (const y of r.ids) {
+      const prev = best.get(`${x}|${y}`);
+      if (!prev || prev.k <= k) best.set(`${x}|${y}`, { k, v });
+    }
+  }
+  return Object.fromEntries([...best].filter(([, e]) => e.v !== 0).map(([key, e]) => [key, e.v]).sort());
+}

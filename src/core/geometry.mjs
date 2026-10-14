@@ -327,7 +327,10 @@ export function reverseContour(contour) {
  * Sets contour directions from their nesting: outer contours clockwise
  * (TrueType convention), holes counter clockwise, islands inside holes
  * clockwise again. Pass `{ clockwiseOuter: false }` for the PostScript
- * convention. Returns new contours; the input is not changed.
+ * convention. Contours whose outlines cross or touch another contour (a
+ * stem drawn over a bowl, the bar of an "e" across its counter) keep their
+ * direction, because only their relative directions decide what the
+ * nonzero fill shows. Returns new contours; the input is not changed.
  * @param {Contour[]} contours
  * @param {{ clockwiseOuter?: boolean }} [options]
  * @returns {Contour[]}
@@ -336,8 +339,30 @@ export function correctDirection(contours, options = {}) {
   const clockwiseOuter = options.clockwiseOuter !== false;
   const polys = contours.map((c) => flattenContour(c, 1));
   const areas = contours.map((c) => contourArea(c));
+  const segs = contours.map((c) => contourSegments({ ...c, closed: true }));
+  const boxes = segs.map((list) => {
+    const b = { x0: Infinity, y0: Infinity, x1: -Infinity, y1: -Infinity };
+    for (const sg of list) {
+      const sb = segBox(sg);
+      b.x0 = Math.min(b.x0, sb.x0);
+      b.y0 = Math.min(b.y0, sb.y0);
+      b.x1 = Math.max(b.x1, sb.x1);
+      b.y1 = Math.max(b.y1, sb.y1);
+    }
+    return b;
+  });
+  const crossing = new Set();
+  for (let i = 0; i < contours.length; i++) {
+    for (let j = i + 1; j < contours.length; j++) {
+      if (!boxOverlap(boxes[i], boxes[j], 1e-9)) continue;
+      if (contoursTouch(segs[i], segs[j])) {
+        crossing.add(i);
+        crossing.add(j);
+      }
+    }
+  }
   return contours.map((c, i) => {
-    if (Math.abs(areas[i]) < EPS || c.points.length < 3) return { ...c, points: [...c.points] };
+    if (Math.abs(areas[i]) < EPS || c.points.length < 3 || crossing.has(i)) return { ...c, points: [...c.points] };
     const probe = interiorProbe(polys[i], areas[i]);
     let depth = 0;
     for (let j = 0; j < contours.length; j++) {
@@ -349,6 +374,18 @@ export function correctDirection(contours, options = {}) {
     const isClockwise = areas[i] < 0;
     return isClockwise === wantClockwise ? { ...c, points: [...c.points] } : reverseContour(c);
   });
+}
+
+/** True when two segment lists cross or touch. */
+function contoursTouch(a, b) {
+  for (const sa of a) {
+    const ba = segBox(sa);
+    for (const sb of b) {
+      if (!boxOverlap(ba, segBox(sb), 1e-9)) continue;
+      if (intersectSegments(sa, sb).length) return true;
+    }
+  }
+  return false;
 }
 
 /** A point just inside a polygon near its first edge. @param {Vec[]} poly @param {number} area */
