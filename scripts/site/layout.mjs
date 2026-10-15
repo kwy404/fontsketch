@@ -86,6 +86,7 @@ export const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-
   ic('trash', '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>'),
   ic('sparkle', '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>'),
   ic('play', '<path d="m7 4 13 8-13 8Z"/>'),
+  ic('pause', '<path d="M8 5v14M16 5v14"/>'),
   ic('next', '<path d="M5 12h12M13 6l6 6-6 6"/>'),
   ic('book', '<path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h13"/>'),
   ic('globe', '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18"/>'),

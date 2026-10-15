@@ -42,4 +42,26 @@ document.addEventListener('click', (e) => {
   if (nav?.classList.contains('is-open')) document.querySelector('.nav-btn')?.click();
 });
 
+// Sections rise in as they scroll into view. Only transform and opacity
+// move, nothing hides without JavaScript, and reduced motion skips it all.
+const RISE = '.band h2, .band .lede, .way, .features li, .font-card, .gcard, .faq details, .loop-vis, .scene-text, .cta-in, .prose > h2, .steps li';
+if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      io.unobserve(e.target);
+      e.target.classList.add('is-in');
+      setTimeout(() => e.target.classList.remove('rv', 'is-in'), 1400);
+    }
+  }, { rootMargin: '0px 0px -8% 0px' });
+  const items = [...document.querySelectorAll(RISE)].filter((el) => el.getBoundingClientRect().top > innerHeight);
+  document.documentElement.classList.add('js-motion');
+  for (const el of items) {
+    const sibs = [...el.parentElement.children].filter((c) => c.matches(RISE));
+    el.style.setProperty('--rd', `${Math.min(sibs.indexOf(el), 7) * 70}ms`);
+    el.classList.add('rv');
+    io.observe(el);
+  }
+}
+
 if (V) V.start();

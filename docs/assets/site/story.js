@@ -1,6 +1,7 @@
-// The scroll story on the home page. Each scene is a tall block with a
-// sticky stage; its progress (0 to 1) is published as --p for the CSS, and
-// the weight and hinting scenes redraw real outlines from Quill Hand.
+// The story on the home page. It opens with the photo to font loop, which
+// plays by itself while it is on screen. The other scenes are tall blocks
+// with a sticky stage; their progress (0 to 1) is published as --p for the
+// CSS, and the weight and hinting scenes redraw real outlines from Quill Hand.
 import { expandStroke, strokesToContours, contoursToSvgPath } from './stroke.mjs';
 
 const scenes = [...document.querySelectorAll('.scene')];
@@ -21,26 +22,87 @@ const glyphFor = (ch) => {
   return null;
 };
 
-// ---------- scene 1: the scan ----------
-function layoutScan(scene) {
-  const stage = scene.querySelector('.scan-stage');
-  const cells = scene.querySelector('.cells');
-  const kase = scene.querySelector('.case');
-  if (!stage || !cells || !kase) return;
-  const slots = [...kase.querySelectorAll('.slot')];
-  scene.querySelectorAll('.cell').forEach((cell, i) => {
-    const slot = slots[i];
-    const c = Number(getComputedStyle(cell).getPropertyValue('--c'));
-    const r = Number(getComputedStyle(cell).getPropertyValue('--r'));
-    const cx = cells.offsetLeft + cell.offsetLeft + cell.offsetWidth / 2;
-    const cy = cells.offsetTop + cell.offsetTop + cell.offsetHeight / 2;
-    const sx = kase.offsetLeft + slot.offsetLeft + slot.offsetWidth / 2;
-    const sy = kase.offsetTop + slot.offsetTop + slot.offsetHeight / 2;
-    cell.style.setProperty('--tx', `${(sx - cx - (c - 1.5) * 14).toFixed(1)}px`);
-    cell.style.setProperty('--ty', `${(sy - cy - (r - 1) * 14).toFixed(1)}px`);
-    cell.style.setProperty('--ks', (Math.min(slot.offsetWidth / cell.offsetWidth, slot.offsetHeight / cell.offsetHeight) * 0.95).toFixed(3));
+// ---------- scene 1: the photo to font loop ----------
+// Phases: 0 photo (with a shutter flash), 1 flatten, 2 split the boxes,
+// 3 trace the letters, 4 type with the new font. Each phase adds a class
+// (p0 to p4) and the CSS moves only transform and opacity.
+function scanLoop(root) {
+  const steps = [...root.querySelectorAll('.loop-steps li')];
+  const typed = root.querySelector('.lv-typed');
+  const btn = root.querySelector('[data-pause]');
+  const nameInput = document.querySelector('#studio-app [data-sample]');
+  const AT = [0, 1500, 2900, 4300, 6100];
+  const timers = [];
+  let visible = false;
+  let paused = false;
+  let running = false;
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  const clear = () => {
+    while (timers.length) clearTimeout(timers.pop());
+  };
+  const mark = (k) => steps.forEach((li, j) => {
+    li.classList.toggle('is-on', j <= k);
+    li.classList.toggle('is-now', j === k);
   });
+  if (reduce) {
+    root.classList.add('is-static');
+    mark(steps.length - 1);
+    return;
+  }
+  function phase(k) {
+    root.classList.add(`p${k}`);
+    mark(k);
+    if (k === 4) {
+      const text = (nameInput?.value.trim() || typed.dataset.text).slice(0, 28);
+      [...text].forEach((_, i) => later(() => {
+        typed.textContent = [...text].slice(0, i + 1).join('');
+      }, 120 + i * 95));
+      later(() => {
+        root.classList.add('is-resetting');
+        later(cycle, 450);
+      }, 120 + text.length * 95 + 2600);
+    }
+  }
+  function cycle() {
+    clear();
+    root.className = 'scan-loop';
+    typed.textContent = '';
+    mark(0);
+    void root.offsetWidth;
+    AT.forEach((ms, k) => later(() => phase(k), ms + 60));
+  }
+  function play() {
+    if (running || paused || !visible) return;
+    running = true;
+    cycle();
+  }
+  function stop() {
+    running = false;
+    clear();
+    root.classList.remove('is-resetting');
+  }
+  btn?.addEventListener('click', () => {
+    paused = !paused;
+    btn.setAttribute('aria-pressed', String(paused));
+    const label = paused ? btn.dataset.play : btn.dataset.pause;
+    btn.setAttribute('aria-label', label);
+    btn.title = label;
+    root.classList.toggle('is-paused', paused);
+    if (paused) {
+      stop();
+      root.className = 'scan-loop p0 p1 p2 p3 p4 is-paused';
+      typed.textContent = (nameInput?.value.trim() || typed.dataset.text).slice(0, 28);
+      mark(4);
+    } else play();
+  });
+  new IntersectionObserver((entries) => {
+    visible = entries.some((e) => e.isIntersecting);
+    if (visible) play();
+    else stop();
+  }, { threshold: 0.25 }).observe(root);
 }
+const loop = document.getElementById('scan-loop');
+if (loop) scanLoop(loop);
 
 // ---------- scene 2: weight ----------
 const WORD = document.documentElement.lang === 'pt-BR' ? 'Caligrafia' : 'Handwriting';
@@ -199,16 +261,9 @@ if (scenes.length) {
   scenes.forEach((s) => io.observe(s));
   addEventListener('scroll', request, { passive: true });
   addEventListener('resize', () => {
-    const scan = scenes.find((s) => s.dataset.scene === '1');
-    if (scan) layoutScan(scan);
     lastWeight = -1;
     request();
   });
-  const scan = scenes.find((s) => s.dataset.scene === '1');
-  if (scan) {
-    layoutScan(scan);
-    document.fonts?.ready.then(() => layoutScan(scan));
-  }
   new MutationObserver(() => {
     lastWeight = -1;
     request();

@@ -1,9 +1,11 @@
 // The drawing studio on the home page. It opens with Quill Hand, a complete
-// handwritten font, already writing the sample sentence. Visitors can edit
-// any glyph on the stage (draw strokes, drag spine points, erase strokes) and
-// every copy of it in the sentence updates, or start a new font and draw
-// their own letters, which replace the default font one by one. The live
-// font is compiled in the browser with the fontsketch core engine.
+// handwritten font, already writing the sample sentence. Visitors type their
+// name and see it in the font right away, then press "Draw these letters" to
+// start their own font with only the letters of that name to draw (step 2),
+// and download it (step 3). They can also edit any glyph on the stage (draw
+// strokes, drag spine points, erase strokes) and every copy of it in the
+// sentence updates. The live font is compiled in the browser with the
+// fontsketch core engine.
 import { expandStroke, strokesToContours, contoursToSvgPath } from './stroke.mjs';
 
 const root = document.getElementById('studio-app');
@@ -34,7 +36,13 @@ function start(el) {
   let data = null;
   /** @type {any} */
   let core = null;
-  const S = { mode: 'edit', tool: 'pen', pen: 66, sel: 'a', edits: {}, drawn: {}, sample: sampleInput.value, gen: 0 };
+  const S = { mode: 'edit', tool: 'pen', pen: 66, sel: 'a', edits: {}, drawn: {}, name: sampleInput.value.trim(), sample: '', gen: 0 };
+  const fallbackSample = () => (S.mode === 'new' ? sampleInput.dataset.new : sampleInput.dataset.default);
+  const syncSample = () => {
+    S.sample = S.name || fallbackSample();
+  };
+  syncSample();
+  let shownSample = S.sample;
   const undo = [];
   let autoplay = null;
   let faceName = '';
@@ -45,6 +53,8 @@ function start(el) {
     ready: (n) => (pt ? `Fonte padrão, ${n} glifos, pronta` : `Default font, ${n} glyphs, ready`),
     live: (n) => (pt ? `Sua versão compilada, ${n} glifos` : `Your edit compiled, ${n} glyphs`),
     newp: (d, t) => (pt ? `${d} de ${t} letras desenhadas` : `${d} of ${t} letters drawn`),
+    nameProgress: (d, t) => (pt ? `${d} de ${t} letras do seu nome desenhadas` : `${d} of ${t} letters of your name drawn`),
+    nameDone: pt ? 'Todas as letras do seu nome estão prontas. Baixe a sua fonte.' : 'Every letter of your name is drawn. Download your font.',
     composite: (b) => (pt ? `Letra acentuada: editando a base ${b}` : `Accented letter: editing its base ${b}`),
     noCore: pt ? 'O motor de fontes não carregou, o desenho continua funcionando' : 'The font engine did not load, drawing still works',
     saved: pt ? 'Abrindo o editor' : 'Opening the editor',
@@ -169,6 +179,7 @@ function start(el) {
   function changed() {
     renderStage();
     updateStrip();
+    updateSteps();
     scheduleBuild();
     save();
   }
@@ -305,7 +316,8 @@ function start(el) {
     $$('.specimen .c').forEach((s) => s.classList.toggle('is-sel', s.dataset.ch === ch));
     renderStage({ animate });
     const btn = el.querySelector(`.strip .g[data-ch="${CSS.escape(ch)}"]`);
-    if (btn) btn.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    const strip = btn?.parentElement;
+    if (strip && (btn.offsetLeft < strip.scrollLeft || btn.offsetLeft + btn.offsetWidth > strip.scrollLeft + strip.clientWidth)) strip.scrollTo({ left: btn.offsetLeft - strip.clientWidth / 2, behavior: reduce ? 'auto' : 'smooth' });
   }
 
   function covered(ch) {
@@ -318,13 +330,22 @@ function start(el) {
 
   function renderSpecimen() {
     const frag = document.createDocumentFragment();
-    for (const ch of S.sample) {
+    const prev = [...shownSample];
+    const chars = [...S.sample];
+    let same = 0;
+    while (same < prev.length && same < chars.length && prev[same] === chars[same]) same++;
+    shownSample = S.sample;
+    specimen.classList.toggle('is-name', Boolean(S.name) && chars.length <= 24);
+    let k = 0;
+    for (const ch of chars) {
+      const fresh = k++ >= same && !reduce;
       if (ch === ' ') {
         frag.append(' ');
         continue;
       }
       const s = document.createElement('span');
-      s.className = `c${covered(ch) ? '' : ' fallback'}${ch === S.sel ? ' is-sel' : ''}`;
+      s.className = `c${covered(ch) ? '' : ' fallback'}${ch === S.sel ? ' is-sel' : ''}${fresh ? ' is-new' : ''}`;
+      if (fresh) s.style.setProperty('--d', `${Math.min(k - 1 - same, 12) * 45}ms`);
       s.dataset.ch = ch;
       s.textContent = ch;
       frag.append(s);
@@ -339,10 +360,58 @@ function start(el) {
     stage.focus({ preventScroll: true });
   });
   sampleInput.addEventListener('input', () => {
-    S.sample = sampleInput.value || ' ';
+    stopAutoplay();
+    S.name = sampleInput.value.trim();
+    syncSample();
     renderSpecimen();
+    updateSteps();
     save();
   });
+  sampleInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      go();
+    }
+  });
+
+  // ---------- the three steps: type a name, draw its letters, download ----------
+  /** Base characters the sample needs, in order (accented letters map to their base). */
+  function neededChars() {
+    if (!data) return [];
+    const out = [];
+    for (const ch of S.sample) {
+      if (ch === ' ') continue;
+      let n = nameOf(ch);
+      let c = ch;
+      const comp = data.composites[n];
+      if (comp) {
+        n = comp.comps[0][0];
+        c = String.fromCodePoint((data.glyphs[n]?.u || [0])[0]);
+      }
+      if (baseGlyph(n) && data.glyphs[n].adv > 0 && !out.includes(c)) out.push(c);
+    }
+    return out;
+  }
+  const missingChars = () => neededChars().filter((c) => !S.drawn[nameOf(c)]?.s.length);
+  function updateSteps() {
+    let step = 1;
+    if (S.mode === 'new') step = S.name && data && !missingChars().length ? 3 : 2;
+    el.dataset.step = String(step);
+    $$('.steps3 li').forEach((li) => {
+      const n = Number(li.dataset.n);
+      li.classList.toggle('is-done', n < step);
+      if (n === step) li.setAttribute('aria-current', 'step');
+      else li.removeAttribute('aria-current');
+    });
+  }
+  function go() {
+    stopAutoplay();
+    if (!data) return;
+    if (S.mode !== 'new') toggleMode();
+    else nextLetter();
+    stage.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    stage.focus({ preventScroll: true });
+  }
 
   function updateStrip() {
     let drawnCount = 0;
@@ -389,6 +458,7 @@ function start(el) {
     }
     if (act === 'next') nextLetter();
     if (act === 'new') toggleMode();
+    if (act === 'go') go();
     if (act === 'editor') openEditor();
   });
   $('[data-weight]').addEventListener('input', (e) => {
@@ -426,6 +496,13 @@ function start(el) {
   }
 
   function nextLetter() {
+    const wanted = S.name ? missingChars() : [];
+    if (wanted.length) {
+      const order = neededChars();
+      const from = order.indexOf(S.sel);
+      select(wanted.find((c) => order.indexOf(c) > from) || wanted[0]);
+      return;
+    }
     const i = STRIP.indexOf(S.sel);
     for (let k = 1; k <= STRIP.length; k++) {
       const ch = STRIP[(i + k) % STRIP.length];
@@ -443,16 +520,15 @@ function start(el) {
     btn.querySelector('span').textContent = S.mode === 'new' ? btn.dataset.labelBack : btn.dataset.labelNew;
     hint.textContent = S.mode === 'new' ? hint.dataset.new : hint.dataset.edit;
     $('[data-font-name]').textContent = S.mode === 'new' ? txt.myFont : 'Quill Hand';
+    syncSample();
     if (S.mode === 'new') {
-      S.sample = sampleInput.dataset.new;
-      sampleInput.value = S.sample;
-      select(STRIP.find((c) => !S.drawn[nameOf(c)]?.s.length) || 'a');
+      const wanted = S.name ? missingChars() : [];
+      select(wanted[0] || STRIP.find((c) => !S.drawn[nameOf(c)]?.s.length) || 'a');
     } else {
-      S.sample = sampleInput.dataset.default;
-      sampleInput.value = S.sample;
       select('a');
     }
     updateStrip();
+    updateSteps();
     scheduleBuild();
     save();
   }
@@ -514,10 +590,18 @@ function start(el) {
       document.fonts.add(face);
       setFace(name, face);
       const count = Object.keys(font.glyphs).length;
-      status.textContent = S.mode === 'new' ? txt.newp(STRIP.filter((c) => S.drawn[nameOf(c)]?.s.length).length, STRIP.length) : txt.live(count);
+      status.textContent = S.mode === 'new' ? newStatus() : txt.live(count);
     } catch (err) {
       status.textContent = String(err && err.message ? err.message : err);
     }
+  }
+  function newStatus() {
+    if (S.name) {
+      const need = neededChars();
+      const left = missingChars().length;
+      if (need.length) return left ? txt.nameProgress(need.length - left, need.length) : txt.nameDone;
+    }
+    return txt.newp(STRIP.filter((c) => S.drawn[nameOf(c)]?.s.length).length, STRIP.length);
   }
   let currentFace = null;
   function setFace(name, face) {
@@ -585,7 +669,7 @@ function start(el) {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       try {
-        localStorage.setItem(KEY, JSON.stringify({ mode: S.mode, pen: S.pen, edits: S.edits, drawn: S.drawn, sample: S.sample }));
+        localStorage.setItem(KEY, JSON.stringify({ mode: S.mode, pen: S.pen, edits: S.edits, drawn: S.drawn, name: S.name }));
       } catch {
         /* storage full or blocked */
       }
@@ -599,11 +683,12 @@ function start(el) {
       S.edits = v.edits || {};
       S.drawn = v.drawn || {};
       $('[data-weight]').value = String(S.pen);
+      const oldSample = v.sample && v.sample !== sampleInput.dataset.default && v.sample !== sampleInput.dataset.new ? v.sample : '';
+      S.name = String(v.name || oldSample || '').slice(0, 40).trim();
+      sampleInput.value = S.name;
+      syncSample();
+      shownSample = S.sample;
       if (v.mode === 'new') toggleMode();
-      if (v.sample) {
-        S.sample = v.sample;
-        sampleInput.value = v.sample;
-      }
       return Object.keys(S.edits).length + Object.keys(S.drawn).length > 0 || v.mode === 'new';
     } catch {
       return false;
@@ -618,7 +703,7 @@ function start(el) {
     $$('.specimen .c').forEach((s) => s.classList.remove('is-writing'));
   }
   function startAutoplay() {
-    const word = [...(pt ? 'Ação' : 'Quill')].filter((c) => baseGlyph(nameOf(c)) || data.composites[nameOf(c)]);
+    const word = [...(S.name || (pt ? 'Ação' : 'Quill'))].slice(0, 8).filter((c) => c !== ' ' && (baseGlyph(nameOf(c)) || data.composites[nameOf(c)]));
     let i = 0;
     const step = () => {
       const ch = word[i % word.length];
@@ -651,6 +736,7 @@ function start(el) {
       for (const [n, g] of Object.entries(data.composites)) for (const u of g.u) byCode.set(u, n);
       const resumed = restore();
       updateStrip();
+      updateSteps();
       if (!resumed && !reduce && 'IntersectionObserver' in window) startAutoplay();
       else renderStage();
       status.textContent = txt.loading;

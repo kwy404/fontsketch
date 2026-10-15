@@ -1,6 +1,6 @@
-// The home page (English and Portuguese): the drawing studio hero, the
-// three ways to create, the scroll story, the gallery, features, the
-// developer section, guides and FAQ.
+// The home page (English and Portuguese): the name field and drawing studio
+// hero, the three ways to create, the photo to font loop and scroll story,
+// the gallery, features, the developer section, guides and FAQ.
 import { AUTHOR, NPM, REPO, SITE, VERSION, esc } from './layout.mjs';
 import { art, guidePath } from './guides.mjs';
 import { iconSprite } from './art/icons.mjs';
@@ -15,12 +15,12 @@ export const HOME = {
     kicker: 'Free font maker in your browser',
     h1a: 'Turn your handwriting',
     h1b: 'into a real font',
-    lede: 'Write a letter with your mouse, finger or pen and watch it become a real glyph in a real font. Draw, import SVG or scan a handwriting sheet, then export TTF, OTF, WOFF2 and variable fonts. Nothing is uploaded.',
+    lede: 'Type your name, draw its letters with a mouse, finger or pen, and download a real font file. Free, in your browser, and nothing is uploaded.',
+    name: { label: 'Type your name', placeholder: 'Your name', go: 'Draw these letters', stepsLabel: 'Three steps to your font', steps: ['Type your name', 'Draw its letters', 'Download your font'] },
     stageLabel: 'Drawing stage',
     tools: { pen: 'Draw', points: 'Points', erase: 'Erase', undo: 'Undo', clear: 'Clear glyph', weight: 'Pen weight', next: 'Next letter' },
     hintEdit: 'Drawing on the letter adds strokes. Every copy of it in the sentence updates.',
-    hintNew: 'Draw the letter, then press Next letter. Letters you have not drawn yet stay in Quill Hand and are marked.',
-    sample: 'Sample text',
+    hintNew: 'Draw the letter shown, then press Next letter. Letters you have not drawn yet stay in Quill Hand and are marked.',
     sampleDefault: 'Ação! The quick brown fox jumps over the lazy dog, 1234567890.',
     sampleNew: 'fontsketch makes handwriting fonts',
     fontName: 'Quill Hand',
@@ -38,13 +38,14 @@ export const HOME = {
       ['scan-to-font', 'Scan a handwriting sheet', 'Print the template, fill it with a pen and take a phone photo. fontsketch finds the markers, flattens the page, evens the light, splits the cells and traces every letter.'],
     ] },
     story: { kicker: 'How it works', h2: 'From a sheet of paper to a font file', scenes: [
-      ['Scan', 'A phone photo becomes a type case', 'The four corner markers tell fontsketch how the page was tilted. It flattens the perspective, corrects the uneven light, splits the grid into cells and traces each letter into vector outlines.', ['Flatten the perspective', 'Even out the lighting', 'Split the cells', 'Trace into the type case']],
+      ['Scan', 'A phone photo becomes a font', 'Print the sheet, write one letter in each box and take a photo. The corner markers show how the page was tilted, so fontsketch flattens it, evens out the light, splits the boxes and traces every letter into a glyph you can type with.', ['Take a photo', 'Flatten the page', 'Split the boxes', 'Trace each letter', 'Type with it']],
       ['Weight', 'One drawing, every weight', 'Draw a Regular and a Bold master with the same points and fontsketch exports a variable font with a real weight axis. Scroll to move the axis from Thin to Black.', []],
       ['Hinting', 'Crisp at small sizes', 'Automatic TrueType hinting finds the stems and snaps them to the pixel grid, so a 12 pixel paragraph renders sharp instead of blurry.', []],
       ['Kerning', 'Pairs that fit together', 'Kerning pairs and classes pull awkward combinations like AV, To and Wa together, and every accented copy inherits the pair.', []],
       ['Export', 'TTF, OTF and WOFF2 in one click', 'The compiler writes the font binary in your browser: TrueType outlines, CFF outlines, WOFF and Brotli compressed WOFF2, plus a ready @font-face snippet.', []],
     ] },
     weightNames: ['Thin', 'Light', 'Regular', 'Bold', 'Black'],
+    loop: { label: 'Animation: a photo of a handwriting sheet turning into a font', pause: 'Pause the animation', play: 'Play the animation', font: 'My Hand', file: 'my-hand.woff2', typed: 'Hello from my hand', cta: 'Scan a sheet in the editor' },
     gallery: { kicker: 'Gallery', h2: 'Fonts made with fontsketch', lede: 'Every font below was built with the fontsketch engine, from pen strokes, geometric shapes and SVG icons. Type in any tester, then take the files.', more: 'Open the full gallery' },
     features: { kicker: 'Everything in the box', h2: 'A complete font editor in the browser', items: [
       ['Freehand drawing', 'Pressure aware brush strokes become smooth, editable outlines.'],
@@ -78,12 +79,12 @@ export const HOME = {
     kicker: 'Criador de fontes grátis no navegador',
     h1a: 'Transforme sua letra',
     h1b: 'em uma fonte de verdade',
-    lede: 'Escreva uma letra com o mouse, o dedo ou uma caneta e veja ela virar um glifo de verdade em uma fonte de verdade. Desenhe, importe SVG ou escaneie uma folha manuscrita e exporte TTF, OTF, WOFF2 e fontes variáveis. Nada é enviado para servidores.',
+    lede: 'Digite seu nome, desenhe as letras com o mouse, o dedo ou uma caneta e baixe um arquivo de fonte de verdade. Grátis, no navegador, e nada é enviado para servidores.',
+    name: { label: 'Digite seu nome', placeholder: 'Seu nome', go: 'Desenhar estas letras', stepsLabel: 'Três passos até a sua fonte', steps: ['Digite seu nome', 'Desenhe as letras', 'Baixe sua fonte'] },
     stageLabel: 'Área de desenho',
     tools: { pen: 'Desenhar', points: 'Pontos', erase: 'Apagar', undo: 'Desfazer', clear: 'Limpar glifo', weight: 'Peso da caneta', next: 'Próxima letra' },
     hintEdit: 'Desenhar sobre a letra adiciona traços. Todas as cópias dela na frase são atualizadas.',
-    hintNew: 'Desenhe a letra e toque em Próxima letra. As letras que ainda faltam ficam em Quill Hand e aparecem marcadas.',
-    sample: 'Texto de exemplo',
+    hintNew: 'Desenhe a letra mostrada e toque em Próxima letra. As letras que ainda faltam ficam em Quill Hand e aparecem marcadas.',
     sampleDefault: 'Ação! Coração, pão e açúcar: a fonte é sua, 1234567890.',
     sampleNew: 'fontsketch cria fontes com a sua letra',
     fontName: 'Quill Hand',
@@ -101,13 +102,14 @@ export const HOME = {
       ['scan-to-font', 'Escaneie uma folha manuscrita', 'Imprima o modelo, preencha com caneta e tire uma foto com o celular. O fontsketch acha os marcadores, endireita a página, corrige a luz, separa as células e vetoriza cada letra.'],
     ] },
     story: { kicker: 'Como funciona', h2: 'Da folha de papel ao arquivo de fonte', scenes: [
-      ['Escanear', 'Uma foto vira uma caixa de tipos', 'Os quatro marcadores dos cantos mostram como a página estava inclinada. O fontsketch corrige a perspectiva, iguala a luz, separa a grade em células e vetoriza cada letra.', ['Corrigir a perspectiva', 'Igualar a iluminação', 'Separar as células', 'Vetorizar na caixa de tipos']],
+      ['Escanear', 'Uma foto do celular vira uma fonte', 'Imprima a folha, escreva uma letra em cada quadro e tire uma foto. Os marcadores dos cantos mostram como a página estava inclinada, e o fontsketch endireita, iguala a luz, separa os quadros e vetoriza cada letra em um glifo pronto para digitar.', ['Tire uma foto', 'Endireite a página', 'Separe os quadros', 'Vetorize cada letra', 'Digite com ela']],
       ['Peso', 'Um desenho, todos os pesos', 'Desenhe um master Regular e um Bold com os mesmos pontos e o fontsketch exporta uma fonte variável com um eixo de peso de verdade. Role para ir de Thin a Black.', []],
       ['Hinting', 'Nítida em tamanhos pequenos', 'O hinting TrueType automático encontra as hastes e alinha com a grade de pixels, e um parágrafo em 12 pixels fica nítido em vez de borrado.', []],
       ['Kerning', 'Pares que se encaixam', 'Pares e classes de kerning aproximam combinações difíceis como AV, To e Wa, e toda cópia acentuada herda o par.', []],
       ['Exportar', 'TTF, OTF e WOFF2 em um clique', 'O compilador gera o binário da fonte no navegador: contornos TrueType, contornos CFF, WOFF e WOFF2 com Brotli, além do trecho @font-face pronto.', []],
     ] },
     weightNames: ['Thin', 'Light', 'Regular', 'Bold', 'Black'],
+    loop: { label: 'Animação: a foto de uma folha manuscrita virando uma fonte', pause: 'Pausar a animação', play: 'Reproduzir a animação', font: 'Minha Letra', file: 'minha-letra.woff2', typed: 'Olá da minha letra', cta: 'Escanear uma folha no editor' },
     gallery: { kicker: 'Galeria', h2: 'Fontes feitas com o fontsketch', lede: 'Cada fonte abaixo foi construída com o motor do fontsketch, a partir de traços de caneta, formas geométricas e ícones SVG. Digite em qualquer teste e baixe os arquivos.', more: 'Ver a galeria completa' },
     features: { kicker: 'Tudo incluso', h2: 'Um editor de fontes completo no navegador', items: [
       ['Desenho a mão livre', 'Traços de pincel viram contornos suaves e editáveis.'],
@@ -152,8 +154,39 @@ function sheetSVG() {
   return `${s}</svg>`;
 }
 
-function cellsHTML() {
-  return [...'abcdefghijkl'].map((ch, i) => `<span class="cell" style="--i:${i};--c:${i % 4};--r:${Math.floor(i / 4)}"><svg viewBox="0 0 72 66" aria-hidden="true"><path d="${textD(ch, 46, 36, 50, { anchor: 'middle' })}" fill="currentColor"/></svg></span>`).join('');
+/**
+ * The self playing photo to font loop that opens the story: a phone photo of
+ * the sheet flattens, the boxes are found, every letter is traced into a
+ * glyph tile and the new font types a line (the visitor's name when given).
+ * It renders in its final state; story.js plays it when it is on screen.
+ */
+function scanLoop(t, R, [k, h, p, steps]) {
+  const L = t.loop;
+  const boxes = [...'abcdefghijkl'].map((_, i) => `<span style="--i:${i};--c:${i % 4};--r:${Math.floor(i / 4)}"></span>`).join('');
+  const tiles = [...'abcdefghijkl'].map((ch, i) => `<span class="lv-tile" style="--i:${i}"><svg viewBox="0 0 72 66"><path pathLength="1" d="${textD(ch, 46, 36, 50, { anchor: 'middle' })}"/></svg></span>`).join('');
+  return `<div class="scan-loop p1 p2 p3 p4" id="scan-loop">
+    <div class="loop-grid">
+      <div class="scene-text"><p class="scene-n"><span>01</span>${k}</p><h3>${h}</h3><p>${p}</p>
+        <ol class="loop-steps">${steps.map((s, j) => `<li data-k="${j}">${s}</li>`).join('')}</ol>
+        <p class="loop-cta"><a class="btn btn-outline" href="${R}app/"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>${L.cta}</a></p>
+      </div>
+      <div class="loop-vis">
+        <div class="lv-art" role="img" aria-label="${esc(L.label)}">
+          <div class="lv-phone"><div class="lv-screen">
+            <div class="lv-photo">${sheetSVG()}<span class="lv-light"></span><span class="lv-boxes">${boxes}</span><span class="lv-sweep"></span></div>
+            <span class="lv-flash"></span>
+          </div></div>
+          <span class="lv-arrow"><svg class="ic"><use href="#i-arrow"/></svg></span>
+          <div class="lv-font">
+            <p class="lv-head"><span class="font-badge">${L.font}</span><small>${L.file}</small></p>
+            <div class="lv-tiles">${tiles}</div>
+            <p class="lv-type"><span class="lv-typed" data-text="${esc(L.typed)}">${esc(L.typed)}</span><span class="lv-caret"></span></p>
+          </div>
+        </div>
+        <button type="button" class="lv-pause icon-btn" data-pause="${esc(L.pause)}" data-play="${esc(L.play)}" aria-pressed="false" aria-label="${esc(L.pause)}" title="${esc(L.pause)}"><svg class="ic i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
+      </div>
+    </div>
+  </div>`;
 }
 
 export function homeBody(lang, ctx) {
@@ -171,7 +204,13 @@ export function homeBody(lang, ctx) {
     <h1 id="hero-h"><span class="h1-a">${t.h1a}</span> <span class="h1-b">${t.h1b}</span></h1>
     <p class="lede">${t.lede}</p>
   </div>
-  <div class="studio" id="studio-app" data-mode="edit" data-lang="${lang}">
+  <div class="studio" id="studio-app" data-mode="edit" data-step="1" data-lang="${lang}">
+    <div class="name-bar">
+      <label class="name-field"><span class="name-label"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>${t.name.label}</span><input type="text" data-sample placeholder="${esc(t.name.placeholder)}" data-default="${esc(t.sampleDefault)}" data-new="${esc(t.sampleNew)}" maxlength="40" spellcheck="false" autocomplete="off" autocapitalize="words" enterkeyhint="go"></label>
+      <button type="button" class="btn btn-primary name-go" data-act="go"><span>${t.name.go}</span><svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></button>
+      <ol class="steps3" aria-label="${esc(t.name.stepsLabel)}">${t.name.steps.map((s, i) => `<li data-n="${i + 1}"${i ? '' : ' aria-current="step"'}><span class="sn" aria-hidden="true"><b>${i + 1}</b><svg class="ic"><use href="#i-check"/></svg></span>${s}</li>`).join('')}</ol>
+    </div>
+    <div class="studio-grid">
     <div class="stage-card">
       <div class="stage-bar" role="toolbar" aria-label="${t.stageLabel}">
         <div class="seg" role="group">
@@ -195,7 +234,6 @@ export function homeBody(lang, ctx) {
     <div class="spec-card">
       <div class="spec-head"><span class="font-badge" data-font-name>${t.fontName}</span><span class="spec-status" data-status aria-live="polite">${t.statusDefault}</span></div>
       <p class="specimen" data-specimen lang="${pt ? 'pt-BR' : 'en'}">${esc(t.sampleDefault)}</p>
-      <label class="sample-field"><span>${t.sample}</span><input type="text" data-sample value="${esc(t.sampleDefault)}" data-default="${esc(t.sampleDefault)}" data-new="${esc(t.sampleNew)}" spellcheck="false" autocomplete="off"></label>
       <div class="strip-wrap"><p class="strip-label" id="strip-label">${t.strip} <span data-progress></span></p><div class="strip" role="group" aria-labelledby="strip-label">${[...glyphStrip].map((c) => `<button type="button" class="g" data-ch="${esc(c)}" aria-pressed="${c === 'a'}">${esc(c)}</button>`).join('')}</div></div>
       <div class="studio-actions">
         <button type="button" class="btn btn-outline" data-act="new" data-label-new="${esc(t.newFont)}" data-label-back="${esc(t.backDefault)}"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg><span>${t.newFont}</span></button>
@@ -205,6 +243,7 @@ export function homeBody(lang, ctx) {
           <div class="dl-menu"><button type="button" data-dl="woff2">WOFF2</button><button type="button" data-dl="ttf">TTF</button><button type="button" data-dl="otf">OTF</button><button type="button" data-dl="woff">WOFF</button><button type="button" data-dl="json">${t.projectFile}</button></div>
         </details>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -219,7 +258,7 @@ export function homeBody(lang, ctx) {
 
 <section id="story" class="story" aria-labelledby="story-h">
   <div class="band-in story-intro"><p class="kicker">${t.story.kicker}</p><h2 id="story-h">${t.story.h2}</h2></div>
-  ${t.story.scenes.map(([k, h, p, steps], i) => `<div class="scene scene-${i + 1}" data-scene="${i + 1}" style="--p:0">
+  ${t.story.scenes.map(([k, h, p, steps], i) => i === 0 ? scanLoop(t, R, [k, h, p, steps]) : `<div class="scene scene-${i + 1}" data-scene="${i + 1}" style="--p:0">
     <div class="scene-sticky">
       <div class="scene-text"><p class="scene-n"><span>${String(i + 1).padStart(2, '0')}</span>${k}</p><h3>${h}</h3><p>${p}</p>${steps.length ? `<ol class="scene-steps">${steps.map((s, j) => `<li style="--j:${j}">${s}</li>`).join('')}</ol>` : ''}</div>
       <div class="scene-vis">${sceneVisual(i, t, ctx.sizes)}</div>
@@ -279,13 +318,6 @@ export function homeBody(lang, ctx) {
 }
 
 function sceneVisual(i, t, sizes = {}) {
-  if (i === 0) {
-    return `<div class="scan-stage">
-      <div class="photo"><div class="photo-sheet">${sheetSVG()}<span class="photo-light"></span></div></div>
-      <div class="cells" aria-hidden="true">${cellsHTML()}</div>
-      <div class="case" aria-hidden="true">${Array.from({ length: 12 }, (_, k) => `<span class="slot" data-slot="${k}"></span>`).join('')}</div>
-    </div>`;
-  }
   if (i === 1) {
     return `<div class="weight-stage"><svg class="weight-svg" viewBox="0 -760 2600 1060" aria-hidden="true"><g class="weight-word"></g></svg>
       <div class="axis"><span class="axis-track"><span class="axis-knob"></span></span><span class="axis-labels">${t.weightNames.map((n) => `<span>${n}</span>`).join('')}</span><output class="axis-val">wght 100</output></div></div>`;
