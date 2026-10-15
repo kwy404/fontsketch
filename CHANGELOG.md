@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A pixel brush that fills and erases whole grid squares, so pixel letters stay on the grid.
 - "Use your font" steps in the Download panel for a computer, Word, Canva and websites, with the right file for each and a copy button for the CSS.
 - A "font is ready" view after quick mode with a live sample in the new font.
+- Special dates in the editor: a light seasonal garland under the top bar and Quill in costume on the start screen, sharing the website's on and off switch.
 
 ## [0.1.0] - 2026-10-13
 

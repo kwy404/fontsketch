@@ -691,6 +691,10 @@
         <h2 id="start-title" class="start-title">Make your own font</h2>
         <p class="start-sub">Draw, scan your handwriting or import, then download a real font file. Everything stays on your device.</p>
       </div>
+      <div class="start-season" v-show="S.season.id">
+        <span class="ss-quill" v-show="S.season.on" aria-hidden="true"></span>
+        <label class="ss-switch"><input type="checkbox" class="toggle toggle-sm" role="switch" :checked="S.season.on" @change="A.toggleSeason()" :aria-label="S.season.name + ' mode'"> <span v-text="S.season.name + ' mode'"></span></label>
+      </div>
       <button type="button" class="ib" @click="A.closeStart()" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button>
     </div>
     <section class="quick-start" aria-labelledby="qs-title">

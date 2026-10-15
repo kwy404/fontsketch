@@ -19,6 +19,10 @@ The start screen opens with a quick font: pick a style (script, block or pixel),
 
 The pixel brush (`js/pixel.mjs`) fills grid cells and keeps a pixel letter as a set of cells, so strokes and the eraser never leave the grid. Atelier Pixel, the 5 by 7 pixel template, is built from bitmaps in the same module.
 
+## Special dates
+
+`js/seasons.mjs` reads the date rules from the site's `assets/site/seasons.js` (run without its page decorations) and sets `data-season` on `<html>`. The editor then shows a thin seasonal garland under the top bar and Quill in costume on the start screen, with a switch next to it. The switch uses the website's `fontsketch:season-off:<id>` key, so turning a season off in one place turns it off in both. `?season=<id>` forces a season and `?season=off` turns it off, as on the site.
+
 ## Opening the editor with a font
 
 | URL | What happens |

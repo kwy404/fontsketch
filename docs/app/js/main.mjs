@@ -16,6 +16,7 @@ import { installSpacing } from './panels/spacing.mjs';
 import { installTemplates } from './panels/templates.mjs';
 import { installQuick } from './panels/quickmode.mjs';
 import { installTest } from './panels/test.mjs';
+import { installSeasons } from './seasons.mjs';
 
 setCore(lib);
 const V = window.V;
@@ -56,6 +57,7 @@ const S = V.reactive({
   projects: [],
   lastProject: null,
   tour: { on: false, i: 0, title: '', text: '' },
+  season: { id: '', name: '', on: false },
   quick: { on: false, busy: false, style: 'script', capitals: false, guide: true, i: 0, total: 26, char: '', done: 0, here: false, last: false, tip: '', report: [], sample: '' },
   toasts: [],
 });
@@ -721,6 +723,7 @@ installTest(ctx);
 installFontPanel(ctx);
 installExport(ctx);
 installQuick(ctx);
+installSeasons(ctx);
 
 // Resolved outlines including components (used by decompose and exports).
 ctx.resolveAll = (g) => {
