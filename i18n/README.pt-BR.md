@@ -30,11 +30,12 @@ O fontsketch é um editor de fontes de código aberto que roda no navegador, e o
 
 O jeito mais rápido é a [página inicial](https://kwy404.github.io/fontsketch/pt/): digite seu nome, toque em **Desenhar estas letras**, desenhe cada letra dele e baixe a fonte.
 
-O [editor](https://kwy404.github.io/fontsketch/app/) tem três caminhos:
+O [editor](https://kwy404.github.io/fontsketch/app/) tem quatro caminhos:
 
-1. **Desenhar.** Escreva cada letra com o mouse, o dedo ou uma caneta e ajuste com a caneta bezier. O editor abre com a Quill Hand, uma fonte manuscrita completa, como modelo, ou você começa do zero.
-2. **Importar.** Solte arquivos SVG ou cole caminhos num glifo, vetorize um PNG ou JPG, ou abra uma fonte TTF, OTF, WOFF ou WOFF2 e continue editando.
-3. **Escanear.** Imprima a folha manuscrita, preencha cada quadro com caneta escura e tire uma foto com o celular. O fontsketch endireita a página, iguala a luz, separa os quadros e vetoriza cada letra, com uma nota de confiança para você saber o que revisar.
+1. **Fonte rápida.** Escolha um estilo (Script, Block ou Pixel) e desenhe as 26 letras minúsculas com uma letra guia clarinha atrás de cada uma. O fontsketch cria as maiúsculas, números, pontuação, letras acentuadas e o espaçamento, e uma fonte pronta para usar leva uns cinco minutos. As maiúsculas que você pular saem das suas próprias minúsculas até você desenhar as suas. Abra direto com [`app/#quick=script`](https://kwy404.github.io/fontsketch/app/#quick=script), `#quick=block` ou `#quick=pixel`.
+2. **Desenhar.** Escreva cada letra com o mouse, o dedo ou uma caneta e ajuste com a caneta bezier. O editor abre com a Quill Hand, uma fonte manuscrita completa, como modelo, ou você começa do zero.
+3. **Importar.** Solte arquivos SVG ou cole caminhos num glifo, vetorize um PNG ou JPG, ou abra uma fonte TTF, OTF, WOFF ou WOFF2 e continue editando.
+4. **Escanear.** Imprima a folha manuscrita, preencha cada quadro com caneta escura e tire uma foto com o celular. O fontsketch endireita a página, iguala a luz, separa os quadros e vetoriza cada letra, com uma nota de confiança para você saber o que revisar.
 
 As letras acentuadas são montadas a partir da letra base e do acento (a + til = ã), cobrindo Latin-1 Supplement e Latin Extended-A. Os projetos são salvos no navegador e podem ser baixados como arquivos `.fontsketch.json`.
 
@@ -176,7 +177,7 @@ h1 {
 }
 ```
 
-Para usar a fonte em programas no computador, instale o arquivo TTF ou OTF no Windows ou no macOS. O [guia em inglês](https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/) mostra React, Next.js e Vue.
+O quadro **Use your font** no painel de download do editor mostra os passos para computador, Word, Canva e sites. Para usar a fonte em programas no computador, instale o arquivo TTF ou OTF no Windows ou no macOS; o Canva aceita fontes enviadas nos planos com Kit de Marca. O [guia em inglês](https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/) mostra React, Next.js e Vue.
 
 ## Navegadores compatíveis
 

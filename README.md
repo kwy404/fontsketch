@@ -30,11 +30,12 @@ fontsketch is an open source font editor that runs in the browser, and the font 
 
 The fastest start is the [home page](https://kwy404.github.io/fontsketch/): type your name, press **Draw these letters**, draw each letter of it, and download the font.
 
-The [editor](https://kwy404.github.io/fontsketch/app/) has three ways in:
+The [editor](https://kwy404.github.io/fontsketch/app/) has four ways in:
 
-1. **Draw.** Write each letter with a mouse, finger or stylus, then refine it with the bezier pen tool. The editor opens with Quill Hand, a complete handwritten font, as a template, or you can start blank.
-2. **Import.** Drop SVG files or paste path data into a glyph, trace a PNG or JPG, or open a TTF, OTF, WOFF or WOFF2 font and keep editing it.
-3. **Scan.** Print the handwriting sheet, fill each box with a dark pen and take a phone photo. fontsketch flattens the page, evens out the light, splits the boxes and traces each letter, with a confidence score so you know what to check.
+1. **Quick font.** Pick a style (Script, Block or Pixel) and draw the 26 lowercase letters with a faint guide letter behind each one. fontsketch adds the capitals, numbers, punctuation, accented letters and spacing, so a usable font takes about five minutes. Capitals you skip are made from your own lowercase until you draw them. Open it directly with [](https://kwy404.github.io/fontsketch/app/#quick=script),  or .
+2. **Draw.** Write each letter with a mouse, finger or stylus, then refine it with the bezier pen tool. The editor opens with Quill Hand, a complete handwritten font, as a template, or you can start blank.
+3. **Import.** Drop SVG files or paste path data into a glyph, trace a PNG or JPG, or open a TTF, OTF, WOFF or WOFF2 font and keep editing it.
+4. **Scan.** Print the handwriting sheet, fill each box with a dark pen and take a phone photo. fontsketch flattens the page, evens out the light, splits the boxes and traces each letter, with a confidence score so you know what to check.
 
 Accented letters are built from a base letter and a mark (a + tilde = ã), covering Latin-1 Supplement and Latin Extended-A. Projects autosave in the browser and can be downloaded as `.fontsketch.json` files.
 
@@ -176,7 +177,7 @@ h1 {
 }
 ```
 
-To use the font in desktop apps, install the TTF or OTF file on Windows or macOS. The [website guide](https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/) covers React, Next.js and Vue.
+The **Use your font** box in the editor's Download panel shows the steps for a computer, Word, Canva and websites. To use the font in desktop apps, install the TTF or OTF file on Windows or macOS; Canva accepts uploaded fonts on plans with Brand Kit. The [website guide](https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/) covers React, Next.js and Vue.
 
 ## Browser support
 

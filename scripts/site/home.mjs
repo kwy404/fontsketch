@@ -33,7 +33,7 @@ export const HOME = {
     strip: 'Glyphs: pick one to edit',
     drawn: 'drawn',
     ways: { kicker: 'Three ways in', h2: 'Draw it, import it or write it on paper', items: [
-      ['pen-tool', 'Draw in the browser', 'Freehand brush strokes that turn into clean outlines, plus a bezier pen tool with corner and smooth points, guides for x-height, cap height and baseline, and live side bearings.'],
+      ['pen-tool', 'Draw in the browser', 'Quick font asks only for the 26 lowercase letters, in a script, block or pixel style, and adds the capitals, numbers, punctuation, accents and spacing for you. For full control there is a freehand brush, a bezier pen tool and guides for x-height, cap height and baseline.'],
       ['svg-to-glyph', 'Import SVG and images', 'Drop SVG files or paths, or trace a PNG or JPG of your lettering into vectors. Open an existing TTF, OTF, WOFF or WOFF2 font and keep editing it.'],
       ['scan-to-font', 'Scan a handwriting sheet', 'Print the template, fill it with a pen and take a phone photo. fontsketch finds the markers, flattens the page, evens the light, splits the cells and traces every letter.'],
     ] },
@@ -64,12 +64,14 @@ export const HOME = {
     dev: { kicker: 'For developers', h2: 'A font compiler you can script', lede: 'The same engine runs in Node 18+ and in the browser, with zero runtime dependencies for TTF and OTF. Build fonts in CI, generate icon fonts, or parse existing fonts.', cli: 'Icon font from a folder of SVGs', api: 'Node and browser API' },
     guides: { kicker: 'Guides', h2: 'Short guides', all: 'All guides' },
     faq: { kicker: 'FAQ', h2: 'Common questions', items: [
+      ['How long does it take to make a font?', 'With Quick font in the editor you draw the 26 lowercase letters and fontsketch adds the capitals, numbers, punctuation, accents and spacing, so a usable font takes about five minutes. Capitals start as larger copies of your lowercase until you draw your own.'],
+      ['Can I use my font in Word or Canva?', 'Yes. Install the TTF or OTF file on your computer and it shows up in Word and other apps. Canva accepts uploaded fonts on plans with Brand Kit. The Download panel in the editor shows the steps for a computer, Word, Canva and websites.'],
       ['Are my drawings or photos uploaded?', 'No. Drawing, scanning and exporting all run in your browser. Projects are saved in the browser, and you can download a .fontsketch.json file as a backup.'],
       ['Which formats can I export?', 'TTF and OTF to install on a computer, WOFF and WOFF2 for websites, plus a ready @font-face snippet. Fonts with a Regular and a Bold master can also be exported as one variable font.'],
       ['Does it handle accents like ã, ç and é?', 'Yes. Draw the base letters and the marks once and fontsketch builds the accented letters from them, so Portuguese, Spanish, French, German and Polish text works.'],
       ['Who owns the fonts I make?', 'You do. fontsketch is MIT licensed and adds no license or watermark to your fonts.'],
     ] },
-    cta: { h2: 'Your handwriting deserves a font file', text: 'Open the editor with Quill Hand as a template, or start from a blank page.', btn: 'Open the editor', btn2: 'Read the handwriting guide' },
+    cta: { h2: 'Your handwriting deserves a font file', text: 'Quick font in the editor asks for the 26 lowercase letters and fills in the rest, so a usable font takes about five minutes.', btn: 'Make a quick font', btn2: 'Read the handwriting guide' },
   },
   pt: {
     title: 'fontsketch: faça uma fonte com a sua letra',
@@ -95,7 +97,7 @@ export const HOME = {
     strip: 'Glifos: escolha um para editar',
     drawn: 'desenhadas',
     ways: { kicker: 'Três caminhos', h2: 'Desenhe, importe ou escreva no papel', items: [
-      ['pen-tool', 'Desenhe no navegador', 'Traços a mão livre que viram contornos limpos, além de uma caneta bezier com pontos de canto e suaves, guias de altura x, altura das maiúsculas e linha de base.'],
+      ['pen-tool', 'Desenhe no navegador', 'A fonte rápida pede só as 26 letras minúsculas, no estilo manuscrito, bloco ou pixel, e cria as maiúsculas, números, pontuação, acentos e espaçamento para você. Para controle total há pincel a mão livre, caneta bezier e guias de altura x, maiúsculas e linha de base.'],
       ['svg-to-glyph', 'Importe SVG e imagens', 'Solte arquivos SVG ou caminhos, ou vetorize um PNG ou JPG do seu lettering. Abra uma fonte TTF, OTF, WOFF ou WOFF2 existente e continue editando.'],
       ['scan-to-font', 'Escaneie uma folha manuscrita', 'Imprima o modelo, preencha com caneta e tire uma foto com o celular. O fontsketch acha os marcadores, endireita a página, corrige a luz, separa as células e vetoriza cada letra.'],
     ] },
@@ -126,12 +128,14 @@ export const HOME = {
     dev: { kicker: 'Para desenvolvedores', h2: 'Um compilador de fontes programável', lede: 'O mesmo motor roda no Node 18+ e no navegador, sem dependências em tempo de execução para TTF e OTF. Gere fontes no CI, crie fontes de ícones ou leia fontes existentes.', cli: 'Fonte de ícones a partir de uma pasta de SVGs', api: 'API para Node e navegador' },
     guides: { kicker: 'Guias', h2: 'Guias curtos', all: 'Todos os guias' },
     faq: { kicker: 'Perguntas', h2: 'Perguntas frequentes', items: [
+      ['Quanto tempo leva para fazer uma fonte?', 'Com a fonte rápida do editor você desenha as 26 letras minúsculas e o fontsketch cria as maiúsculas, números, pontuação, acentos e espaçamento, então uma fonte pronta para usar leva uns cinco minutos. As maiúsculas começam como cópias maiores das suas minúsculas até você desenhar as suas.'],
+      ['Posso usar a minha fonte no Word ou no Canva?', 'Sim. Instale o arquivo TTF ou OTF no computador e ela aparece no Word e em outros programas. O Canva aceita fontes enviadas nos planos com Kit de Marca. O painel de download do editor mostra os passos para computador, Word, Canva e sites.'],
       ['Meus desenhos ou fotos são enviados para algum servidor?', 'Não. Desenho, leitura da foto e exportação rodam no navegador. Os projetos ficam salvos no navegador, e você pode baixar um arquivo .fontsketch.json como cópia.'],
       ['Quais formatos posso exportar?', 'TTF e OTF para instalar no computador, WOFF e WOFF2 para sites, além do trecho @font-face pronto. Fontes com um master Regular e um Bold também saem como uma fonte variável.'],
       ['A fonte tem acentos como ã, ç e é?', 'Sim. Desenhe as letras base e os acentos uma vez e o fontsketch monta as letras acentuadas, então textos em português, espanhol e francês funcionam.'],
       ['De quem são as fontes que eu crio?', 'Suas. O fontsketch tem licença MIT e não coloca licença nem marca d\'água nas suas fontes.'],
     ] },
-    cta: { h2: 'Sua letra merece virar um arquivo de fonte', text: 'Abra o editor com a Quill Hand como modelo, ou comece de uma página em branco.', btn: 'Abrir o editor', btn2: 'Ler o guia da letra à mão' },
+    cta: { h2: 'Sua letra merece virar um arquivo de fonte', text: 'A fonte rápida do editor pede as 26 letras minúsculas e completa o resto, e uma fonte pronta para usar leva uns cinco minutos.', btn: 'Fazer uma fonte rápida', btn2: 'Ler o guia da letra à mão' },
   },
 };
 
@@ -307,7 +311,7 @@ export function homeBody(lang, ctx) {
 <section class="cta" aria-labelledby="cta-h">
   <div class="cta-in">
     <span class="art cta-art"><img class="art-l" src="${R}assets/art/quill.svg" width="452" height="452" alt="Quill, the fontsketch octopus calligrapher, holding a brush, a dip pen, a marker and a pencil" loading="lazy"><img class="art-d" src="${R}assets/art/quill-dark.svg" width="452" height="452" alt="" aria-hidden="true" loading="lazy"></span>
-    <div><h2 id="cta-h">${t.cta.h2}</h2><p>${t.cta.text}</p><p class="cta-btns"><a class="btn btn-primary btn-lg" href="${R}app/">${t.cta.btn}</a><a class="btn btn-outline btn-lg" href="${R}${pt ? 'pt/guias/criar-fonte-com-minha-letra/' : 'guides/turn-your-handwriting-into-a-font/'}">${t.cta.btn2}</a></p></div>
+    <div><h2 id="cta-h">${t.cta.h2}</h2><p>${t.cta.text}</p><p class="cta-btns"><a class="btn btn-primary btn-lg" href="${R}app/#quick">${t.cta.btn}</a><a class="btn btn-outline btn-lg" href="${R}${pt ? 'pt/guias/criar-fonte-com-minha-letra/' : 'guides/turn-your-handwriting-into-a-font/'}">${t.cta.btn2}</a></p></div>
   </div>
 </section>`;
 }
