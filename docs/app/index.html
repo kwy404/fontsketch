@@ -175,6 +175,7 @@
               <option value="geometric">Geometric display</option>
               <option value="rounded">Rounded</option>
               <option value="mono">Monospace</option>
+              <option value="pixel">Pixel</option>
             </select>
             <button type="button" class="btn btn-sm btn-soft" @click="A.fillMissing()"><svg class="ic"><use href="#i-wand"/></svg>Auto fill missing</button>
           </div>
@@ -216,6 +217,8 @@
 
       <!-- Draw: brushes, shapes, swashes -->
       <section v-show="S.panel === 'draw'" class="pane">
+        <h3 class="pane-h">Style</h3>
+        <div class="qs-styles qs-styles-sm" id="style-chips" v-ignore role="group" aria-label="Drawing style"></div>
         <h3 class="pane-h">Brushes</h3>
         <div class="presets" id="presets" v-ignore></div>
         <div class="field-grid">
@@ -486,7 +489,7 @@
   </aside>
 
   <!-- ============ Stage ============ -->
-  <main class="stage" id="stage" data-tour="canvas">
+  <main class="stage" id="stage" data-tour="canvas" :class="{ 'quick-on': S.quick.on }">
     <div class="toolbox" role="toolbar" aria-label="Tools" aria-orientation="vertical">
       <button type="button" class="tool" @click="A.setTool('brush')" :aria-pressed="S.tool === 'brush' ? 'true' : 'false'" title="Brush (B)" aria-label="Brush"><svg class="ic"><use href="#i-brush"/></svg></button>
       <button type="button" class="tool" @click="A.setTool('eraser')" :aria-pressed="S.tool === 'eraser' ? 'true' : 'false'" title="Eraser (E)" aria-label="Eraser"><svg class="ic"><use href="#i-eraser"/></svg></button>
@@ -499,9 +502,9 @@
 
     <div class="optbar" role="group" aria-label="Tool options">
       <div class="ob-group" v-show="S.tool === 'brush'">
-        <label class="ob"><span>Size</span><input type="range" class="range range-xs" min="6" max="240" v-model="S.brush.size" aria-label="Brush size"><b v-text="S.brush.size"></b></label>
+        <label class="ob"><span>Size</span><input type="range" class="range range-xs" min="6" max="240" v-model="S.brush.size" aria-label="Brush size"><b v-text="S.brush.shape === 'pixel' ? Math.max(1, Math.round(S.brush.size / S.brush.cell)) + ' sq' : S.brush.size"></b></label>
         <label class="ob hide-sm"><span>Smooth</span><input type="range" class="range range-xs" min="0" max="100" v-model="S.brush.smoothing" aria-label="Smoothing"><b v-text="S.brush.smoothing"></b></label>
-        <select class="select select-xs hide-sm" v-model="S.brush.shape" aria-label="Brush shape"><option value="round">Round</option><option value="chisel">Chisel</option><option value="calligraphy">Calligraphy</option></select>
+        <select class="select select-xs hide-sm" v-model="S.brush.shape" aria-label="Brush shape"><option value="round">Round</option><option value="chisel">Chisel</option><option value="calligraphy">Calligraphy</option><option value="pixel">Pixel</option></select>
       </div>
       <div class="ob-group" v-show="S.tool === 'eraser'">
         <label class="ob"><span>Size</span><input type="range" class="range range-xs" min="6" max="300" v-model="S.brush.eraserSize" aria-label="Eraser size"><b v-text="S.brush.eraserSize"></b></label>
@@ -517,6 +520,27 @@
       <button type="button" class="ib ib-sm" @click="S.opts.snap = !S.opts.snap" :aria-pressed="S.opts.snap ? 'true' : 'false'" title="Snap to grid" aria-label="Snap to grid"><svg class="ic"><use href="#i-magnet"/></svg></button>
       <button type="button" class="ib ib-sm" @click="S.opts.preview = !S.opts.preview; A.redraw()" :aria-pressed="S.opts.preview ? 'true' : 'false'" title="Preview the filled letter (F)" aria-label="Preview fill"><svg class="ic"><use href="#i-eye"/></svg></button>
       <button type="button" class="ib ib-sm insp-toggle" @click="S.inspector = !S.inspector" :aria-pressed="S.inspector ? 'true' : 'false'" title="Letter properties" aria-label="Letter properties"><svg class="ic"><use href="#i-sliders"/></svg></button>
+    </div>
+
+    <div class="quickbar" v-show="S.quick.on" role="region" aria-label="Quick font">
+      <div class="qb-row">
+        <span class="qb-char" aria-hidden="true" v-text="S.quick.char"></span>
+        <div class="qb-text">
+          <b role="status" aria-live="polite" v-text="'Draw “' + S.quick.char + '”, letter ' + (S.quick.i + 1) + ' of ' + S.quick.total"></b>
+          <small v-text="S.quick.tip"></small>
+        </div>
+        <button type="button" class="ib ib-sm qb-close" @click="A.quickExit()" aria-label="Leave quick mode" title="Leave quick mode"><svg class="ic"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="qb-dots" id="qb-dots" v-ignore role="group" aria-label="Letters to draw"></div>
+      <div class="qb-row qb-actions">
+        <button type="button" class="btn btn-sm btn-ghost" @click="A.quickStep(-1)" :disabled="S.quick.i === 0"><svg class="ic"><use href="#i-left"/></svg>Back</button>
+        <label class="fg-inline qb-guide"><input type="checkbox" class="toggle toggle-sm" role="switch" v-model="S.quick.guide" @change="A.quickGuide()"> Guide</label>
+        <span class="grow"></span>
+        <button type="button" class="btn btn-sm btn-ghost" v-show="S.quick.done > 0 && !S.quick.last" @click="A.quickFinish()" :disabled="S.quick.busy">Finish now</button>
+        <button type="button" class="btn btn-sm qb-next" :class="S.quick.here ? 'btn-primary' : 'btn-soft'" @click="A.quickStep(1)" :disabled="S.quick.busy" title="Enter">
+          <span v-text="S.quick.last ? 'Finish my font' : S.quick.here ? 'Next letter' : 'Skip'"></span><svg class="ic"><use href="#i-right"/></svg>
+        </button>
+      </div>
     </div>
 
     <canvas id="cv" class="cv" tabindex="0" role="img" aria-roledescription="drawing canvas" :aria-label="'Canvas for ' + S.glyph.label + '. Draw with the brush, or press V for select, B for brush, E for eraser.'"></canvas>
@@ -631,6 +655,16 @@
       </div>
       <button type="button" class="ib" @click="A.closeStart()" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button>
     </div>
+    <section class="quick-start" aria-labelledby="qs-title">
+      <div class="qs-copy">
+        <span class="sc-kicker">Quick font</span>
+        <h3 id="qs-title" class="qs-title">Your own font in about 5 minutes</h3>
+        <p class="qs-text">Pick a style and draw the 26 lowercase letters. fontsketch adds the capitals, numbers, punctuation and accents, then spaces every letter.</p>
+        <label class="fg-inline"><input type="checkbox" class="toggle toggle-sm" role="switch" v-model="S.quick.capitals"> I want to draw the capitals too</label>
+      </div>
+      <div class="qs-styles" id="qs-styles" v-ignore role="group" aria-label="Pick a style to start"></div>
+    </section>
+    <h3 class="start-h">Or start another way</h3>
     <div class="start-grid">
       <button type="button" class="start-card start-continue" v-show="S.lastProject" @click="A.openProject(S.lastProject.id)">
         <span class="sc-kicker">Continue</span>
@@ -670,6 +704,22 @@
   <form method="dialog" class="modal-backdrop"><button aria-label="Close">Close</button></form>
 </dialog>
 
+<!-- ============ Quick font ready ============ -->
+<dialog id="quick-done" class="modal" aria-labelledby="qd-title">
+  <div class="modal-box qd-box">
+    <div class="modal-header"><h2 id="qd-title" class="modal-title">Your font is ready</h2></div>
+    <div class="qd-sample" id="qd-sample" v-ignore aria-hidden="true"></div>
+    <label class="fg"><span>Try it</span><input class="input" v-model="S.quick.sample" @input="A.quickSample()" spellcheck="false" autocomplete="off"></label>
+    <ul class="qd-list"><li v-for="(l, i) in S.quick.report" :key="i" v-text="l"></li></ul>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" @click="A.quickDone('edit')">Keep editing</button>
+      <button type="button" class="btn btn-soft" @click="A.quickDone('guide')">How to use it</button>
+      <button type="button" class="btn btn-primary" @click="A.quickDone('download')"><svg class="ic"><use href="#i-download"/></svg>Download font</button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button aria-label="Close">Close</button></form>
+</dialog>
+
 <!-- ============ Shortcuts ============ -->
 <dialog id="shortcuts" class="modal" aria-labelledby="sc-title">
   <div class="modal-box">
@@ -692,7 +742,7 @@
         <dt><kbd class="kbd kbd-sm">Ctrl A</kbd></dt><dd>Select all</dd>
         <dt><kbd class="kbd kbd-sm">Del</kbd></dt><dd>Delete selection</dd>
         <dt><kbd class="kbd kbd-sm">Arrows</kbd></dt><dd>Nudge (Shift for 10)</dd>
-        <dt><kbd class="kbd kbd-sm">Enter</kbd></dt><dd>Finish the pen path</dd>
+        <dt><kbd class="kbd kbd-sm">Enter</kbd></dt><dd>Finish the pen path; next letter in quick mode</dd>
       </dl></div>
       <div><h3>View and file</h3><dl>
         <dt><kbd class="kbd kbd-sm">Alt ←</kbd> <kbd class="kbd kbd-sm">Alt →</kbd></dt><dd>Previous, next letter</dd>

@@ -14,6 +14,7 @@ import { installImports } from './panels/imports.mjs';
 import { installSheet } from './panels/sheet.mjs';
 import { installSpacing } from './panels/spacing.mjs';
 import { installTemplates } from './panels/templates.mjs';
+import { installQuick } from './panels/quickmode.mjs';
 import { installTest } from './panels/test.mjs';
 
 setCore(lib);
@@ -28,7 +29,7 @@ const S = V.reactive({
   wide: false,
   inspector: !matchMedia('(max-width: 1199px)').matches,
   tool: 'brush',
-  brush: { size: 70, smoothing: 45, taper: 25, shape: 'round', angle: 35, pressure: true, merge: true, eraserSize: 90, preset: 'marker' },
+  brush: { size: 70, smoothing: 45, taper: 25, shape: 'round', angle: 35, pressure: true, merge: true, eraserSize: 90, preset: 'marker', cell: 100 },
   opts: { grid: false, snap: false, gridSize: 10, metrics: true, rulers: true, points: true, preview: false, stems: false, simplifyTolerance: 2, snapPoints: true },
   master: 0,
   zoom: 100,
@@ -51,9 +52,11 @@ const S = V.reactive({
   variable: { has: false, min: 100, def: 400, max: 900, embolden: 45, preview: 400 },
   problems: [],
   exporting: false,
+  use: { tab: 'computer' },
   projects: [],
   lastProject: null,
   tour: { on: false, i: 0, title: '', text: '' },
+  quick: { on: false, busy: false, style: 'script', capitals: false, guide: true, i: 0, total: 26, char: '', done: 0, here: false, last: false, tip: '', report: [], sample: '' },
   toasts: [],
 });
 
@@ -663,7 +666,7 @@ const TOUR = [
   { sel: '[data-tour="download"]', title: 'One click to a real font', text: 'Download a TTF you can install anywhere. The arrow opens OTF, WOFF2, variable fonts and a web kit.' },
 ];
 async function maybeTour() {
-  if (S.tour.on) return;
+  if (S.tour.on || S.quick.on) return;
   let seen = false;
   try {
     seen = localStorage.getItem('fontsketch:tour') === '1';
@@ -717,6 +720,7 @@ installSpacing(ctx);
 installTest(ctx);
 installFontPanel(ctx);
 installExport(ctx);
+installQuick(ctx);
 
 // Resolved outlines including components (used by decompose and exports).
 ctx.resolveAll = (g) => {
@@ -783,7 +787,11 @@ async function boot() {
   if (!opened) opened = await ctx.loadTemplateFont('quill-hand', { quiet: true, fresh: true });
   if (!opened) ctx.openFont(lib.createFont({ family: 'My Font' }));
   S.ready = true;
-  if (!hash.has('handoff') && !hash.has('editor')) A.openStart();
+  if (hash.has('quick')) {
+    // app/#quick=script (or block, pixel) goes straight to quick mode.
+    window.history.replaceState(null, '', location.pathname);
+    await A.startQuick(hash.get('quick') || 'script');
+  } else if (!hash.has('handoff') && !hash.has('editor')) A.openStart();
   else maybeTour();
 }
 

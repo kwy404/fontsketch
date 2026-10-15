@@ -5,12 +5,14 @@ import { status, transformContours } from '../geom.mjs';
 import { P, history } from '../project.mjs';
 import { css, fitCanvas } from '../render.mjs';
 import { tracePath } from '../geom.mjs';
+import { pixelFont } from '../pixel.mjs';
 
 export const TEMPLATES = [
   { id: 'quill-hand', name: 'Quill Hand', note: 'Handwritten, friendly and complete', url: '../assets/fonts/quill-hand.fontsketch.json', sample: 'Hand Aa', kind: 'Handwriting' },
   { id: 'geometric', name: 'Atelier Geometric', note: 'Heavy display letters from circles and bars', url: 'templates/geometric.fontsketch.json', sample: 'Bold Gg', kind: 'Display' },
   { id: 'rounded', name: 'Atelier Rounded', note: 'Soft monoline with round ends', url: 'templates/rounded.fontsketch.json', sample: 'Soft Rr', kind: 'Rounded' },
   { id: 'mono', name: 'Atelier Mono', note: 'Every letter the same width, for code', url: 'templates/mono.fontsketch.json', sample: 'f(x)=1', kind: 'Monospace' },
+  { id: 'pixel', name: 'Atelier Pixel', note: 'Square cells on a 5 by 7 grid, drawn cell by cell', build: pixelFont, sample: 'Pixel 8', kind: 'Pixel' },
   { id: 'icons', name: 'Atelier Icons', note: 'Icons in the Private Use Area, ready for your own', url: 'templates/icons.fontsketch.json', sample: '\ue000\ue00a\ue00b', kind: 'Icon font' },
 ];
 
@@ -22,6 +24,7 @@ export function installTemplates(ctx) {
   async function fetchTemplate(id) {
     const t = TEMPLATES.find((x) => x.id === id);
     if (!t) throw new Error(`Unknown template ${id}`);
+    if (t.build) return t.build(lib);
     if (!cache.has(id)) {
       cache.set(
         id,
@@ -44,7 +47,7 @@ export function installTemplates(ctx) {
   ctx.loadTemplateFont = async (id, { quiet = false } = {}) => {
     try {
       const font = await fetchTemplate(id);
-      ctx.openFont(font, { extras: { charset: id === 'icons' ? 'all' : undefined } });
+      ctx.openFont(font, { extras: { charset: id === 'icons' ? 'all' : undefined, style: id === 'pixel' ? 'pixel' : undefined } });
       if (!quiet) A.toast(`${font.meta.family} is ready. It is your copy now: rename it in the top bar.`, 'success');
       return true;
     } catch (e) {

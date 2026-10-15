@@ -7,6 +7,7 @@ import {
   bbox, clone, closestOnSegment, contourAt, dist, ellipseContour, flatten, insertPoint, matrix, orient,
   polygonToContour, rectContour, resolve, roundPt, segments, stabilize, strokeOutline, tracePath, transformContours,
 } from './geom.mjs';
+import { cellsFromContours, cellsToContours, isPixelAligned, stampCells } from './pixel.mjs';
 import { P, core, history } from './project.mjs';
 import { css, fitCanvas } from './render.mjs';
 
@@ -117,12 +118,15 @@ export class Editor {
     const adv = g ? g.advanceWidth : m.unitsPerEm / 2;
     const top = Math.max(m.ascender, m.capHeight) + 60;
     const bottom = m.descender - 60;
+    // Space kept free for floating bars over the canvas (quick mode).
+    const inTop = this.inset?.top || 0;
+    const inBottom = this.inset?.bottom || 0;
     const usableW = w - RULER - 40;
-    const usableH = h - RULER - 30;
+    const usableH = Math.max(80, h - RULER - 30 - inTop - inBottom);
     const scale = Math.min(usableH / (top - bottom), usableW / Math.max(adv + 200, 600));
     this.view.scale = scale;
     this.view.ox = RULER + 20 + (usableW - adv * scale) / 2;
-    this.view.oy = RULER + 15 + top * scale + Math.max(0, (usableH - (top - bottom) * scale) / 2);
+    this.view.oy = RULER + 15 + inTop + top * scale + Math.max(0, (usableH - (top - bottom) * scale) / 2);
     this.redraw();
     this.onView();
   }
@@ -921,13 +925,52 @@ export class Editor {
 
   strokePolygon() {
     const st = this.stroke;
-    if (!st || !st.samples.length) return null;
+    if (!st || !st.samples.length || this.pixelMode) return null;
     const sm = stabilize(st.samples, +this.S.brush.smoothing / 100);
     const o = st.tool === 'eraser' ? { size: +this.S.brush.eraserSize, shape: 'round', pressure: this.S.brush.pressure } : this.brushOptions();
     return strokeOutline(sm, o);
   }
 
+  /** The pixel brush paints whole grid cells (Pixel style). */
+  get pixelMode() {
+    return this.S.brush.shape === 'pixel';
+  }
+  get pixelCell() {
+    return Math.max(1, +this.S.brush.cell || 100);
+  }
+  /** Cells under the current stroke. */
+  strokeCells() {
+    const st = this.stroke;
+    if (!st || !st.samples.length) return new Set();
+    const size = st.tool === 'eraser' ? +this.S.brush.eraserSize : +this.S.brush.size;
+    return stampCells(st.samples, this.pixelCell, Math.min(size, this.pixelCell * 8));
+  }
+
+  finishPixelStroke() {
+    const st = this.stroke;
+    const stamp = this.strokeCells();
+    this.stroke = null;
+    if (!stamp.size) return;
+    const cell = this.pixelCell;
+    const erase = st.tool === 'eraser';
+    history.run(erase ? 'Erase' : 'Pixels', this.scope, () => {
+      if (isPixelAligned(this.contours, cell)) {
+        // A pixel letter stays a set of cells: add or remove, then trace again.
+        const cells = cellsFromContours(this.contours, cell);
+        for (const k of stamp) erase ? cells.delete(k) : cells.add(k);
+        this.contours = cellsToContours(cells, cell);
+      } else if (erase) {
+        this.contours = subtract(this.contours, cellsToContours(stamp, cell).map((c) => c.points), core);
+      } else {
+        this.contours = safeUnion([...this.contours, ...cellsToContours(stamp, cell)]);
+      }
+      if (!erase) this.inkFresh = { at: performance.now(), from: 0 };
+    });
+    this.sel.clear();
+  }
+
   finishStroke() {
+    if (this.pixelMode) return this.finishPixelStroke();
     const st = this.stroke;
     const poly = this.strokePolygon();
     this.stroke = null;
@@ -1334,6 +1377,18 @@ export class Editor {
       }
     }
 
+    // Guide letter (quick mode): the style template's letter, very faint.
+    const guide = this.guide;
+    if (guide && guide.name === g.name && guide.contours?.length && !preview) {
+      ctx.save();
+      ctx.globalAlpha = 0.14;
+      ctx.fillStyle = C.ink;
+      ctx.beginPath();
+      tracePath(ctx, guide.contours, tf);
+      ctx.fill('nonzero');
+      ctx.restore();
+    }
+
     // Metric guides
     if (o.metrics !== false) {
       const [ax0] = tf(0, 0);
@@ -1466,7 +1521,16 @@ export class Editor {
     }
 
     // Live stroke
-    if (this.stroke) {
+    if (this.stroke && this.pixelMode) {
+      const cell = this.pixelCell;
+      ctx.fillStyle = this.stroke.tool === 'eraser' ? 'rgba(224,86,43,.35)' : C.ink;
+      for (const k of this.strokeCells()) {
+        const [i, j] = k.split(',').map(Number);
+        const [x0, y0] = tf(i * cell, (j + 1) * cell);
+        const [x1, y1] = tf((i + 1) * cell, j * cell);
+        ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+      }
+    } else if (this.stroke) {
       const poly = this.strokePolygon();
       if (poly) {
         ctx.beginPath();
@@ -1492,7 +1556,15 @@ export class Editor {
       ctx.strokeStyle = tool === 'eraser' ? C.accent : C.select;
       ctx.lineWidth = 1;
       ctx.beginPath();
-      if (tool === 'brush' && this.S.brush.shape !== 'round') {
+      if (this.pixelMode) {
+        const cell = this.pixelCell;
+        const k = Math.max(1, Math.round(Math.min((tool === 'eraser' ? +this.S.brush.eraserSize : +this.S.brush.size), cell * 8) / cell));
+        const i = Math.floor(this.cursorPos.x / cell) - Math.floor((k - 1) / 2);
+        const j = Math.floor(this.cursorPos.y / cell) - Math.floor((k - 1) / 2);
+        const [x0, y0] = tf(i * cell, (j + k) * cell);
+        const [x1, y1] = tf((i + k) * cell, j * cell);
+        ctx.rect(Math.round(x0) + 0.5, Math.round(y0) + 0.5, Math.round(x1 - x0), Math.round(y1 - y0));
+      } else if (tool === 'brush' && this.S.brush.shape !== 'round') {
         const a = (+this.S.brush.angle * Math.PI) / 180;
         ctx.moveTo(cx - (Math.cos(a) * size) / 2, cy + (Math.sin(a) * size) / 2);
         ctx.lineTo(cx + (Math.cos(a) * size) / 2, cy - (Math.sin(a) * size) / 2);

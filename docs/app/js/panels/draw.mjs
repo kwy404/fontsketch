@@ -1,6 +1,7 @@
 // Draw panel: brush presets with live previews, basic shapes, decorative
 // swashes and marks, and the per letter reference image.
 import { ellipseContour, flatten, orient, polygonToContour, rectContour, roundPt, strokeOutline } from '../geom.mjs';
+import { stampCells } from '../pixel.mjs';
 import { P, history } from '../project.mjs';
 import { css, fitCanvas } from '../render.mjs';
 
@@ -13,6 +14,7 @@ export const PRESETS = [
   { id: 'calli30', name: 'Broad nib 30\u00b0', b: { shape: 'calligraphy', size: 120, smoothing: 50, taper: 0, angle: 30, pressure: true } },
   { id: 'calli45', name: 'Broad nib 45\u00b0', b: { shape: 'calligraphy', size: 120, smoothing: 50, taper: 0, angle: 45, pressure: true } },
   { id: 'pencil', name: 'Sketch pencil', b: { shape: 'round', size: 22, smoothing: 15, taper: 30, pressure: true } },
+  { id: 'pixel', name: 'Pixel', b: { shape: 'pixel', size: 100, smoothing: 0, taper: 0, pressure: false } },
 ];
 
 /** Swash skeletons in a unit box (x 0..1, y 0..1), drawn with a tapering round brush. */
@@ -81,18 +83,29 @@ export function installDraw(ctx) {
         const t = i / 40;
         pts.push({ x: 60 + t * 880, y: 160 + Math.sin(t * Math.PI * 2) * 70, p: Math.sin(t * Math.PI) * 0.9 + 0.1 });
       }
-      const poly = strokeOutline(pts, { size: p.b.size, shape: p.b.shape, angle: p.b.angle ?? 35, pressure: p.b.pressure, taper: p.b.taper / 100 });
       const s = w / 1000;
       c.fillStyle = ink;
+      if (p.b.shape === 'pixel') {
+        // The same S stroke, as the squares the pixel brush would fill.
+        for (const k of stampCells(pts.map((q) => ({ x: q.x, y: q.y - 60 })), 60)) {
+          const [i, j] = k.split(',').map(Number);
+          c.fillRect(Math.round(i * 60 * s), Math.round(h - (j + 1) * 60 * s), Math.ceil(60 * s), Math.ceil(60 * s));
+        }
+        continue;
+      }
+      const poly = strokeOutline(pts, { size: p.b.size, shape: p.b.shape, angle: p.b.angle ?? 35, pressure: p.b.pressure, taper: p.b.taper / 100 });
       c.beginPath();
       poly.forEach((q, i) => (i ? c.lineTo(q.x * s, h - q.y * s * 1.0 + 0) : c.moveTo(q.x * s, h - q.y * s)));
       c.closePath();
       c.fill('nonzero');
     }
   }
+  ctx.onBrushChanged = () => S.panel === 'draw' && renderPresets();
   A.usePreset = (id) => {
     const p = PRESETS.find((x) => x.id === id);
     if (!p) return;
+    if (p.id === 'pixel') return A.useStyle('pixel');
+    if (S.brush.shape === 'pixel') S.opts.grid = false;
     Object.assign(S.brush, p.b, { preset: id });
     A.setTool('brush');
     renderPresets();
