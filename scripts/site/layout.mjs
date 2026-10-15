@@ -138,6 +138,7 @@ export function page(o, body) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 ${themeHead()}
+<script src="${R}assets/site/seasons.js"></script>
 <title>${esc(o.title)}</title>
 <meta name="description" content="${esc(o.description)}">
 ${o.noindex ? '<meta name="robots" content="noindex">\n' : ''}<link rel="canonical" href="${url}">

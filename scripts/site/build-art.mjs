@@ -4,6 +4,7 @@
 // (assets/social-preview.png, docs/og.png and one Open Graph image per guide)
 // with a local Edge or Chrome in headless mode.
 // Usage: node scripts/site/build-art.mjs [--png]
+import { SEASONS, iconCount, seasonAccentSVG, seasonIconSVG, seasonQuillSVG } from './art/seasons.mjs';
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -21,7 +22,21 @@ const write = (p, s) => {
   writeFileSync(f, typeof s === 'string' ? `${s.trim()}\n` : s);
 };
 
+function buildSeasons() {
+  for (const id of SEASONS) {
+    for (const dir of [`assets/seasons/${id}`, `docs/assets/seasons/${id}`]) {
+      for (const mode of ['light', 'dark']) {
+        const sfx = mode === 'dark' ? '-dark' : '';
+        write(`${dir}/quill${sfx}.svg`, seasonQuillSVG(id, mode));
+        write(`${dir}/accent${sfx}.svg`, seasonAccentSVG(id, mode));
+        for (let i = 0; i < iconCount(id); i++) write(`${dir}/icon-${i + 1}${sfx}.svg`, seasonIconSVG(id, i, mode));
+      }
+    }
+  }
+}
+
 export function buildArt() {
+  buildSeasons();
   write('assets/mascot.svg', mascotSVG('light'));
   write('assets/mascot-dark.svg', mascotSVG('dark'));
   write('assets/mascot-head.svg', headSVG('light'));

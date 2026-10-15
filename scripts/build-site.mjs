@@ -107,6 +107,17 @@ try {
   console.warn(`build-site: core bundle failed: ${/** @type {Error} */ (err).message}`);
 }
 
+// ---------- Special dates script, minified ----------
+
+try {
+  const { transform } = await import('esbuild');
+  const src = readFileSync(join(root, 'scripts/site/seasons.js'), 'utf8');
+  const { code } = await transform(src, { minify: true, target: 'es2017', legalComments: 'none' });
+  writeFileSync(join(docs, 'assets/site/seasons.js'), code);
+} catch (err) {
+  console.warn(`build-site: seasons script failed: ${/** @type {Error} */ (err).message}`);
+}
+
 // ---------- Art ----------
 
 buildArt();
