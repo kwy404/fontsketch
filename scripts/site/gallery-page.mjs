@@ -30,7 +30,7 @@ export const FONTS = [
 ];
 
 const L = {
-  en: { size: 'Size', weight: 'Weight', type: 'Type to test', glyphs: 'glyphs', copy: 'Copy CSS', title: 'Font gallery: free fonts made with fontsketch', desc: 'Free fonts made with fontsketch: a handwriting font, a variable weight font, a geometric display face and an icon font, each with a live type tester and downloads.', kicker: 'Gallery', h1: 'Fonts made with fontsketch', lede: 'Four fonts built with the fontsketch engine, free to download under the MIT license. Each one shows a different way in: pen strokes, a variable weight axis, geometric shapes and SVG icons.', home: 'Home', how: 'How it was made', all: 'Every glyph' },
+  en: { size: 'Size', weight: 'Weight', type: 'Type to test', glyphs: 'glyphs', copy: 'Copy CSS', title: 'Gallery | fontsketch', desc: 'Four fonts made with fontsketch, each with a type tester and downloads.', kicker: 'Gallery', h1: 'Fonts made with fontsketch', lede: 'Four fonts built with the fontsketch engine, free to download under the MIT license. Each one shows a different way in: pen strokes, a variable weight axis, geometric shapes and SVG icons.', home: 'Home', how: 'How it was made', all: 'Every glyph' },
   pt: { size: 'Tamanho', weight: 'Peso', type: 'Digite para testar', glyphs: 'glifos', copy: 'Copiar CSS', title: '', desc: '', kicker: '', h1: '', lede: '', home: 'Início', how: 'Como foi feita', all: 'Todos os glifos' },
 };
 

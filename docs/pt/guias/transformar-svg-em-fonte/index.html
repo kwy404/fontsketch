@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
-<title>Transformar SVG em Fonte, Passo a Passo e Grátis</title>
-<meta name="description" content="Aprenda a transformar SVG em fonte no navegador. Prepare os caminhos, importe cada letra, ajuste métricas e espaçamento e exporte em TTF, OTF ou WOFF2 grátis.">
+<title>Montar uma fonte a partir de arquivos SVG</title>
+<meta name="description" content="Como preparar letras em SVG, importar no fontsketch, alinhar na linha de base, ajustar o espaçamento e exportar a fonte.">
 <link rel="canonical" href="https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/">
 <link rel="alternate" hreflang="pt-BR" href="https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/">
 <link rel="alternate" hreflang="en" href="https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/">
@@ -17,16 +17,16 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="fontsketch">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Transformar SVG em Fonte, Passo a Passo e Grátis">
-<meta property="og:description" content="Aprenda a transformar SVG em fonte no navegador. Prepare os caminhos, importe cada letra, ajuste métricas e espaçamento e exporte em TTF, OTF ou WOFF2 grátis.">
+<meta property="og:title" content="Montar uma fonte a partir de arquivos SVG">
+<meta property="og:description" content="Como preparar letras em SVG, importar no fontsketch, alinhar na linha de base, ajustar o espaçamento e exportar a fonte.">
 <meta property="og:url" content="https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/">
 <meta property="og:image" content="https://kwy404.github.io/fontsketch/assets/og/transformar-svg-em-fonte.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Letra R em SVG com seus pontos de caminho sendo encaixados numa grade de glifo com linha de base e altura das maiúsculas">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Transformar SVG em Fonte, Passo a Passo e Grátis">
-<meta name="twitter:description" content="Aprenda a transformar SVG em fonte no navegador. Prepare os caminhos, importe cada letra, ajuste métricas e espaçamento e exporte em TTF, OTF ou WOFF2 grátis.">
+<meta name="twitter:title" content="Montar uma fonte a partir de arquivos SVG">
+<meta name="twitter:description" content="Como preparar letras em SVG, importar no fontsketch, alinhar na linha de base, ajustar o espaçamento e exportar a fonte.">
 <meta name="twitter:image" content="https://kwy404.github.io/fontsketch/assets/og/transformar-svg-em-fonte.png">
 <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -45,14 +45,13 @@
   {
    "@type": "TechArticle",
    "@id": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/#article",
-   "headline": "Como transformar arquivos SVG em fonte",
-   "description": "Aprenda a transformar SVG em fonte no navegador. Prepare os caminhos, importe cada letra, ajuste métricas e espaçamento e exporte em TTF, OTF ou WOFF2 grátis.",
+   "headline": "Montar uma fonte a partir de arquivos SVG",
+   "description": "Como preparar letras em SVG, importar no fontsketch, alinhar na linha de base, ajustar o espaçamento e exportar a fonte.",
    "image": "https://kwy404.github.io/fontsketch/assets/og/transformar-svg-em-fonte.png",
    "inLanguage": "pt-BR",
    "datePublished": "2026-10-13",
    "dateModified": "2026-10-13",
-   "wordCount": 1065,
-   "keywords": "transformar svg em fonte",
+   "wordCount": 1053,
    "author": {
     "@type": "Person",
     "name": "Alexandre Kohler",
@@ -69,117 +68,6 @@
     "name": "fontsketch",
     "url": "https://kwy404.github.io/fontsketch/"
    }
-  },
-  {
-   "@type": "HowTo",
-   "@id": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/#howto",
-   "name": "Como converter arquivos SVG em fonte com o fontsketch",
-   "description": "Aprenda a transformar SVG em fonte no navegador. Prepare os caminhos, importe cada letra, ajuste métricas e espaçamento e exporte em TTF, OTF ou WOFF2 grátis.",
-   "image": "https://kwy404.github.io/fontsketch/assets/og/transformar-svg-em-fonte.png",
-   "inLanguage": "pt-BR",
-   "totalTime": "PT40M",
-   "estimatedCost": {
-    "@type": "MonetaryAmount",
-    "currency": "USD",
-    "value": "0"
-   },
-   "tool": [
-    {
-     "@type": "HowToTool",
-     "name": "fontsketch (free, in the browser)"
-    }
-   ],
-   "step": [
-    {
-     "@type": "HowToStep",
-     "position": 1,
-     "name": "Prepare os arquivos SVG",
-     "text": "Converta traços e textos em contornos preenchidos, aplique as transformações e remova máscaras, degradês e camadas ocultas.",
-     "url": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/#step-1"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 2,
-     "name": "Use a mesma prancheta para todas as letras",
-     "text": "Desenhe todas as letras numa prancheta da mesma altura, com a linha de base sempre na mesma posição.",
-     "url": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/#step-2"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 3,
-     "name": "Importe no fontsketch",
-     "text": "Abra o editor e importe cada arquivo SVG, ou cole o caminho SVG, no caractere correspondente.",
-     "url": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/#step-3"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 4,
-     "name": "Alinhe às métricas",
-     "text": "Confira se cada glifo está apoiado na linha de base e se bate com a altura de x ou das maiúsculas no eme de 1000 unidades.",
-     "url": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/#step-4"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 5,
-     "name": "Limpe os contornos e espace",
-     "text": "Remova sobreposições, corrija a direção dos contornos e ajuste as margens laterais e o kerning.",
-     "url": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/#step-5"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 6,
-     "name": "Exporte a fonte",
-     "text": "Baixe TTF ou OTF para o computador ou WOFF2 com o CSS @font-face pronto para a web.",
-     "url": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/#step-6"
-    }
-   ]
-  },
-  {
-   "@type": "FAQPage",
-   "@id": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/#faq",
-   "inLanguage": "pt-BR",
-   "mainEntity": [
-    {
-     "@type": "Question",
-     "name": "Como converter SVG em fonte de graça?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Importe os arquivos SVG no fontsketch, um por caractere, ajuste métricas e espaçamento e exporte em TTF, OTF, WOFF ou WOFF2. É gratuito e roda no navegador, sem enviar os arquivos para servidor."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Por que minha letra em SVG aparece fininha ou some na fonte?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Fontes só guardam formas preenchidas. Se a letra foi desenhada com traço (stroke) e sem preenchimento, converta o traço em contorno no seu programa vetorial antes de exportar o SVG."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Por que o miolo da letra O ficou preenchido?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "O contorno interno está na mesma direção do externo, ou as duas formas foram desenhadas separadas. Use a correção de direção dos contornos no fontsketch e, na origem, junte as formas num caminho composto."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Dá para transformar ícones SVG em fonte?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Dá. Para ícones, a linha de comando do fontsketch transforma uma pasta inteira de SVGs numa fonte de ícones com TTF, WOFF2 e classes CSS, o que é mais rápido que importar um por um."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Qual tamanho devo usar nos SVGs?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "O tamanho absoluto importa menos que a consistência. Use a mesma altura de prancheta em todas as letras e, se possível, faça 1000 unidades do SVG corresponderem ao eme inteiro da fonte."
-     }
-    }
-   ]
   },
   {
    "@type": "BreadcrumbList",
@@ -199,7 +87,7 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "Como transformar arquivos SVG em fonte",
+     "name": "Montar uma fonte a partir de arquivos SVG",
      "item": "https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/"
     }
    ]
@@ -231,22 +119,22 @@
 </header>
 <main id="main">
 <div class="guide-wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../pt/">Início</a></li><li><a href="../../../pt/guias/">Guias</a></li><li aria-current="page">Como transformar arquivos SVG em fonte</li></ol></nav>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../../pt/">Início</a></li><li><a href="../../../pt/guias/">Guias</a></li><li aria-current="page">Montar uma fonte a partir de arquivos SVG</li></ol></nav>
 <header class="guide-head">
   <div class="guide-head-text">
-    <p class="kicker">Guia · transformar svg em fonte</p>
-    <h1>Como transformar arquivos SVG em fonte</h1>
+    <p class="kicker">Guia · SVG</p>
+    <h1>Montar uma fonte a partir de arquivos SVG</h1>
     <p class="guide-meta"><span>5 min de leitura</span><span>Atualizado em <time datetime="2026-10-13">2026-10-13</time></span><a href="../../../guides/make-a-font-from-svg/" hreflang="en" lang="en">Read in English</a></p>
   </div>
   <figure class="guide-art"><span class="art "><img class="art-l" src="../../../assets/art/svg-to-glyph.svg" width="640" height="400" alt="Letra R em SVG com seus pontos de caminho sendo encaixados numa grade de glifo com linha de base e altura das maiúsculas" fetchpriority="high"><img class="art-d" src="../../../assets/art/svg-to-glyph-dark.svg" width="640" height="400" alt="" aria-hidden="true" fetchpriority="high"></span></figure>
 </header>
 <div class="guide-grid">
   <aside class="guide-side" aria-label="Nesta página">
-    <div class="toc"><p class="toc-h">Nesta página</p><ol><li><a href="#por-que-comecar-pelo-svg">Por que começar pelo SVG</a></li><li><a href="#prepare-bem-os-arquivos">Prepare bem os arquivos</a></li><li><a href="#padronize-a-prancheta">Padronize a prancheta</a></li><li><a href="#configure-a-exportacao-no-programa-vetorial">Configure a exportação no programa vetorial</a></li><li><a href="#importe-no-fontsketch">Importe no fontsketch</a></li><li><a href="#limpe-os-contornos">Limpe os contornos</a></li><li><a href="#espacamento-acentos-e-kerning">Espaçamento, acentos e kerning</a></li><li><a href="#exporte-a-fonte">Exporte a fonte</a></li><li><a href="#checklist-de-preparacao">Checklist de preparação</a></li><li><a href="#proximos-passos">Próximos passos</a></li><li><a href="#steps">Passo a passo</a></li><li><a href="#faq">Perguntas frequentes</a></li></ol></div>
+    <div class="toc"><p class="toc-h">Nesta página</p><ol><li><a href="#por-que-comecar-pelo-svg">Por que começar pelo SVG</a></li><li><a href="#prepare-bem-os-arquivos">Prepare bem os arquivos</a></li><li><a href="#padronize-a-prancheta">Padronize a prancheta</a></li><li><a href="#configure-a-exportacao-no-programa-vetorial">Configure a exportação no programa vetorial</a></li><li><a href="#importe-no-fontsketch">Importe no fontsketch</a></li><li><a href="#limpe-os-contornos">Limpe os contornos</a></li><li><a href="#espacamento-acentos-e-kerning">Espaçamento, acentos e kerning</a></li><li><a href="#exporte-a-fonte">Exporte a fonte</a></li><li><a href="#checklist-de-preparacao">Checklist de preparação</a></li><li><a href="#proximos-passos">Próximos passos</a></li></ol></div>
     <div class="try-card"><img src="../../../assets/art/quill-head.svg" width="84" height="112" alt="" loading="lazy"><p class="try-h">Experimente agora</p><p>Desenhe uma letra no estúdio e veja ela virar uma fonte de verdade. Grátis, sem upload e sem cadastro.</p><a class="btn btn-primary btn-sm" href="../../../pt/#studio">Abrir o estúdio</a><a class="btn btn-ghost btn-sm" href="../../../app/">Abrir o editor</a></div>
   </aside>
   <article class="prose" id="article">
-<p>Para transformar SVG em fonte, prepare cada letra como um caminho preenchido numa prancheta padronizada, importe os SVGs num editor de fontes, alinhe à linha de base e às métricas, ajuste o espaçamento e exporte. No fontsketch isso acontece no navegador: você importa arquivos SVG ou cola caminhos, limpa os contornos e baixa TTF, OTF, WOFF ou WOFF2.</p>
+<p>Para montar uma fonte a partir de arquivos SVG, prepare cada letra como um caminho preenchido numa prancheta padronizada, importe os SVGs num editor de fontes, alinhe à linha de base e às métricas, ajuste o espaçamento e exporte. No fontsketch isso acontece no navegador: você importa arquivos SVG ou cola caminhos, limpa os contornos e baixa TTF, OTF, WOFF ou WOFF2.</p>
 <section id="por-que-comecar-pelo-svg" class="prose-sec"><h2>Por que começar pelo SVG</h2>
 <p>Se você já faz lettering ou desenha letras num programa vetorial, o SVG é o caminho mais direto para uma fonte. Os caminhos já são curvas, então não há vetorização nem perda de detalhe. Um contorno de fonte e um caminho SVG são parentes próximos: os dois descrevem formas com retas e curvas bézier. As diferenças estão no sistema de coordenadas e em algumas regras sobre o que uma fonte aceita.</p>
 </section>
@@ -284,24 +172,22 @@
 <ul><li><strong>Remoção de sobreposição</strong> une formas que se cruzam, como a barra do t sobre a haste. Contornos sobrepostos podem gerar defeitos em tamanhos pequenos e aumentam o arquivo.</li><li><strong>Correção da direção dos contornos</strong> garante que contornos externos e contraformas girem em sentidos opostos, para que os furos continuem furos.</li><li><strong>Simplificar</strong> reduz o número de pontos. Programas vetoriais às vezes exportam dezenas de nós redundantes; menos pontos significam curvas mais suaves.</li></ul>
 </section>
 <section id="espacamento-acentos-e-kerning" class="prose-sec"><h2>Espaçamento, acentos e kerning</h2>
-<p>Arquivos SVG não trazem informação de espaçamento, então isso é feito no fontsketch. Ajuste as margens laterais até uma sequência como <em>Hamburgefonstiv</em> ficar equilibrada, e depois crie pares de kerning para o que ainda parecer estranho. O guia <a href="../../../pt/guias/como-criar-uma-fonte/">como criar uma fonte</a> explica o método de espaçamento com n, o, H e O.</p>
+<p>Arquivos SVG não trazem informação de espaçamento, então isso é feito no fontsketch. Ajuste as margens laterais até uma sequência como <em>Hamburgefonstiv</em> ficar equilibrada, e depois crie pares de kerning para o que ainda parecer estranho. Comece por pares como To, AV e Ty.</p>
 <p>Para os acentos, importe ou desenhe os sinais uma vez só, e o fontsketch monta é, ã, ô e ç a partir de componentes.</p>
 </section>
 <section id="exporte-a-fonte" class="prose-sec"><h2>Exporte a fonte</h2>
 <div class="table-wrap"><table><thead><tr><th scope="col">Destino</th><th scope="col">Formato</th></tr></thead><tbody><tr><td>Programas no Windows ou Mac</td><td>TTF ou OTF</td></tr><tr><td>Sites</td><td>WOFF2, com o CSS gerado pelo fontsketch</td></tr><tr><td>Navegadores antigos</td><td>WOFF</td></tr></tbody></table></div>
-<p>Se o que você tem é uma pasta de ícones e não um alfabeto, use a linha de comando descrita no <a href="../../../pt/guias/gerador-de-fonte-de-icones/">gerador de fonte de ícones</a>, que cuida dos códigos Unicode e das classes CSS para você.</p>
+<p>Se o que você tem é uma pasta de ícones e não um alfabeto, use o comando <code>npx fontsketch from-svg</code>, que atribui os códigos Unicode e escreve as classes CSS para você.</p>
 </section>
 <section id="checklist-de-preparacao" class="prose-sec"><h2>Checklist de preparação</h2>
 <ul><li>Traços e textos convertidos em contornos</li><li>Sem degradês, máscaras, camadas ocultas ou imagens embutidas</li><li>Transformações aplicadas</li><li>Contraformas feitas com caminho composto</li><li>Mesma prancheta e mesma linha de base em todas as letras</li><li>Depois de importar: sobreposições removidas, direções corrigidas, pontos simplificados</li></ul>
 </section>
 <section id="proximos-passos" class="prose-sec"><h2>Próximos passos</h2>
-<p>Importe as primeiras letras no <a href="../../../app/">editor do fontsketch</a> e confira a linha de base antes de converter o resto. Se você ainda não tem letras vetoriais, veja as outras formas de criar glifos em <a href="../../../pt/guias/criar-fonte-online-gratis/">criar fonte online grátis</a>.</p>
+<p>Importe as primeiras letras no <a href="../../../app/">editor do fontsketch</a> e confira a linha de base antes de converter o resto. Se as suas letras estão só no papel, veja como <a href="../../../pt/guias/criar-fonte-com-minha-letra/">fazer uma fonte com a sua letra</a>.</p>
 </section>
-    <section id="steps" class="prose-sec steps-sec"><h2>Passo a passo</h2><ol class="steps"><li id="step-1"><span class="step-n">1</span><div><h3>Prepare os arquivos SVG</h3><p>Converta traços e textos em contornos preenchidos, aplique as transformações e remova máscaras, degradês e camadas ocultas.</p></div></li><li id="step-2"><span class="step-n">2</span><div><h3>Use a mesma prancheta para todas as letras</h3><p>Desenhe todas as letras numa prancheta da mesma altura, com a linha de base sempre na mesma posição.</p></div></li><li id="step-3"><span class="step-n">3</span><div><h3>Importe no fontsketch</h3><p>Abra o editor e importe cada arquivo SVG, ou cole o caminho SVG, no caractere correspondente.</p></div></li><li id="step-4"><span class="step-n">4</span><div><h3>Alinhe às métricas</h3><p>Confira se cada glifo está apoiado na linha de base e se bate com a altura de x ou das maiúsculas no eme de 1000 unidades.</p></div></li><li id="step-5"><span class="step-n">5</span><div><h3>Limpe os contornos e espace</h3><p>Remova sobreposições, corrija a direção dos contornos e ajuste as margens laterais e o kerning.</p></div></li><li id="step-6"><span class="step-n">6</span><div><h3>Exporte a fonte</h3><p>Baixe TTF ou OTF para o computador ou WOFF2 com o CSS @font-face pronto para a web.</p></div></li></ol></section>
-    <section id="faq" class="prose-sec"><h2>Perguntas frequentes</h2><div class="faq"><details><summary>Como converter SVG em fonte de graça?</summary><p>Importe os arquivos SVG no fontsketch, um por caractere, ajuste métricas e espaçamento e exporte em TTF, OTF, WOFF ou WOFF2. É gratuito e roda no navegador, sem enviar os arquivos para servidor.</p></details><details><summary>Por que minha letra em SVG aparece fininha ou some na fonte?</summary><p>Fontes só guardam formas preenchidas. Se a letra foi desenhada com traço (stroke) e sem preenchimento, converta o traço em contorno no seu programa vetorial antes de exportar o SVG.</p></details><details><summary>Por que o miolo da letra O ficou preenchido?</summary><p>O contorno interno está na mesma direção do externo, ou as duas formas foram desenhadas separadas. Use a correção de direção dos contornos no fontsketch e, na origem, junte as formas num caminho composto.</p></details><details><summary>Dá para transformar ícones SVG em fonte?</summary><p>Dá. Para ícones, a linha de comando do fontsketch transforma uma pasta inteira de SVGs numa fonte de ícones com TTF, WOFF2 e classes CSS, o que é mais rápido que importar um por um.</p></details><details><summary>Qual tamanho devo usar nos SVGs?</summary><p>O tamanho absoluto importa menos que a consistência. Use a mesma altura de prancheta em todas as letras e, se possível, faça 1000 unidades do SVG corresponderem ao eme inteiro da fonte.</p></details></div></section>
   </article>
 </div>
-<section class="related" aria-labelledby="related-h"><h2 id="related-h">Continue lendo</h2><div class="cards"><a class="gcard" href="../../../pt/guias/gerador-de-fonte-de-icones/"><span class="art "><img class="art-l" src="../../../assets/art/icon-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../../assets/art/icon-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">gerador de fonte de ícones</span><span class="gcard-t">Gerador de fonte de ícones, de uma pasta de SVGs para uma fonte web</span><span class="gcard-more">Ler o guia <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../../pt/guias/como-criar-uma-fonte/"><span class="art "><img class="art-l" src="../../../assets/art/metrics-ruler.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../../assets/art/metrics-ruler-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">como criar uma fonte</span><span class="gcard-t">Como criar uma fonte, da primeira letra ao arquivo pronto</span><span class="gcard-more">Ler o guia <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../../pt/guias/criar-fonte-online-gratis/"><span class="art "><img class="art-l" src="../../../assets/art/pen-tool.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../../assets/art/pen-tool-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">criar fonte online grátis</span><span class="gcard-t">Como criar uma fonte online grátis</span><span class="gcard-more">Ler o guia <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
+<section class="related" aria-labelledby="related-h"><h2 id="related-h">Continue lendo</h2><div class="cards"><a class="gcard" href="../../../pt/guias/criar-fonte-com-minha-letra/"><span class="art "><img class="art-l" src="../../../assets/art/scan-to-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../../assets/art/scan-to-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">Letra à mão</span><span class="gcard-t">Fazer uma fonte com a sua letra</span><span class="gcard-more">Ler o guia <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
 </div>
 </main>
 <footer class="foot">
@@ -317,8 +203,8 @@
       <ul class="foot-list"><li><a href="../../../app/">Editor de fontes</a></li><li><a href="../../../gallery/">Galeria</a></li><li><a href="../../../pt/guias/">Todos os guias</a></li><li><a href="https://www.npmjs.com/package/fontsketch" rel="noopener">Pacote npm</a></li><li><a href="https://github.com/kwy404/fontsketch" rel="noopener">Código no GitHub</a></li><li><a href="https://github.com/kwy404/fontsketch/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li></ul>
     </div>
     <div>
-      <h2 class="foot-h">Guias populares</h2>
-      <ul class="foot-list"><li><a href="../../../pt/guias/criar-fonte-com-minha-letra/">Criar fonte com minha letra</a></li><li><a href="../../../pt/guias/criar-fonte-online-gratis/">Criar fonte online grátis</a></li><li><a href="../../../pt/guias/como-criar-uma-fonte/">Como criar uma fonte</a></li><li><a href="../../../pt/guias/transformar-svg-em-fonte/">Transformar SVG em fonte</a></li><li><a href="../../../pt/guias/gerador-de-fonte-de-icones/">Gerador de fonte de ícones</a></li></ul>
+      <h2 class="foot-h">Guias</h2>
+      <ul class="foot-list"><li><a href="../../../pt/guias/criar-fonte-com-minha-letra/">Fonte com a sua letra</a></li><li><a href="../../../pt/guias/transformar-svg-em-fonte/">Fonte a partir de SVG</a></li></ul>
     </div>
     <div>
       <h2 class="foot-h">Mais de kwy404</h2>

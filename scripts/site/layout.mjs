@@ -37,7 +37,7 @@ export const STR = {
     langShort: 'PT',
     footBlurb: 'A free, open source font maker. Draw, import or scan your handwriting and export real TTF, OTF, WOFF and WOFF2 fonts, all in your browser.',
     product: 'Product',
-    guides: 'Popular guides',
+    guides: 'Guides',
     more: 'More from kwy404',
     made: 'Made by',
     builtMonsoon: 'Built with',
@@ -55,7 +55,7 @@ export const STR = {
     langShort: 'EN',
     footBlurb: 'Um criador de fontes gratuito e de código aberto. Desenhe, importe ou escaneie sua letra e exporte fontes TTF, OTF, WOFF e WOFF2 de verdade, tudo no navegador.',
     product: 'Produto',
-    guides: 'Guias populares',
+    guides: 'Guias',
     more: 'Mais de kwy404',
     made: 'Feito por',
     builtMonsoon: 'Feito com',
@@ -129,8 +129,8 @@ export function page(o, body) {
   const navHref = (h) => (h.startsWith('#') ? (isHome ? h : `${R || './'}${o.lang === 'pt' ? 'pt/' : ''}${h}`) : R + h);
   const otherLang = o.langHref ? R + o.langHref : R + (o.lang === 'pt' ? '' : 'pt/');
   const guidesLinks = o.lang === 'pt'
-    ? [['Criar fonte com minha letra', 'pt/guias/criar-fonte-com-minha-letra/'], ['Criar fonte online grátis', 'pt/guias/criar-fonte-online-gratis/'], ['Como criar uma fonte', 'pt/guias/como-criar-uma-fonte/'], ['Transformar SVG em fonte', 'pt/guias/transformar-svg-em-fonte/'], ['Gerador de fonte de ícones', 'pt/guias/gerador-de-fonte-de-icones/']]
-    : [['Turn your handwriting into a font', 'guides/turn-your-handwriting-into-a-font/'], ['Create a font online free', 'guides/create-a-font-online-free/'], ['Make a font from SVG', 'guides/make-a-font-from-svg/'], ['Icon font generator', 'guides/icon-font-generator/'], ['Variable font tutorial', 'guides/variable-font-tutorial/'], ['Font hinting explained', 'guides/font-hinting-explained/']];
+    ? [['Fonte com a sua letra', 'pt/guias/criar-fonte-com-minha-letra/'], ['Fonte a partir de SVG', 'pt/guias/transformar-svg-em-fonte/']]
+    : [['From your handwriting', 'guides/turn-your-handwriting-into-a-font/'], ['From SVG files', 'guides/make-a-font-from-svg/'], ['Adding a weight axis', 'guides/variable-font-tutorial/'], ['Using it on a website', 'guides/use-a-custom-font-on-your-website/']];
   return `<!doctype html>
 <html lang="${htmlLang}">
 <head>

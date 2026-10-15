@@ -1,43 +1,19 @@
 ---
 slug: use-a-custom-font-on-your-website
 lang: en
-title: Add a Custom Font to Your Website With @font-face
-description: Add a custom font to your website with @font-face. Ready snippets for plain HTML, React, Next.js and Vue, plus preload, fallbacks and fixes for common errors.
-h1: How to add a custom font to your website
-keyword: add custom font to website
+title: Using your font on a website
+description: Load a WOFF2 file with @font-face in plain HTML, React, Next.js or Vue, with fallbacks, preloading and fixes for common problems.
+h1: Using your font on a website
+topic: Web fonts
 art: type-case
 alt: A WOFF2 font file dropped into a project folder next to HTML, React, Next.js and Vue code snippets using the same font family
-time: PT15M
-howto: How to add a custom font to a website with @font-face
-steps:
-  - name: Export the web font
-    text: Export WOFF2 from fontsketch along with the generated CSS @font-face snippet.
-  - name: Put the file in your project
-    text: Copy the WOFF2 file into a fonts folder that your site serves, such as public/fonts or src/assets/fonts.
-  - name: Declare the font with @font-face
-    text: Add the @font-face rule with the correct path, weight, style and font-display value.
-  - name: Apply the font family
-    text: Use the family name in font-family on body or specific elements, followed by a fallback stack.
-  - name: Preload and verify
-    text: Preload the main file, then confirm in the browser developer tools that the font downloads and renders.
-faq:
-  - q: How do I add a custom font to my website without a font hosting service?
-    a: Self host it. Put the WOFF2 file in your project, declare it with @font-face pointing to that file, and use the family name in your CSS. No third party service is involved.
-  - q: Why is my custom font not loading?
-    a: The usual causes are a wrong path relative to the CSS file, a family name typo, a missing crossorigin attribute on a preload, or the server blocking cross origin requests. Check the Network panel for a 404 or CORS error.
-  - q: Where do I put font files in a React or Vue project?
-    a: Either in the public folder and reference them with an absolute path such as /fonts/MyHand.woff2, or next to your CSS in src so the build tool fingerprints them. Both work.
-  - q: Why does my bold text look smeared with a custom font?
-    a: You only declared a regular weight, so the browser synthesizes bold. Add a separate @font-face rule for the real bold file, or use a variable font with a weight range.
-  - q: Can I use my handwriting font on a website?
-    a: Yes. Export it as WOFF2 from fontsketch, add it with @font-face and use it for headings or accents. Handwriting fonts are usually best for short text rather than long paragraphs.
-related: [web-font-formats-ttf-otf-woff2, turn-your-handwriting-into-a-font, variable-font-tutorial, icon-font-generator]
+related: [turn-your-handwriting-into-a-font, variable-font-tutorial]
 ---
 To add a custom font to your website, export it as WOFF2, place the file in your project, declare it with an @font-face rule that points to the file, then use the family name in font-family with a fallback stack. The same rule works in plain HTML, React, Next.js and Vue; only the file location and import style change.
 
 ## Step 1: get a WOFF2 file
 
-WOFF2 is the format browsers download fastest. If you made the font in fontsketch, export WOFF2 and copy the CSS @font-face snippet it generates. If you are using someone else's font, check that its license allows web embedding. The [web font formats guide](guide:web-font-formats-ttf-otf-woff2) explains why WOFF2 is the right choice and when other formats still matter.
+WOFF2 is the format browsers download fastest. If you made the font in fontsketch, export WOFF2 and copy the CSS @font-face snippet it generates. If you are using someone else's font, check that its license allows web embedding. WOFF2 is compressed with Brotli and supported by every current browser, so it is the only format most sites need.
 
 Name files in lowercase without spaces and include a version, for example `myhand-v1.woff2`. It avoids case sensitivity bugs on Linux servers and makes cache busting easy.
 
@@ -215,7 +191,7 @@ Each font file is a download that competes with images and scripts. A sensible b
 - Include only the characters you need, and split large sets with unicode-range.
 - Preload only the file needed for text visible without scrolling.
 
-Your browser's built in performance audit will flag fonts that delay the first render of text. The [web font formats guide](guide:web-font-formats-ttf-otf-woff2) goes deeper into subsetting and font-display.
+Your browser's built in performance audit will flag fonts that delay the first render of text.
 
 ## Troubleshooting
 
@@ -242,4 +218,4 @@ To confirm which font is actually used, open the browser developer tools, select
 
 ## Next steps
 
-Export WOFF2 and the CSS snippet from the [fontsketch editor](app:) and drop them into one of the setups above. Do not have a font yet? Make one from your own writing with [turn your handwriting into a font](guide:turn-your-handwriting-into-a-font), or ship a set of interface icons with the [icon font generator](guide:icon-font-generator).
+Export WOFF2 and the CSS snippet from the [fontsketch editor](app:) and drop them into one of the setups above. Do not have a font yet? Make one from your own writing with [the handwriting guide](guide:turn-your-handwriting-into-a-font), or build one from vector letters with [the SVG guide](guide:make-a-font-from-svg).

@@ -2,132 +2,56 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/banner-dark.svg">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/banner.svg" alt="Banner do fontsketch: Quill, o polvo calígrafo, ao lado do nome fontsketch escrito na própria fonte manuscrita" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/banner.svg" alt="Banner do fontsketch: Quill, o polvo calígrafo, ao lado do nome fontsketch escrito na sua própria fonte manuscrita" width="100%">
 </picture>
 
-# fontsketch: crie uma fonte com a sua letra, grátis e no navegador
+# fontsketch
 
-**Desenhe, importe ou escaneie a sua letra e exporte uma fonte TTF, OTF, WOFF ou WOFF2 de verdade. Sem upload e sem cadastro.**
+**Faça uma fonte com a sua letra, no navegador ou no Node.**
 
-[![versão no npm](https://img.shields.io/npm/v/fontsketch.svg)](https://www.npmjs.com/package/fontsketch)
-[![downloads por mês](https://img.shields.io/npm/dm/fontsketch.svg)](https://www.npmjs.com/package/fontsketch)
-[![downloads no total](https://img.shields.io/npm/dt/fontsketch.svg)](https://www.npmjs.com/package/fontsketch)
+[![npm version](https://img.shields.io/npm/v/fontsketch.svg)](https://www.npmjs.com/package/fontsketch)
 [![CI](https://github.com/kwy404/fontsketch/actions/workflows/ci.yml/badge.svg)](https://github.com/kwy404/fontsketch/actions/workflows/ci.yml)
-[![Licença: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/kwy404/fontsketch/blob/main/LICENSE)
-[![tamanho minificado e gzip](https://img.shields.io/bundlephobia/minzip/fontsketch)](https://bundlephobia.com/package/fontsketch)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/kwy404/fontsketch/blob/main/LICENSE)
 
 [English](https://github.com/kwy404/fontsketch/blob/main/README.md) | Português (Brasil)
 
-[Abrir o editor](https://kwy404.github.io/fontsketch/app/) · [Site](https://kwy404.github.io/fontsketch/pt/) · [Guias](https://kwy404.github.io/fontsketch/pt/guias/) · [Galeria](https://kwy404.github.io/fontsketch/gallery/) · [npm](https://www.npmjs.com/package/fontsketch)
+[Abrir o editor](https://kwy404.github.io/fontsketch/app/) · [Site](https://kwy404.github.io/fontsketch/pt/) · [Guias](https://kwy404.github.io/fontsketch/pt/guias/) · [Galeria](https://kwy404.github.io/fontsketch/gallery/)
 
 </div>
 
-O fontsketch é um **editor de fontes no navegador**, gratuito e de código aberto, e também um compilador de fontes para Node. Escreva as letras com o mouse, o dedo ou uma caneta, importe arquivos SVG ou imprima uma folha manuscrita, preencha e tire uma foto com o celular: o fontsketch endireita a página, vetoriza cada letra e transforma tudo numa fonte que você instala no computador ou usa no seu site. Ele gera o binário da fonte por conta própria, com kerning, letras acentuadas, hinting TrueType automático e eixos de peso variáveis, e roda inteiro no seu aparelho.
-
-O mesmo motor vem como biblioteca e CLI, então você também pode **transformar SVG em fonte**, rodar um **gerador de fonte de ícones** no CI ou criar fontes por código.
-
-## Sumário
-
-- [Recursos](#recursos)
-- [Três jeitos de criar uma fonte](#três-jeitos-de-criar-uma-fonte)
-- [Capturas de tela](#capturas-de-tela)
-- [Começo rápido](#começo-rápido)
-- [Linha de comando: fontes de ícones a partir de SVG](#linha-de-comando-fontes-de-ícones-a-partir-de-svg)
-- [API para Node e navegador](#api-para-node-e-navegador)
-- [Use a sua fonte em um site](#use-a-sua-fonte-em-um-site)
-- [Navegadores compatíveis](#navegadores-compatíveis)
-- [Perguntas frequentes](#perguntas-frequentes)
-- [Mais de kwy404](#mais-de-kwy404)
-- [Autor](#autor)
-- [Licença](#licença)
-
-## Recursos
-
-<table>
-<tr>
-<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/draw.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/draw.svg" width="40" alt="Ícone de traço de pincel"></picture><br><b>Desenho a mão livre</b><br>Traços com uma caneta macia viram contornos suaves e editáveis.</td>
-<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/pen-tool.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/pen-tool.svg" width="40" alt="Ícone de pena com alças bezier"></picture><br><b>Caneta bezier</b><br>Pontos de canto e suaves, alças, guias e espaçamento lateral.</td>
-<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/import-svg.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/import-svg.svg" width="40" alt="Ícone de importar SVG"></picture><br><b>Importar SVG</b><br>Solte arquivos SVG ou cole caminhos direto em um glifo.</td>
-</tr>
-<tr>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/image-trace.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/image-trace.svg" width="40" alt="Ícone de vetorizar imagem"></picture><br><b>Vetorizar imagens</b><br>Transforme lettering em PNG ou JPG em contornos vetoriais.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/handwriting-sheet.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/handwriting-sheet.svg" width="40" alt="Ícone de folha manuscrita para imprimir"></picture><br><b>Folha manuscrita</b><br>Modelos A4 e Carta (PDF e SVG) com marcadores nos cantos.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/camera.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/camera.svg" width="40" alt="Ícone de câmera do celular"></picture><br><b>Foto do celular</b><br>Perspectiva, luz e células detectadas no aparelho, com nota de confiança por letra.</td>
-</tr>
-<tr>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/kerning.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/kerning.svg" width="40" alt="Ícone de par de kerning"></picture><br><b>Kerning</b><br>Pares e classes, exportados como kerning OpenType.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/hinting.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/hinting.svg" width="40" alt="Ícone de grade de pixels"></picture><br><b>Hinting</b><br>Hinting TrueType automático, hastes manuais ou nenhum.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/variable-font.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/variable-font.svg" width="40" alt="Ícone de controle de peso variável"></picture><br><b>Fontes variáveis</b><br>Eixo de peso a partir de masters compatíveis, em um só arquivo.</td>
-</tr>
-<tr>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/export.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/export.svg" width="40" alt="Ícone de exportar fonte"></picture><br><b>Exportação</b><br>TTF, OTF (CFF), WOFF e WOFF2, com o CSS <code>@font-face</code>.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/icon-font.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/icon-font.svg" width="40" alt="Ícone de grade de ícones"></picture><br><b>Fontes de ícones</b><br>Uma CLI que transforma uma pasta de ícones SVG em fonte com classes CSS.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/autosave.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/autosave.svg" width="40" alt="Ícone de salvamento automático"></picture><br><b>Salvamento automático</b><br>Projetos salvos no navegador e em arquivos <code>.fontsketch.json</code>.</td>
-</tr>
-</table>
-
-As letras acentuadas são montadas automaticamente com componentes (a + til = ã), cobrindo Latin-1 Supplement e Latin Extended-A. Português, espanhol, francês, alemão e polonês funcionam sem trabalho extra.
-
-## Três jeitos de criar uma fonte
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/scan-to-font-dark.svg">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/scan-to-font.svg" alt="Foto de uma folha manuscrita sendo endireitada, limpa, separada em células e vetorizada em glifos" width="100%">
-</picture>
-
-1. **Desenhe.** Abra o [editor](https://kwy404.github.io/fontsketch/app/) e escreva cada letra com o mouse, o dedo ou uma caneta stylus. Os traços viram contornos limpos que você refina com a caneta bezier. O editor abre com a Quill Hand, uma fonte manuscrita completa, como modelo, ou você começa de uma página em branco.
-2. **Importe.** Solte arquivos SVG ou cole caminhos em qualquer glifo, vetorize um PNG ou JPG do seu lettering ou abra uma fonte TTF, OTF, WOFF ou WOFF2 existente e continue editando.
-3. **Folha manuscrita.** Imprima o modelo em A4 ou Carta, preencha cada célula com uma caneta escura e tire uma foto com o celular. O fontsketch encontra os quatro marcadores dos cantos, corrige a perspectiva, iguala a iluminação, separa as células e vetoriza cada letra, com uma nota de confiança para você saber o que revisar.
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/nib-strokes-dark.svg">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/nib-strokes.svg" alt="Traços feitos com pena de bico chato, pena pontuda, pincel e marcador de traço uniforme" width="100%">
-</picture>
-
-## Capturas de tela
+O fontsketch é um editor de fontes de código aberto que roda no navegador, e o compilador de fontes por trás dele como biblioteca e CLI para Node. Desenhe as letras com o mouse, o dedo ou uma caneta, importe SVG ou fotografe uma folha manuscrita preenchida e exporte TTF, OTF, WOFF ou WOFF2. Ele gera o binário da fonte sozinho, com kerning, letras acentuadas, hinting TrueType e eixos de peso variáveis. Nada é enviado para servidores: tudo roda no seu aparelho.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/studio-dark.png">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/studio.png" alt="O estúdio do fontsketch no site: a letra a desenhada com as guias de altura x e linha de base, ao lado de uma frase ao vivo na fonte Quill Hand" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/studio.png" alt="O estúdio do fontsketch no site: a letra a desenhada com guias de altura x e linha de base, ao lado de uma frase ao vivo na fonte Quill Hand" width="100%">
 </picture>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/editor-dark.png">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/editor.png" alt="O editor de fontes do fontsketch no navegador: grade de letras, a letra A no canvas com as linhas de métrica e as ferramentas de espaçamento, contorno e componentes" width="100%">
-</picture>
+## Faça uma fonte no navegador
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/templates-dark.png">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/templates.png" alt="Tela inicial do editor: editar a Quill Hand, começar uma fonte em branco, escolher um modelo ou importar fonte, desenhos SVG, imagem ou folha manuscrita" width="100%">
-</picture>
+O jeito mais rápido é a [página inicial](https://kwy404.github.io/fontsketch/pt/): digite seu nome, toque em **Desenhar estas letras**, desenhe cada letra dele e baixe a fonte.
 
-## Começo rápido
+O [editor](https://kwy404.github.io/fontsketch/app/) tem três caminhos:
 
-**No navegador:** abra [kwy404.github.io/fontsketch/app](https://kwy404.github.io/fontsketch/app/). Não precisa instalar nada e seus arquivos não saem do seu aparelho.
+1. **Desenhar.** Escreva cada letra com o mouse, o dedo ou uma caneta e ajuste com a caneta bezier. O editor abre com a Quill Hand, uma fonte manuscrita completa, como modelo, ou você começa do zero.
+2. **Importar.** Solte arquivos SVG ou cole caminhos num glifo, vetorize um PNG ou JPG, ou abra uma fonte TTF, OTF, WOFF ou WOFF2 e continue editando.
+3. **Escanear.** Imprima a folha manuscrita, preencha cada quadro com caneta escura e tire uma foto com o celular. O fontsketch endireita a página, iguala a luz, separa os quadros e vetoriza cada letra, com uma nota de confiança para você saber o que revisar.
 
-**Com npm** (Node 18 ou mais recente):
+As letras acentuadas são montadas a partir da letra base e do acento (a + til = ã), cobrindo Latin-1 Supplement e Latin Extended-A. Os projetos são salvos no navegador e podem ser baixados como arquivos `.fontsketch.json`.
+
+## Instalação
 
 ```bash
 npm install fontsketch
 ```
 
-**Por CDN** com uma tag script (a global é `fontsketch`):
+Node 18.18 ou mais recente. Para usar com uma tag script, use `https://cdn.jsdelivr.net/npm/fontsketch@0.1.0/dist/fontsketch.min.js` (a global é `fontsketch`).
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/fontsketch@0.1.0/dist/fontsketch.min.js"></script>
-```
+## Linha de comando
 
-## Linha de comando: fontes de ícones a partir de SVG
-
-Transforme uma pasta de ícones SVG numa fonte de ícones. Cada arquivo vira um glifo na Private Use Area (a partir de U+E000), e você recebe arquivos WOFF2, WOFF e TTF, uma folha de estilo com uma classe por ícone e uma página `index.html` de prévia:
+Transforme uma pasta de ícones SVG numa fonte de ícones com arquivos WOFF2, WOFF e TTF, uma classe CSS por ícone e uma página de prévia:
 
 ```bash
-npx fontsketch from-svg ./icons --family Icons -o ./dist
-```
-
-```html
-<link rel="stylesheet" href="dist/icons.css">
-<i class="icon icon-home" aria-hidden="true"></i>
+npx fontsketch from-svg ./icones --family Icones -o ./dist
 ```
 
 Todos os comandos:
@@ -238,7 +162,7 @@ Disponíveis em `fontsketch` no Node e em `fontsketch/node`:
 
 ## Use a sua fonte em um site
 
-Exporte em WOFF2 e carregue com `@font-face`. O mesmo CSS funciona em HTML puro, React, Vue, Angular e Next.js.
+Exporte em WOFF2 e carregue com `@font-face`. O editor e a função `cssFontFace` entregam esta regra pronta para colar:
 
 ```css
 @font-face {
@@ -252,56 +176,11 @@ h1 {
 }
 ```
 
-No **Next.js**, o próprio framework pode servir o arquivo com `next/font/local`:
-
-```js
-import localFont from 'next/font/local';
-
-export const minhaLetra = localFont({ src: './fonts/minha-letra.woff2', display: 'swap' });
-```
-
-Depois use `className={minhaLetra.className}` em qualquer elemento. Em projetos **React**, **Vue** e **Angular**, coloque a regra `@font-face` na folha de estilo global e use o nome da família.
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/glyph-anatomy-dark.svg">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/glyph-anatomy.svg" alt="Anatomia do glifo: ascendente, altura das maiúsculas, altura x, linha de base e descendente em volta das letras Hgx" width="100%">
-</picture>
+Para usar a fonte em programas no computador, instale o arquivo TTF ou OTF no Windows ou no macOS. O [guia em inglês](https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/) mostra React, Next.js e Vue.
 
 ## Navegadores compatíveis
 
-| | Chrome e Edge | Firefox | Safari |
-| --- | --- | --- | --- |
-| Editor, desenho e exportação | 100+ | 100+ | 15.4+ |
-| Foto da folha manuscrita | 100+ | 100+ | 15.4+ |
-| Fontes exportadas | qualquer navegador e sistema que leia TTF, OTF, WOFF ou WOFF2 | | |
-
-A biblioteca roda no Node 18.18 ou mais recente e em qualquer navegador moderno. No Node, o WOFF2 usa o Brotli nativo do zlib. No navegador, `exportFontAsync` e `parseFontAsync` carregam uma versão pequena do Brotli em WebAssembly sob demanda, só quando você exporta ou abre WOFF2.
-
-## Perguntas frequentes
-
-### Como criar uma fonte com a minha letra de graça?
-
-Imprima a folha manuscrita do fontsketch, preencha cada célula com uma caneta escura, tire uma foto com o celular e solte no [editor](https://kwy404.github.io/fontsketch/app/). Ele vetoriza cada letra e exporta TTF, OTF ou WOFF2. Passo a passo: [criar fonte com minha letra](https://kwy404.github.io/fontsketch/pt/guias/criar-fonte-com-minha-letra/).
-
-### Dá para criar uma fonte online grátis sem instalar nada?
-
-Sim. O fontsketch é um editor de fontes no navegador: sem cadastro, sem instalação, sem marca d'água e sem upload. Veja [criar fonte online grátis](https://kwy404.github.io/fontsketch/pt/guias/criar-fonte-online-gratis/).
-
-### Como transformar SVG em fonte?
-
-Importe caminhos SVG nos glifos do editor ou rode `npx fontsketch from-svg ./icons --family Icons -o ./dist` para gerar uma fonte de ícones a partir de uma pasta. Veja [transformar SVG em fonte](https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/) e o [gerador de fonte de ícones](https://kwy404.github.io/fontsketch/pt/guias/gerador-de-fonte-de-icones/).
-
-### Quais formatos posso exportar?
-
-TTF (contornos TrueType), OTF (contornos CFF), WOFF e WOFF2, além do trecho `@font-face` pronto. Fontes variáveis com eixo de peso saem a partir de masters compatíveis.
-
-### Posso usar a minha fonte no Cricut Design Space, Canva, Word ou Photoshop?
-
-Sim. Instale o TTF ou OTF no Windows ou no macOS e a fonte aparece em todos os programas que listam as fontes do sistema. Veja [design your own font for Cricut](https://kwy404.github.io/fontsketch/guides/design-your-own-font-for-cricut/) (em inglês).
-
-### De quem são as fontes que eu crio?
-
-Suas. O fontsketch tem licença MIT e não coloca licença nem marca d'água nas suas fontes. Escolha a licença que quiser para elas.
+O editor, o desenho, a exportação e a leitura pela câmera funcionam no Chrome e no Edge 100+, Firefox 100+ e Safari 15.4+. No navegador, `exportFontAsync` e `parseFontAsync` carregam um pequeno Brotli em WebAssembly só quando você exporta ou abre WOFF2. No Node, o WOFF2 usa o Brotli do zlib.
 
 ## Mais de kwy404
 

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
-<title>Make a Font From SVG Files, SVG to Font in Your Browser</title>
-<meta name="description" content="Make a font from SVG files in your browser. Prepare clean paths, import each letter, set metrics and spacing, then export an SVG to font result as TTF or WOFF2.">
+<title>Building a font from SVG files</title>
+<meta name="description" content="How to prepare SVG letters, import them into fontsketch, line them up on the baseline, space them and export the font.">
 <link rel="canonical" href="https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/">
 <link rel="alternate" hreflang="en" href="https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/">
 <link rel="alternate" hreflang="pt-BR" href="https://kwy404.github.io/fontsketch/pt/guias/transformar-svg-em-fonte/">
@@ -17,16 +17,16 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="fontsketch">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Make a Font From SVG Files, SVG to Font in Your Browser">
-<meta property="og:description" content="Make a font from SVG files in your browser. Prepare clean paths, import each letter, set metrics and spacing, then export an SVG to font result as TTF or WOFF2.">
+<meta property="og:title" content="Building a font from SVG files">
+<meta property="og:description" content="How to prepare SVG letters, import them into fontsketch, line them up on the baseline, space them and export the font.">
 <meta property="og:url" content="https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/">
 <meta property="og:image" content="https://kwy404.github.io/fontsketch/assets/og/make-a-font-from-svg.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="An SVG letter R with its path points being mapped onto a font glyph grid with baseline and cap height lines">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Make a Font From SVG Files, SVG to Font in Your Browser">
-<meta name="twitter:description" content="Make a font from SVG files in your browser. Prepare clean paths, import each letter, set metrics and spacing, then export an SVG to font result as TTF or WOFF2.">
+<meta name="twitter:title" content="Building a font from SVG files">
+<meta name="twitter:description" content="How to prepare SVG letters, import them into fontsketch, line them up on the baseline, space them and export the font.">
 <meta name="twitter:image" content="https://kwy404.github.io/fontsketch/assets/og/make-a-font-from-svg.png">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -45,14 +45,13 @@
   {
    "@type": "TechArticle",
    "@id": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/#article",
-   "headline": "How to make a font from SVG files",
-   "description": "Make a font from SVG files in your browser. Prepare clean paths, import each letter, set metrics and spacing, then export an SVG to font result as TTF or WOFF2.",
+   "headline": "Building a font from SVG files",
+   "description": "How to prepare SVG letters, import them into fontsketch, line them up on the baseline, space them and export the font.",
    "image": "https://kwy404.github.io/fontsketch/assets/og/make-a-font-from-svg.png",
    "inLanguage": "en",
    "datePublished": "2026-10-13",
    "dateModified": "2026-10-13",
-   "wordCount": 1125,
-   "keywords": "make a font from SVG",
+   "wordCount": 1105,
    "author": {
     "@type": "Person",
     "name": "Alexandre Kohler",
@@ -69,117 +68,6 @@
     "name": "fontsketch",
     "url": "https://kwy404.github.io/fontsketch/"
    }
-  },
-  {
-   "@type": "HowTo",
-   "@id": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/#howto",
-   "name": "How to convert SVG files into a font with fontsketch",
-   "description": "Make a font from SVG files in your browser. Prepare clean paths, import each letter, set metrics and spacing, then export an SVG to font result as TTF or WOFF2.",
-   "image": "https://kwy404.github.io/fontsketch/assets/og/make-a-font-from-svg.png",
-   "inLanguage": "en",
-   "totalTime": "PT40M",
-   "estimatedCost": {
-    "@type": "MonetaryAmount",
-    "currency": "USD",
-    "value": "0"
-   },
-   "tool": [
-    {
-     "@type": "HowToTool",
-     "name": "fontsketch (free, in the browser)"
-    }
-   ],
-   "step": [
-    {
-     "@type": "HowToStep",
-     "position": 1,
-     "name": "Prepare the SVG files",
-     "text": "Convert strokes and text to filled outlines, flatten transforms and remove clipping masks, gradients and hidden layers.",
-     "url": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/#step-1"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 2,
-     "name": "Use one artboard size for all letters",
-     "text": "Draw every letter on the same artboard height with the baseline at the same position so sizes stay consistent.",
-     "url": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/#step-2"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 3,
-     "name": "Import into fontsketch",
-     "text": "Open the editor and import each SVG file or paste an SVG path into the matching character.",
-     "url": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/#step-3"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 4,
-     "name": "Align to the font metrics",
-     "text": "Check that each glyph sits on the baseline and matches the x-height or cap height in the 1000 unit em.",
-     "url": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/#step-4"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 5,
-     "name": "Clean outlines and set spacing",
-     "text": "Remove overlaps, correct contour direction, then set side bearings and kerning pairs.",
-     "url": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/#step-5"
-    },
-    {
-     "@type": "HowToStep",
-     "position": 6,
-     "name": "Export the font",
-     "text": "Export TTF or OTF for desktop use, or WOFF2 with the generated CSS @font-face snippet for the web.",
-     "url": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/#step-6"
-    }
-   ]
-  },
-  {
-   "@type": "FAQPage",
-   "@id": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/#faq",
-   "inLanguage": "en",
-   "mainEntity": [
-    {
-     "@type": "Question",
-     "name": "Can I convert an SVG to a font for free?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Yes. fontsketch imports SVG files and paths into glyphs and exports TTF, OTF, WOFF and WOFF2 at no cost. It runs in your browser, so the SVG files are not uploaded anywhere."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Why does my SVG letter come out as a thin line or disappear?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Fonts can only store filled shapes. If your SVG uses a stroke with no fill, convert the stroke to an outline in your vector editor before importing, then the letter keeps its visible thickness."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Why is the hole in my letter O filled in after import?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "The inner contour has the same direction as the outer one. Run contour direction correction in fontsketch so counters are cut out of the shape correctly."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Can I make an icon font from SVG instead of letters?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Yes. For icons, the fontsketch CLI turns a whole folder of SVG files into an icon font with TTF, WOFF2 and CSS classes, which is faster than importing them one by one."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "What size should my SVG letters be?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "The absolute size matters less than consistency. Use the same artboard height for every letter, and ideally make it match the em so that 1000 units in the SVG equal the full em of the font."
-     }
-    }
-   ]
   },
   {
    "@type": "BreadcrumbList",
@@ -199,7 +87,7 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "How to make a font from SVG files",
+     "name": "Building a font from SVG files",
      "item": "https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/"
     }
    ]
@@ -231,22 +119,22 @@
 </header>
 <main id="main">
 <div class="guide-wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../guides/">Guides</a></li><li aria-current="page">How to make a font from SVG files</li></ol></nav>
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../guides/">Guides</a></li><li aria-current="page">Building a font from SVG files</li></ol></nav>
 <header class="guide-head">
   <div class="guide-head-text">
-    <p class="kicker">Guide · make a font from SVG</p>
-    <h1>How to make a font from SVG files</h1>
+    <p class="kicker">Guide · SVG</p>
+    <h1>Building a font from SVG files</h1>
     <p class="guide-meta"><span>5 min read</span><span>Updated <time datetime="2026-10-13">2026-10-13</time></span><a href="../../pt/guias/transformar-svg-em-fonte/" hreflang="pt-BR" lang="pt-BR">Leia em português</a></p>
   </div>
   <figure class="guide-art"><span class="art "><img class="art-l" src="../../assets/art/svg-to-glyph.svg" width="640" height="400" alt="An SVG letter R with its path points being mapped onto a font glyph grid with baseline and cap height lines" fetchpriority="high"><img class="art-d" src="../../assets/art/svg-to-glyph-dark.svg" width="640" height="400" alt="" aria-hidden="true" fetchpriority="high"></span></figure>
 </header>
 <div class="guide-grid">
   <aside class="guide-side" aria-label="On this page">
-    <div class="toc"><p class="toc-h">On this page</p><ol><li><a href="#why-svg-is-a-great-starting-point">Why SVG is a great starting point</a></li><li><a href="#prepare-your-svg-files-properly">Prepare your SVG files properly</a></li><li><a href="#set-up-a-consistent-artboard">Set up a consistent artboard</a></li><li><a href="#export-settings-in-your-vector-app">Export settings in your vector app</a></li><li><a href="#import-the-svgs-into-fontsketch">Import the SVGs into fontsketch</a></li><li><a href="#clean-up-the-outlines">Clean up the outlines</a></li><li><a href="#spacing-accents-and-kerning">Spacing, accents and kerning</a></li><li><a href="#export-the-font">Export the font</a></li><li><a href="#svg-preparation-checklist">SVG preparation checklist</a></li><li><a href="#next-steps">Next steps</a></li><li><a href="#steps">Step by step</a></li><li><a href="#faq">Questions people ask</a></li></ol></div>
+    <div class="toc"><p class="toc-h">On this page</p><ol><li><a href="#why-svg-is-a-great-starting-point">Why SVG is a great starting point</a></li><li><a href="#prepare-your-svg-files-properly">Prepare your SVG files properly</a></li><li><a href="#set-up-a-consistent-artboard">Set up a consistent artboard</a></li><li><a href="#export-settings-in-your-vector-app">Export settings in your vector app</a></li><li><a href="#import-the-svgs-into-fontsketch">Import the SVGs into fontsketch</a></li><li><a href="#clean-up-the-outlines">Clean up the outlines</a></li><li><a href="#spacing-accents-and-kerning">Spacing, accents and kerning</a></li><li><a href="#export-the-font">Export the font</a></li><li><a href="#svg-preparation-checklist">SVG preparation checklist</a></li><li><a href="#next-steps">Next steps</a></li></ol></div>
     <div class="try-card"><img src="../../assets/art/quill-head.svg" width="84" height="112" alt="" loading="lazy"><p class="try-h">Try it right now</p><p>Draw a letter on the stage and watch it become a real font. Free, no upload, no account.</p><a class="btn btn-primary btn-sm" href="../../#studio">Open the studio</a><a class="btn btn-ghost btn-sm" href="../../app/">Open the editor</a></div>
   </aside>
   <article class="prose" id="article">
-<p>To make a font from SVG, prepare each letter as a clean filled path on a consistent artboard, import the SVGs into a font editor, align them to the baseline and metrics, set spacing, and export. In fontsketch this happens in the browser: you import SVG files or paste paths, tidy the outlines and export TTF, OTF, WOFF or WOFF2.</p>
+<p>To build a font from SVG files, prepare each letter as a clean filled path on a consistent artboard, import the SVGs into a font editor, align them to the baseline and metrics, set spacing, and export. In fontsketch this happens in the browser: you import SVG files or paste paths, tidy the outlines and export TTF, OTF, WOFF or WOFF2.</p>
 <section id="why-svg-is-a-great-starting-point" class="prose-sec"><h2>Why SVG is a great starting point</h2>
 <p>If you already design lettering in a vector app, SVG is the most direct route into a font. The paths are already curves, so nothing needs to be traced and no detail is lost. A font outline and an SVG path are close relatives: both describe shapes with lines and bezier curves. The main differences are the coordinate system and a few rules about what a font can contain.</p>
 </section>
@@ -284,24 +172,22 @@
 <ul><li><strong>Overlap removal</strong> merges shapes that cross, such as the bar of a t over its stem. Overlapping contours can render with odd artifacts at small sizes and inflate file size.</li><li><strong>Contour direction correction</strong> makes sure outer contours and counters wind in opposite directions, so holes stay holes.</li><li><strong>Simplify</strong> reduces the number of points. Vector apps sometimes export dozens of redundant nodes; fewer points give smoother curves and better hinting.</li></ul>
 </section>
 <section id="spacing-accents-and-kerning" class="prose-sec"><h2>Spacing, accents and kerning</h2>
-<p>SVG files do not carry spacing information, so you set it in fontsketch. Adjust the left and right side bearings until a test string such as <em>Hamburgefonstiv</em> reads evenly. Then add kerning pairs for the combinations that still look wrong. The <a href="../../guides/font-kerning-guide/">font kerning guide</a> lists where to start.</p>
+<p>SVG files do not carry spacing information, so you set it in fontsketch. Adjust the left and right side bearings until a test string such as <em>Hamburgefonstiv</em> reads evenly. Then add kerning pairs for the combinations that still look wrong. Start with pairs like To, AV and Ty.</p>
 <p>For accented letters, import or draw the marks once and fontsketch composes letters like é, ã and ç from components.</p>
 </section>
 <section id="export-the-font" class="prose-sec"><h2>Export the font</h2>
 <div class="table-wrap"><table><thead><tr><th scope="col">Destination</th><th scope="col">Format</th></tr></thead><tbody><tr><td>Desktop apps on Windows or macOS</td><td>TTF or OTF</td></tr><tr><td>Websites</td><td>WOFF2, with the CSS snippet fontsketch generates</td></tr><tr><td>Older browser fallback</td><td>WOFF</td></tr></tbody></table></div>
-<p>If you are converting a folder of icons rather than letters, use the CLI described in the <a href="../../guides/icon-font-generator/">icon font generator guide</a>, which handles codepoints and CSS classes for you.</p>
+<p>If you are converting a folder of icons rather than letters, use the <code>npx fontsketch from-svg</code> command, which assigns codepoints and writes the CSS classes for you.</p>
 </section>
 <section id="svg-preparation-checklist" class="prose-sec"><h2>SVG preparation checklist</h2>
 <ul><li>Strokes and text converted to outlines</li><li>No gradients, masks, hidden layers or embedded images</li><li>Transforms flattened</li><li>Counters made with compound paths</li><li>Same artboard size and baseline for every letter</li><li>After import: overlaps removed, directions corrected, points simplified</li></ul>
 </section>
 <section id="next-steps" class="prose-sec"><h2>Next steps</h2>
-<p>Import your first few letters into the <a href="../../app/">fontsketch editor</a> and check them against the baseline before converting the rest. If your lettering exists only as a picture rather than vectors, read <a href="../../guides/convert-image-to-font/">convert an image to a font</a>. For the full process from character set to testing, see <a href="../../guides/how-to-make-a-font/">how to make a font</a>.</p>
+<p>Import your first few letters into the <a href="../../app/">fontsketch editor</a> and check them against the baseline before converting the rest. If your lettering exists only on paper, <a href="../../guides/turn-your-handwriting-into-a-font/">make a font from your handwriting</a> instead.</p>
 </section>
-    <section id="steps" class="prose-sec steps-sec"><h2>Step by step</h2><ol class="steps"><li id="step-1"><span class="step-n">1</span><div><h3>Prepare the SVG files</h3><p>Convert strokes and text to filled outlines, flatten transforms and remove clipping masks, gradients and hidden layers.</p></div></li><li id="step-2"><span class="step-n">2</span><div><h3>Use one artboard size for all letters</h3><p>Draw every letter on the same artboard height with the baseline at the same position so sizes stay consistent.</p></div></li><li id="step-3"><span class="step-n">3</span><div><h3>Import into fontsketch</h3><p>Open the editor and import each SVG file or paste an SVG path into the matching character.</p></div></li><li id="step-4"><span class="step-n">4</span><div><h3>Align to the font metrics</h3><p>Check that each glyph sits on the baseline and matches the x-height or cap height in the 1000 unit em.</p></div></li><li id="step-5"><span class="step-n">5</span><div><h3>Clean outlines and set spacing</h3><p>Remove overlaps, correct contour direction, then set side bearings and kerning pairs.</p></div></li><li id="step-6"><span class="step-n">6</span><div><h3>Export the font</h3><p>Export TTF or OTF for desktop use, or WOFF2 with the generated CSS @font-face snippet for the web.</p></div></li></ol></section>
-    <section id="faq" class="prose-sec"><h2>Questions people ask</h2><div class="faq"><details><summary>Can I convert an SVG to a font for free?</summary><p>Yes. fontsketch imports SVG files and paths into glyphs and exports TTF, OTF, WOFF and WOFF2 at no cost. It runs in your browser, so the SVG files are not uploaded anywhere.</p></details><details><summary>Why does my SVG letter come out as a thin line or disappear?</summary><p>Fonts can only store filled shapes. If your SVG uses a stroke with no fill, convert the stroke to an outline in your vector editor before importing, then the letter keeps its visible thickness.</p></details><details><summary>Why is the hole in my letter O filled in after import?</summary><p>The inner contour has the same direction as the outer one. Run contour direction correction in fontsketch so counters are cut out of the shape correctly.</p></details><details><summary>Can I make an icon font from SVG instead of letters?</summary><p>Yes. For icons, the fontsketch CLI turns a whole folder of SVG files into an icon font with TTF, WOFF2 and CSS classes, which is faster than importing them one by one.</p></details><details><summary>What size should my SVG letters be?</summary><p>The absolute size matters less than consistency. Use the same artboard height for every letter, and ideally make it match the em so that 1000 units in the SVG equal the full em of the font.</p></details></div></section>
   </article>
 </div>
-<section class="related" aria-labelledby="related-h"><h2 id="related-h">Keep reading</h2><div class="cards"><a class="gcard" href="../../guides/convert-image-to-font/"><span class="art "><img class="art-l" src="../../assets/art/glyph-anatomy.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/glyph-anatomy-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">convert image to font</span><span class="gcard-t">How to convert an image to a font (PNG and JPG to font)</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/icon-font-generator/"><span class="art "><img class="art-l" src="../../assets/art/icon-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/icon-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">icon font generator</span><span class="gcard-t">Icon font generator, from a folder of SVG icons to a web font</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/how-to-make-a-font/"><span class="art "><img class="art-l" src="../../assets/art/metrics-ruler.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/metrics-ruler-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">how to make a font</span><span class="gcard-t">How to make a font, from first letter to finished file</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/create-a-font-online-free/"><span class="art "><img class="art-l" src="../../assets/art/pen-tool.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/pen-tool-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">create a font online free</span><span class="gcard-t">How to create a font online for free</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
+<section class="related" aria-labelledby="related-h"><h2 id="related-h">Keep reading</h2><div class="cards"><a class="gcard" href="../../guides/turn-your-handwriting-into-a-font/"><span class="art "><img class="art-l" src="../../assets/art/scan-to-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/scan-to-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">Handwriting</span><span class="gcard-t">Making a font from your handwriting</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a><a class="gcard" href="../../guides/variable-font-tutorial/"><span class="art "><img class="art-l" src="../../assets/art/variable-weight.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../../assets/art/variable-weight-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">Variable fonts</span><span class="gcard-t">Adding a weight axis with two masters</span><span class="gcard-more">Read the guide <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div></section>
 </div>
 </main>
 <footer class="foot">
@@ -317,8 +203,8 @@
       <ul class="foot-list"><li><a href="../../app/">Font editor</a></li><li><a href="../../gallery/">Gallery</a></li><li><a href="../../guides/">All guides</a></li><li><a href="https://www.npmjs.com/package/fontsketch" rel="noopener">npm package</a></li><li><a href="https://github.com/kwy404/fontsketch" rel="noopener">Source on GitHub</a></li><li><a href="https://github.com/kwy404/fontsketch/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li></ul>
     </div>
     <div>
-      <h2 class="foot-h">Popular guides</h2>
-      <ul class="foot-list"><li><a href="../../guides/turn-your-handwriting-into-a-font/">Turn your handwriting into a font</a></li><li><a href="../../guides/create-a-font-online-free/">Create a font online free</a></li><li><a href="../../guides/make-a-font-from-svg/">Make a font from SVG</a></li><li><a href="../../guides/icon-font-generator/">Icon font generator</a></li><li><a href="../../guides/variable-font-tutorial/">Variable font tutorial</a></li><li><a href="../../guides/font-hinting-explained/">Font hinting explained</a></li></ul>
+      <h2 class="foot-h">Guides</h2>
+      <ul class="foot-list"><li><a href="../../guides/turn-your-handwriting-into-a-font/">From your handwriting</a></li><li><a href="../../guides/make-a-font-from-svg/">From SVG files</a></li><li><a href="../../guides/variable-font-tutorial/">Adding a weight axis</a></li><li><a href="../../guides/use-a-custom-font-on-your-website/">Using it on a website</a></li></ul>
     </div>
     <div>
       <h2 class="foot-h">More from kwy404</h2>

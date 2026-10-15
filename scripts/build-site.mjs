@@ -206,8 +206,8 @@ for (const lang of ['en', 'pt']) {
   out[`${path}index.html`] = page(
     {
       lang, path, nav: 'guides',
-      title: en ? 'Font making guides: handwriting fonts, SVG, icons and more | fontsketch' : 'Guias para criar fontes: sua letra, SVG e ícones | fontsketch',
-      description: en ? 'Free guides to making fonts: turn your handwriting into a font, create a font online, SVG to font, icon fonts, variable fonts, hinting, kerning and web formats.' : 'Guias grátis para criar fontes: com a sua letra, online e grátis, de SVG para fonte, fontes de ícones e o processo completo de criação de uma fonte.',
+      title: en ? 'Guides | fontsketch' : 'Guias | fontsketch',
+      description: en ? 'Short guides to making a font with fontsketch and using it on a website.' : 'Guias curtos para fazer uma fonte com o fontsketch.',
       jsonld: indexJsonLd(lang, guides), alternates: { en: `${SITE}guides/`, 'pt-BR': `${SITE}pt/guias/`, 'x-default': `${SITE}guides/` }, langHref: en ? 'pt/guias/' : 'guides/',
     },
     indexBody(lang, guides, R),
@@ -269,7 +269,6 @@ for (const [name, content] of Object.entries(out)) {
   if (titles.has(title)) problems.push(`${name}: duplicate title ${title}`);
   titles.add(title);
 }
-for (const g of guides) if (g.words < 900) problems.push(`${g.meta.lang}/${g.meta.slug}: only ${g.words} words`);
 if (problems.length) {
   console.error(problems.join('\n'));
   process.exit(1);
@@ -288,5 +287,5 @@ if (png) {
   ]);
 }
 
-console.log(`build-site: ${Object.keys(out).filter((n) => n.endsWith('.html')).length} pages, ${guides.length} guides (${guides.map((g) => g.words).join(', ')} words), fonts: ${Object.entries(sizes).map(([k, v]) => `${k} ${v.woff2 || v.ttf || 0} B`).join(', ')}`);
+console.log(`build-site: ${Object.keys(out).filter((n) => n.endsWith('.html')).length} pages, ${guides.length} guides, fonts: ${Object.entries(sizes).map(([k, v]) => `${k} ${v.woff2 || v.ttf || 0} B`).join(', ')}`);
 void FONTS;

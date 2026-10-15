@@ -5,129 +5,53 @@
   <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/banner.svg" alt="fontsketch banner: Quill the octopus calligrapher next to the fontsketch wordmark, written in its own handwritten font" width="100%">
 </picture>
 
-# fontsketch: turn your handwriting into a font, free in your browser
+# fontsketch
 
-**Draw, import or scan your handwriting and export a real TTF, OTF, WOFF or WOFF2 font. No upload, no account.**
+**Make a font from your handwriting, in the browser or in Node.**
 
 [![npm version](https://img.shields.io/npm/v/fontsketch.svg)](https://www.npmjs.com/package/fontsketch)
-[![npm downloads per month](https://img.shields.io/npm/dm/fontsketch.svg)](https://www.npmjs.com/package/fontsketch)
-[![npm downloads total](https://img.shields.io/npm/dt/fontsketch.svg)](https://www.npmjs.com/package/fontsketch)
 [![CI](https://github.com/kwy404/fontsketch/actions/workflows/ci.yml/badge.svg)](https://github.com/kwy404/fontsketch/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/kwy404/fontsketch/blob/main/LICENSE)
-[![minzipped size](https://img.shields.io/bundlephobia/minzip/fontsketch)](https://bundlephobia.com/package/fontsketch)
 
 English | [Português (Brasil)](https://github.com/kwy404/fontsketch/blob/main/i18n/README.pt-BR.md)
 
-[Open the editor](https://kwy404.github.io/fontsketch/app/) · [Website](https://kwy404.github.io/fontsketch/) · [Guides](https://kwy404.github.io/fontsketch/guides/) · [Gallery](https://kwy404.github.io/fontsketch/gallery/) · [npm](https://www.npmjs.com/package/fontsketch)
+[Open the editor](https://kwy404.github.io/fontsketch/app/) · [Website](https://kwy404.github.io/fontsketch/) · [Guides](https://kwy404.github.io/fontsketch/guides/) · [Gallery](https://kwy404.github.io/fontsketch/gallery/)
 
 </div>
 
-fontsketch is a free, open source **font editor in the browser** and a font compiler for Node. Write letters with your mouse, finger or pen, import SVG files, or print a handwriting sheet, fill it in and take a phone photo: fontsketch flattens the page, traces every letter and turns it into a font you can install or use on the web. It writes the font binary itself, with kerning, accented letters, automatic TrueType hinting and variable weight axes, and it runs entirely on your device.
-
-The same engine ships as a library and a CLI, so you can **make a font from SVG** files, run an **icon font generator** in CI, or build fonts from code.
-
-## Table of contents
-
-- [Features](#features)
-- [Three ways to create a font](#three-ways-to-create-a-font)
-- [Screenshots](#screenshots)
-- [Quick start](#quick-start)
-- [Command line: icon fonts from SVG](#command-line-icon-fonts-from-svg)
-- [Node and browser API](#node-and-browser-api)
-- [Use your font on a website](#use-your-font-on-a-website)
-- [Browser support](#browser-support)
-- [FAQ](#faq)
-- [More from kwy404](#more-from-kwy404)
-- [Author](#author)
-- [License](#license)
-
-## Features
-
-<table>
-<tr>
-<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/draw.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/draw.svg" width="40" alt="Brush stroke icon"></picture><br><b>Freehand drawing</b><br>Brush strokes with a soft pen become smooth, editable outlines.</td>
-<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/pen-tool.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/pen-tool.svg" width="40" alt="Pen nib with bezier handles icon"></picture><br><b>Bezier pen tool</b><br>Corner and smooth points, handles, guides and side bearings.</td>
-<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/import-svg.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/import-svg.svg" width="40" alt="SVG file import icon"></picture><br><b>Import SVG</b><br>Drop SVG files or paste path data straight into a glyph.</td>
-</tr>
-<tr>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/image-trace.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/image-trace.svg" width="40" alt="Image tracing icon"></picture><br><b>Image tracing</b><br>Convert PNG or JPG lettering into vector contours.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/handwriting-sheet.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/handwriting-sheet.svg" width="40" alt="Printable handwriting sheet icon"></picture><br><b>Handwriting sheet</b><br>Printable A4 and Letter templates (PDF and SVG) with corner markers.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/camera.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/camera.svg" width="40" alt="Phone camera icon"></picture><br><b>Phone camera scan</b><br>Perspective, lighting and cells detected on the device, with a confidence score per letter.</td>
-</tr>
-<tr>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/kerning.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/kerning.svg" width="40" alt="Kerning pair icon"></picture><br><b>Kerning</b><br>Pairs and classes, exported as OpenType kerning.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/hinting.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/hinting.svg" width="40" alt="Pixel grid hinting icon"></picture><br><b>Hinting</b><br>Automatic TrueType hinting, manual stems, or none.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/variable-font.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/variable-font.svg" width="40" alt="Variable weight slider icon"></picture><br><b>Variable fonts</b><br>A weight axis from compatible masters, in one font file.</td>
-</tr>
-<tr>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/export.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/export.svg" width="40" alt="Font export icon"></picture><br><b>Export</b><br>TTF, OTF (CFF), WOFF and WOFF2, plus the <code>@font-face</code> CSS.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/icon-font.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/icon-font.svg" width="40" alt="Icon font grid icon"></picture><br><b>Icon fonts</b><br>A CLI that turns a folder of SVG icons into a font with CSS classes.</td>
-<td valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/dark/autosave.svg"><img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/icons/light/autosave.svg" width="40" alt="Autosave icon"></picture><br><b>Autosave</b><br>Projects save in your browser and as <code>.fontsketch.json</code> files.</td>
-</tr>
-</table>
-
-Accented letters are built automatically from components (a + tilde = ã), covering Latin-1 Supplement and Latin Extended-A, so Portuguese, Spanish, French, German and Polish text works out of the box.
-
-## Three ways to create a font
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/scan-to-font-dark.svg">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/scan-to-font.svg" alt="A phone photo of a handwriting sheet being flattened, cleaned, split into cells and traced into vector glyphs" width="100%">
-</picture>
-
-1. **Draw.** Open the [editor](https://kwy404.github.io/fontsketch/app/) and write each letter with a mouse, a finger or a stylus. Strokes become clean outlines you can refine with the bezier pen tool. The editor opens with Quill Hand, a complete handwritten font, as a template, or you can start from a blank page.
-2. **Import.** Drop SVG files or paste path data into any glyph, trace a PNG or JPG of your lettering, or open an existing TTF, OTF, WOFF or WOFF2 font and keep editing it.
-3. **Handwriting sheet.** Print the template on A4 or Letter paper, fill each cell with a dark pen and take a phone photo. fontsketch finds the four corner markers, corrects the perspective, evens out the light, splits the cells and traces each letter, with a confidence score so you know what to check.
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/nib-strokes-dark.svg">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/nib-strokes.svg" alt="Strokes made by a broad nib, a pointed pen, a brush and a monoline marker" width="100%">
-</picture>
-
-## Screenshots
+fontsketch is an open source font editor that runs in the browser, and the font compiler behind it as a Node library and CLI. Draw letters with a mouse, finger or pen, import SVG, or photograph a filled handwriting sheet, then export TTF, OTF, WOFF or WOFF2. It writes the font binary itself, with kerning, accented letters, TrueType hinting and variable weight axes. Nothing is uploaded: everything runs on your device.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/studio-dark.png">
   <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/studio.png" alt="The fontsketch studio on the website: the letter a drawn on a stage with x-height and baseline guides, next to a live sentence set in the Quill Hand font" width="100%">
 </picture>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/editor-dark.png">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/editor.png" alt="The fontsketch font editor in the browser: a letter grid, the letter A on the canvas with metric lines, and spacing, outline and component tools" width="100%">
-</picture>
+## Make a font in the browser
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/templates-dark.png">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/screenshots/templates.png" alt="The start screen of the editor: edit Quill Hand, start a blank font, pick a template or import a font file, SVG drawings, an image or a handwriting sheet" width="100%">
-</picture>
+The fastest start is the [home page](https://kwy404.github.io/fontsketch/): type your name, press **Draw these letters**, draw each letter of it, and download the font.
 
-## Quick start
+The [editor](https://kwy404.github.io/fontsketch/app/) has three ways in:
 
-**In the browser:** open [kwy404.github.io/fontsketch/app](https://kwy404.github.io/fontsketch/app/). Nothing to install, and your files never leave your device.
+1. **Draw.** Write each letter with a mouse, finger or stylus, then refine it with the bezier pen tool. The editor opens with Quill Hand, a complete handwritten font, as a template, or you can start blank.
+2. **Import.** Drop SVG files or paste path data into a glyph, trace a PNG or JPG, or open a TTF, OTF, WOFF or WOFF2 font and keep editing it.
+3. **Scan.** Print the handwriting sheet, fill each box with a dark pen and take a phone photo. fontsketch flattens the page, evens out the light, splits the boxes and traces each letter, with a confidence score so you know what to check.
 
-**With npm** (Node 18 or newer):
+Accented letters are built from a base letter and a mark (a + tilde = ã), covering Latin-1 Supplement and Latin Extended-A. Projects autosave in the browser and can be downloaded as `.fontsketch.json` files.
+
+## Install
 
 ```bash
 npm install fontsketch
 ```
 
-**From a CDN** with a script tag (the global is `fontsketch`):
+Node 18.18 or newer. For a script tag, use `https://cdn.jsdelivr.net/npm/fontsketch@0.1.0/dist/fontsketch.min.js` (the global is `fontsketch`).
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/fontsketch@0.1.0/dist/fontsketch.min.js"></script>
-```
+## Command line
 
-## Command line: icon fonts from SVG
-
-Turn a folder of SVG icons into an icon font. Each file becomes a glyph in the Private Use Area (from U+E000), and you get WOFF2, WOFF and TTF files, a stylesheet with one class per icon and an `index.html` preview page:
+Turn a folder of SVG icons into an icon font with WOFF2, WOFF and TTF files, one CSS class per icon and a preview page:
 
 ```bash
 npx fontsketch from-svg ./icons --family Icons -o ./dist
-```
-
-```html
-<link rel="stylesheet" href="dist/icons.css">
-<i class="icon icon-home" aria-hidden="true"></i>
 ```
 
 All commands:
@@ -238,7 +162,7 @@ Available from `fontsketch` in Node and from `fontsketch/node`:
 
 ## Use your font on a website
 
-Export WOFF2 and load it with `@font-face`. The same CSS works in plain HTML, React, Vue, Angular and Next.js.
+Export WOFF2 and load it with `@font-face`. The editor and `cssFontFace` give you this rule ready to paste:
 
 ```css
 @font-face {
@@ -252,56 +176,11 @@ h1 {
 }
 ```
 
-In **Next.js** you can let the framework host the file with `next/font/local`:
-
-```js
-import localFont from 'next/font/local';
-
-export const myHand = localFont({ src: './fonts/my-hand.woff2', display: 'swap' });
-```
-
-Then use `className={myHand.className}` on any element. In **React**, **Vue** and **Angular** projects, put the `@font-face` rule in your global stylesheet and reference the family by name.
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/glyph-anatomy-dark.svg">
-  <img src="https://cdn.jsdelivr.net/gh/kwy404/fontsketch@main/assets/illustrations/glyph-anatomy.svg" alt="Glyph anatomy: ascender, cap height, x-height, baseline and descender around the letters Hgx" width="100%">
-</picture>
+To use the font in desktop apps, install the TTF or OTF file on Windows or macOS. The [website guide](https://kwy404.github.io/fontsketch/guides/use-a-custom-font-on-your-website/) covers React, Next.js and Vue.
 
 ## Browser support
 
-| | Chrome and Edge | Firefox | Safari |
-| --- | --- | --- | --- |
-| Editor, drawing and export | 100+ | 100+ | 15.4+ |
-| Camera scan of a handwriting sheet | 100+ | 100+ | 15.4+ |
-| Fonts you export | every browser and operating system that reads TTF, OTF, WOFF or WOFF2 | | |
-
-The library runs in Node 18.18 or newer and in any modern browser. In Node, WOFF2 uses the Brotli codec built into zlib. In browsers, `exportFontAsync` and `parseFontAsync` load a small Brotli WebAssembly build on demand, only when you export or open WOFF2.
-
-## FAQ
-
-### How do I turn my handwriting into a font for free?
-
-Print the fontsketch handwriting sheet, fill each cell with a dark pen, take a phone photo and drop it into the [editor](https://kwy404.github.io/fontsketch/app/). It traces every letter and exports TTF, OTF or WOFF2. Step by step: [turn your handwriting into a font](https://kwy404.github.io/fontsketch/guides/turn-your-handwriting-into-a-font/).
-
-### Can I create a font online for free without installing anything?
-
-Yes. fontsketch is a font editor in the browser: no account, no install, no watermark, and nothing is uploaded. See [create a font online free](https://kwy404.github.io/fontsketch/guides/create-a-font-online-free/).
-
-### How do I make a font from SVG files?
-
-Import SVG paths into glyphs in the editor, or run `npx fontsketch icons ./icons --out ./dist` to build an icon font from a folder. See [make a font from SVG](https://kwy404.github.io/fontsketch/guides/make-a-font-from-svg/) and the [icon font generator guide](https://kwy404.github.io/fontsketch/guides/icon-font-generator/).
-
-### Which font formats can I export?
-
-TTF (TrueType outlines), OTF (CFF outlines), WOFF and WOFF2, plus a ready `@font-face` snippet. Variable fonts with a weight axis are exported from compatible masters.
-
-### Can I use my font in Cricut Design Space, Canva, Word or Photoshop?
-
-Yes. Install the TTF or OTF on Windows or macOS and it appears in every app that lists system fonts. See [design your own font for Cricut](https://kwy404.github.io/fontsketch/guides/design-your-own-font-for-cricut/).
-
-### Who owns the fonts I make?
-
-You do. fontsketch is MIT licensed and adds no license or watermark to your fonts. Pick any license you like for them.
+The editor, drawing, export and camera scan work in Chrome and Edge 100+, Firefox 100+ and Safari 15.4+. In browsers, `exportFontAsync` and `parseFontAsync` load a small Brotli WebAssembly build only when you export or open WOFF2. In Node, WOFF2 uses the Brotli codec in zlib.
 
 ## More from kwy404
 

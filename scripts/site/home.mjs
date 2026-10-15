@@ -10,8 +10,8 @@ const ICON_ORDER = ['draw', 'pen-tool', 'import-svg', 'image-trace', 'handwritin
 
 export const HOME = {
   en: {
-    title: 'Turn your handwriting into a font: free font maker in the browser | fontsketch',
-    description: 'Turn your handwriting into a font, free and in your browser. Draw, import SVG or scan a handwriting sheet, then export TTF, OTF, WOFF2 and variable fonts.',
+    title: 'fontsketch: make a font from your handwriting',
+    description: 'Draw or scan your letters and download a font file. Free, open source, and it runs in your browser.',
     kicker: 'Free font maker in your browser',
     h1a: 'Turn your handwriting',
     h1b: 'into a real font',
@@ -62,20 +62,18 @@ export const HOME = {
       ['Autosave', 'Projects save in your browser and as .fontsketch.json.'],
     ] },
     dev: { kicker: 'For developers', h2: 'A font compiler you can script', lede: 'The same engine runs in Node 18+ and in the browser, with zero runtime dependencies for TTF and OTF. Build fonts in CI, generate icon fonts, or parse existing fonts.', cli: 'Icon font from a folder of SVGs', api: 'Node and browser API' },
-    guides: { kicker: 'Guides', h2: 'Learn type design, one guide at a time', all: 'All guides' },
-    faq: { kicker: 'FAQ', h2: 'Questions people ask', items: [
-      ['How do I turn my handwriting into a font for free?', 'Print the fontsketch handwriting sheet, fill each cell with a dark pen, take a phone photo and drop it into the editor. It flattens the page, traces every letter and lets you export a TTF, OTF or WOFF2 font. Everything is free and runs in your browser.'],
-      ['Can I create a font online without installing anything?', 'Yes. fontsketch is a font editor in the browser. Open the editor, draw or import your glyphs and download the font file. There is no account and no install, and your files never leave your device.'],
-      ['Can I make a font from SVG files?', 'Yes. Import SVG paths into any glyph in the editor, or run npx fontsketch icons with a folder of SVG icons to generate an icon font with CSS classes.'],
-      ['Which font formats can I export?', 'TTF (TrueType outlines), OTF (CFF outlines), WOFF and WOFF2 for the web, plus a ready @font-face CSS snippet. Variable fonts with a weight axis are exported from compatible masters.'],
-      ['Does it support accents like ã, ç and é?', 'Yes. Draw the base letters and the marks once, and fontsketch builds accented letters from components, covering Latin-1 Supplement and Latin Extended-A, so Portuguese, Spanish, French, German and Polish text just works.'],
-      ['Who owns the fonts I make?', 'You do. fontsketch is MIT licensed open source and adds no license or watermark to your fonts. Choose any license you like for the fonts you create.'],
+    guides: { kicker: 'Guides', h2: 'Short guides', all: 'All guides' },
+    faq: { kicker: 'FAQ', h2: 'Common questions', items: [
+      ['Are my drawings or photos uploaded?', 'No. Drawing, scanning and exporting all run in your browser. Projects are saved in the browser, and you can download a .fontsketch.json file as a backup.'],
+      ['Which formats can I export?', 'TTF and OTF to install on a computer, WOFF and WOFF2 for websites, plus a ready @font-face snippet. Fonts with a Regular and a Bold master can also be exported as one variable font.'],
+      ['Does it handle accents like ã, ç and é?', 'Yes. Draw the base letters and the marks once and fontsketch builds the accented letters from them, so Portuguese, Spanish, French, German and Polish text works.'],
+      ['Who owns the fonts I make?', 'You do. fontsketch is MIT licensed and adds no license or watermark to your fonts.'],
     ] },
     cta: { h2: 'Your handwriting deserves a font file', text: 'Open the editor with Quill Hand as a template, or start from a blank page.', btn: 'Open the editor', btn2: 'Read the handwriting guide' },
   },
   pt: {
-    title: 'Criar fonte com minha letra: criador de fontes grátis no navegador | fontsketch',
-    description: 'Crie uma fonte com a sua letra, grátis e no navegador. Desenhe, importe SVG ou escaneie uma folha manuscrita e exporte TTF, OTF, WOFF2 e fontes variáveis.',
+    title: 'fontsketch: faça uma fonte com a sua letra',
+    description: 'Desenhe ou escaneie suas letras e baixe um arquivo de fonte. Grátis, de código aberto e roda no navegador.',
     kicker: 'Criador de fontes grátis no navegador',
     h1a: 'Transforme sua letra',
     h1b: 'em uma fonte de verdade',
@@ -126,14 +124,12 @@ export const HOME = {
       ['Salvamento automático', 'Projetos salvos no navegador e em .fontsketch.json.'],
     ] },
     dev: { kicker: 'Para desenvolvedores', h2: 'Um compilador de fontes programável', lede: 'O mesmo motor roda no Node 18+ e no navegador, sem dependências em tempo de execução para TTF e OTF. Gere fontes no CI, crie fontes de ícones ou leia fontes existentes.', cli: 'Fonte de ícones a partir de uma pasta de SVGs', api: 'API para Node e navegador' },
-    guides: { kicker: 'Guias', h2: 'Aprenda a criar fontes, um guia por vez', all: 'Todos os guias' },
+    guides: { kicker: 'Guias', h2: 'Guias curtos', all: 'Todos os guias' },
     faq: { kicker: 'Perguntas', h2: 'Perguntas frequentes', items: [
-      ['Como criar uma fonte com a minha letra de graça?', 'Imprima a folha manuscrita do fontsketch, preencha cada célula com uma caneta escura, tire uma foto com o celular e solte no editor. Ele endireita a página, vetoriza cada letra e exporta TTF, OTF ou WOFF2. Tudo é grátis e roda no navegador.'],
-      ['Dá para criar uma fonte online sem instalar nada?', 'Sim. O fontsketch é um editor de fontes no navegador. Abra o editor, desenhe ou importe os glifos e baixe o arquivo. Não tem cadastro nem instalação, e seus arquivos não saem do seu aparelho.'],
-      ['Posso transformar SVG em fonte?', 'Sim. Importe caminhos SVG em qualquer glifo no editor, ou rode npx fontsketch icons com uma pasta de ícones SVG para gerar uma fonte de ícones com classes CSS.'],
-      ['Quais formatos posso exportar?', 'TTF (contornos TrueType), OTF (contornos CFF), WOFF e WOFF2 para a web, além do CSS @font-face pronto. Fontes variáveis com eixo de peso saem a partir de masters compatíveis.'],
-      ['A fonte tem acentos como ã, ç e é?', 'Sim. Desenhe as letras base e os acentos uma vez e o fontsketch monta as letras acentuadas com componentes, cobrindo Latin-1 Supplement e Latin Extended-A. Português, espanhol e francês funcionam direto.'],
-      ['De quem são as fontes que eu crio?', 'Suas. O fontsketch é código aberto com licença MIT e não coloca licença nem marca d\'água nas suas fontes. Escolha a licença que quiser para elas.'],
+      ['Meus desenhos ou fotos são enviados para algum servidor?', 'Não. Desenho, leitura da foto e exportação rodam no navegador. Os projetos ficam salvos no navegador, e você pode baixar um arquivo .fontsketch.json como cópia.'],
+      ['Quais formatos posso exportar?', 'TTF e OTF para instalar no computador, WOFF e WOFF2 para sites, além do trecho @font-face pronto. Fontes com um master Regular e um Bold também saem como uma fonte variável.'],
+      ['A fonte tem acentos como ã, ç e é?', 'Sim. Desenhe as letras base e os acentos uma vez e o fontsketch monta as letras acentuadas, então textos em português, espanhol e francês funcionam.'],
+      ['De quem são as fontes que eu crio?', 'Suas. O fontsketch tem licença MIT e não coloca licença nem marca d\'água nas suas fontes.'],
     ] },
     cta: { h2: 'Sua letra merece virar um arquivo de fonte', text: 'Abra o editor com a Quill Hand como modelo, ou comece de uma página em branco.', btn: 'Abrir o editor', btn2: 'Ler o guia da letra à mão' },
   },
@@ -194,8 +190,7 @@ export function homeBody(lang, ctx) {
   const R = ctx.R;
   const pt = lang === 'pt';
   const glyphStrip = ctx.stripChars;
-  const order = ['turn-your-handwriting-into-a-font', 'criar-fonte-com-minha-letra', 'create-a-font-online-free', 'criar-fonte-online-gratis', 'make-a-font-from-svg', 'transformar-svg-em-fonte', 'icon-font-generator', 'gerador-de-fonte-de-icones', 'how-to-make-a-font', 'como-criar-uma-fonte', 'variable-font-tutorial', 'design-your-own-font-for-cricut'];
-  const guideList = ctx.guides.filter((g) => g.meta.lang === lang).sort((a, b) => (order.indexOf(a.meta.slug) + 1 || 99) - (order.indexOf(b.meta.slug) + 1 || 99)).slice(0, 6);
+  const guideList = ctx.guides.filter((g) => g.meta.lang === lang);
   return `${iconSprite()}
 <section id="studio" class="hero" aria-labelledby="hero-h">
   <div class="hero-paper" aria-hidden="true"></div>
@@ -296,7 +291,7 @@ export function homeBody(lang, ctx) {
   <div class="band-in">
     <p class="kicker">${t.guides.kicker}</p>
     <h2 id="guides-h">${t.guides.h2}</h2>
-    <div class="cards">${guideList.map((g) => `<a class="gcard" href="${R}${guidePath(lang, g.meta.slug)}">${art(R, g.meta.art, '')}<span class="gcard-k">${esc(g.meta.keyword)}</span><span class="gcard-t">${esc(g.meta.h1)}</span></a>`).join('')}</div>
+    <div class="cards">${guideList.map((g) => `<a class="gcard" href="${R}${guidePath(lang, g.meta.slug)}">${art(R, g.meta.art, '')}<span class="gcard-k">${esc(g.meta.topic)}</span><span class="gcard-t">${esc(g.meta.h1)}</span></a>`).join('')}</div>
     <p class="more-link"><a class="btn btn-outline" href="${R}${pt ? 'pt/guias/' : 'guides/'}">${t.guides.all} <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
   </div>
 </section>

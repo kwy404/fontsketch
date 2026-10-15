@@ -1,39 +1,13 @@
 ---
 slug: variable-font-tutorial
 lang: en
-title: Variable Font Tutorial, Build a Weight Axis From Masters
-description: Variable font tutorial for beginners. Draw compatible Regular and Bold masters, build a wght axis, export one file and use it in CSS with font-weight ranges.
-h1: Variable font tutorial, from two masters to one flexible file
-keyword: variable font tutorial
+title: Adding a weight axis with two masters
+description: Draw a Regular and a Bold master with matching points, export one variable font file and use its weight range in CSS.
+h1: Adding a weight axis with two masters
+topic: Variable fonts
 art: variable-weight
 alt: The letter a shown in five weights interpolated between a thin Regular master and a heavy Bold master along a slider
-time: PT2H
-howto: How to make a variable font with a weight axis in fontsketch
-steps:
-  - name: Finish the Regular master
-    text: Draw, clean and simplify all Regular glyphs first, with overlaps removed and contour directions corrected.
-  - name: Duplicate it as the Bold master
-    text: Copy the Regular outlines to start the Bold master so every glyph keeps the same contours and point order.
-  - name: Make the Bold drawings by moving points
-    text: Thicken stems and curves by moving existing points only. Do not add, delete or reorder points.
-  - name: Check compatibility
-    text: Confirm each glyph has the same number of contours and points, in the same order and direction, in both masters.
-  - name: Export a variable font
-    text: Export with the variable option to get one font file with a wght axis between the Regular and Bold weights.
-  - name: Use it in CSS
-    text: Declare a font-weight range in @font-face and pick any weight in between with font-weight.
-faq:
-  - q: What is a variable font in simple terms?
-    a: It is a single font file that contains a range of styles instead of one. A weight axis lets you pick any weight between the lightest and heaviest master, such as 400, 523 or 700, from the same file.
-  - q: Why does my variable font export fail or look broken?
-    a: Almost always the masters are not compatible. Each glyph must have the same number of contours and points, in the same order, with the same start point and direction in every master.
-  - q: Are variable fonts smaller than static fonts?
-    a: One variable file is larger than one static file, but usually much smaller than several static weights together. If you only ever use one weight, a static font is lighter.
-  - q: Should I use font-weight or font-variation-settings in CSS?
-    a: Use font-weight for the wght axis. It works with the cascade, bold elements and fallbacks. Keep font-variation-settings for custom axes or special cases.
-  - q: Do all browsers support variable fonts?
-    a: All current major browsers support variable fonts in WOFF2 and TTF. Very old browsers fall back to the next font in your font-family stack.
-related: [how-to-make-a-font, web-font-formats-ttf-otf-woff2, use-a-custom-font-on-your-website, font-hinting-explained]
+related: [use-a-custom-font-on-your-website, make-a-font-from-svg]
 ---
 A variable font is one font file that contains a continuous range of styles. To make one with a weight axis, you draw two masters, for example Regular and Bold, with exactly the same point structure, then export them together. The font interpolates between the masters, so CSS can request any weight in the range, such as 450 or 620.
 
@@ -62,7 +36,7 @@ The most reliable workflow is to fully finish one master before starting the oth
 
 Do these operations *before* creating the second master. If you simplify the Bold master later, the algorithm may remove different points than it did in the Regular, and compatibility breaks.
 
-If you are new to drawing the base font, start with [how to make a font](guide:how-to-make-a-font) and come back once the Regular is solid.
+If you are new to drawing a font, finish and test the Regular on its own first and come back once it is solid.
 
 ## Step 2: create the Bold master from a copy
 
@@ -147,7 +121,7 @@ Use **font-weight** for the wght axis. It cascades properly, works with `bold` a
 
 Variable weights can also be animated with a CSS transition on font-weight, which is useful for hover states. Use it sparingly, since changing weight changes width and can shift layout.
 
-For more on loading the file efficiently, read [web font formats explained](guide:web-font-formats-ttf-otf-woff2) and [use a custom font on your website](guide:use-a-custom-font-on-your-website).
+For more on loading the file efficiently, read [using your font on a website](guide:use-a-custom-font-on-your-website).
 
 ## Providing a fallback for older browsers
 
@@ -159,7 +133,7 @@ A variable font pays off when a design uses three or more weights, or when you w
 
 ## Hinting and variable fonts
 
-Variable fonts are mostly used on high resolution screens where hinting matters less, but small UI text on Windows can still benefit. Test the exported font at 12 to 16 px at several weights. The [font hinting guide](guide:font-hinting-explained) explains the options.
+Variable fonts are mostly used on high resolution screens where hinting matters less, but small UI text on Windows can still benefit. Test the exported font at 12 to 16 px at several weights. The export dialog offers automatic hinting, manual stems or none.
 
 ## Variable font checklist
 
@@ -172,4 +146,4 @@ Variable fonts are mostly used on high resolution screens where hinting matters 
 
 ## Next steps
 
-Open the [fontsketch editor](app:), finish your Regular master, and duplicate it to start the Bold. Begin with n, o and H in bold before touching the rest, exactly as in the [how to make a font](guide:how-to-make-a-font) workflow.
+Open the [fontsketch editor](app:), finish your Regular master, and duplicate it to start the Bold. Begin with n, o and H in bold before touching the rest.

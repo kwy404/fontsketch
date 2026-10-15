@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <script>(function(){try{var t=localStorage.getItem('voodoo:theme');if(t&&t.charAt(0)==='"')t=JSON.parse(t);var r=document.documentElement;if(t==='light'||t==='dark'){r.setAttribute('data-theme',t);r.style.colorScheme=t}else{r.removeAttribute('data-theme')}}catch(e){}})();</script>
-<title>Criar fonte com minha letra: criador de fontes grátis no navegador | fontsketch</title>
-<meta name="description" content="Crie uma fonte com a sua letra, grátis e no navegador. Desenhe, importe SVG ou escaneie uma folha manuscrita e exporte TTF, OTF, WOFF2 e fontes variáveis.">
+<title>fontsketch: faça uma fonte com a sua letra</title>
+<meta name="description" content="Desenhe ou escaneie suas letras e baixe um arquivo de fonte. Grátis, de código aberto e roda no navegador.">
 <link rel="canonical" href="https://kwy404.github.io/fontsketch/pt/">
 <link rel="alternate" hreflang="en" href="https://kwy404.github.io/fontsketch/">
 <link rel="alternate" hreflang="pt-BR" href="https://kwy404.github.io/fontsketch/pt/">
@@ -17,16 +17,16 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="fontsketch">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Criar fonte com minha letra: criador de fontes grátis no navegador | fontsketch">
-<meta property="og:description" content="Crie uma fonte com a sua letra, grátis e no navegador. Desenhe, importe SVG ou escaneie uma folha manuscrita e exporte TTF, OTF, WOFF2 e fontes variáveis.">
+<meta property="og:title" content="fontsketch: faça uma fonte com a sua letra">
+<meta property="og:description" content="Desenhe ou escaneie suas letras e baixe um arquivo de fonte. Grátis, de código aberto e roda no navegador.">
 <meta property="og:url" content="https://kwy404.github.io/fontsketch/pt/">
 <meta property="og:image" content="https://kwy404.github.io/fontsketch/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="fontsketch, the free font maker in the browser, with Quill the octopus mascot">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Criar fonte com minha letra: criador de fontes grátis no navegador | fontsketch">
-<meta name="twitter:description" content="Crie uma fonte com a sua letra, grátis e no navegador. Desenhe, importe SVG ou escaneie uma folha manuscrita e exporte TTF, OTF, WOFF2 e fontes variáveis.">
+<meta name="twitter:title" content="fontsketch: faça uma fonte com a sua letra">
+<meta name="twitter:description" content="Desenhe ou escaneie suas letras e baixe um arquivo de fonte. Grátis, de código aberto e roda no navegador.">
 <meta name="twitter:image" content="https://kwy404.github.io/fontsketch/og.png">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -47,7 +47,7 @@
   {
    "@type": "SoftwareApplication",
    "name": "fontsketch",
-   "description": "Crie uma fonte com a sua letra, grátis e no navegador. Desenhe, importe SVG ou escaneie uma folha manuscrita e exporte TTF, OTF, WOFF2 e fontes variáveis.",
+   "description": "Desenhe ou escaneie suas letras e baixe um arquivo de fonte. Grátis, de código aberto e roda no navegador.",
    "url": "https://kwy404.github.io/fontsketch/pt/",
    "applicationCategory": "DesignApplication",
    "applicationSubCategory": "Font editor",
@@ -90,26 +90,10 @@
    "mainEntity": [
     {
      "@type": "Question",
-     "name": "Como criar uma fonte com a minha letra de graça?",
+     "name": "Meus desenhos ou fotos são enviados para algum servidor?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Imprima a folha manuscrita do fontsketch, preencha cada célula com uma caneta escura, tire uma foto com o celular e solte no editor. Ele endireita a página, vetoriza cada letra e exporta TTF, OTF ou WOFF2. Tudo é grátis e roda no navegador."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Dá para criar uma fonte online sem instalar nada?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Sim. O fontsketch é um editor de fontes no navegador. Abra o editor, desenhe ou importe os glifos e baixe o arquivo. Não tem cadastro nem instalação, e seus arquivos não saem do seu aparelho."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Posso transformar SVG em fonte?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Sim. Importe caminhos SVG em qualquer glifo no editor, ou rode npx fontsketch icons com uma pasta de ícones SVG para gerar uma fonte de ícones com classes CSS."
+      "text": "Não. Desenho, leitura da foto e exportação rodam no navegador. Os projetos ficam salvos no navegador, e você pode baixar um arquivo .fontsketch.json como cópia."
      }
     },
     {
@@ -117,7 +101,7 @@
      "name": "Quais formatos posso exportar?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "TTF (contornos TrueType), OTF (contornos CFF), WOFF e WOFF2 para a web, além do CSS @font-face pronto. Fontes variáveis com eixo de peso saem a partir de masters compatíveis."
+      "text": "TTF e OTF para instalar no computador, WOFF e WOFF2 para sites, além do trecho @font-face pronto. Fontes com um master Regular e um Bold também saem como uma fonte variável."
      }
     },
     {
@@ -125,7 +109,7 @@
      "name": "A fonte tem acentos como ã, ç e é?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Sim. Desenhe as letras base e os acentos uma vez e o fontsketch monta as letras acentuadas com componentes, cobrindo Latin-1 Supplement e Latin Extended-A. Português, espanhol e francês funcionam direto."
+      "text": "Sim. Desenhe as letras base e os acentos uma vez e o fontsketch monta as letras acentuadas, então textos em português, espanhol e francês funcionam."
      }
     },
     {
@@ -133,7 +117,7 @@
      "name": "De quem são as fontes que eu crio?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Suas. O fontsketch é código aberto com licença MIT e não coloca licença nem marca d'água nas suas fontes. Escolha a licença que quiser para elas."
+      "text": "Suas. O fontsketch tem licença MIT e não coloca licença nem marca d'água nas suas fontes."
      }
     }
    ]
@@ -349,8 +333,8 @@
 <section id="guides" class="band" aria-labelledby="guides-h">
   <div class="band-in">
     <p class="kicker">Guias</p>
-    <h2 id="guides-h">Aprenda a criar fontes, um guia por vez</h2>
-    <div class="cards"><a class="gcard" href="../pt/guias/criar-fonte-com-minha-letra/"><span class="art "><img class="art-l" src="../assets/art/scan-to-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../assets/art/scan-to-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">criar fonte com minha letra</span><span class="gcard-t">Como criar uma fonte com a sua própria letra (grátis, no navegador)</span></a><a class="gcard" href="../pt/guias/criar-fonte-online-gratis/"><span class="art "><img class="art-l" src="../assets/art/pen-tool.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../assets/art/pen-tool-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">criar fonte online grátis</span><span class="gcard-t">Como criar uma fonte online grátis</span></a><a class="gcard" href="../pt/guias/transformar-svg-em-fonte/"><span class="art "><img class="art-l" src="../assets/art/svg-to-glyph.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../assets/art/svg-to-glyph-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">transformar svg em fonte</span><span class="gcard-t">Como transformar arquivos SVG em fonte</span></a><a class="gcard" href="../pt/guias/gerador-de-fonte-de-icones/"><span class="art "><img class="art-l" src="../assets/art/icon-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../assets/art/icon-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">gerador de fonte de ícones</span><span class="gcard-t">Gerador de fonte de ícones, de uma pasta de SVGs para uma fonte web</span></a><a class="gcard" href="../pt/guias/como-criar-uma-fonte/"><span class="art "><img class="art-l" src="../assets/art/metrics-ruler.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../assets/art/metrics-ruler-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">como criar uma fonte</span><span class="gcard-t">Como criar uma fonte, da primeira letra ao arquivo pronto</span></a></div>
+    <h2 id="guides-h">Guias curtos</h2>
+    <div class="cards"><a class="gcard" href="../pt/guias/criar-fonte-com-minha-letra/"><span class="art "><img class="art-l" src="../assets/art/scan-to-font.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../assets/art/scan-to-font-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">Letra à mão</span><span class="gcard-t">Fazer uma fonte com a sua letra</span></a><a class="gcard" href="../pt/guias/transformar-svg-em-fonte/"><span class="art "><img class="art-l" src="../assets/art/svg-to-glyph.svg" width="640" height="400" alt="" loading="lazy" decoding="async"><img class="art-d" src="../assets/art/svg-to-glyph-dark.svg" width="640" height="400" alt="" aria-hidden="true" loading="lazy" decoding="async"></span><span class="gcard-k">SVG</span><span class="gcard-t">Montar uma fonte a partir de arquivos SVG</span></a></div>
     <p class="more-link"><a class="btn btn-outline" href="../pt/guias/">Todos os guias <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
   </div>
 </section>
@@ -359,7 +343,7 @@
   <div class="band-in narrow">
     <p class="kicker">Perguntas</p>
     <h2 id="faq-h">Perguntas frequentes</h2>
-    <div class="faq"><details><summary>Como criar uma fonte com a minha letra de graça?</summary><p>Imprima a folha manuscrita do fontsketch, preencha cada célula com uma caneta escura, tire uma foto com o celular e solte no editor. Ele endireita a página, vetoriza cada letra e exporta TTF, OTF ou WOFF2. Tudo é grátis e roda no navegador.</p></details><details><summary>Dá para criar uma fonte online sem instalar nada?</summary><p>Sim. O fontsketch é um editor de fontes no navegador. Abra o editor, desenhe ou importe os glifos e baixe o arquivo. Não tem cadastro nem instalação, e seus arquivos não saem do seu aparelho.</p></details><details><summary>Posso transformar SVG em fonte?</summary><p>Sim. Importe caminhos SVG em qualquer glifo no editor, ou rode npx fontsketch icons com uma pasta de ícones SVG para gerar uma fonte de ícones com classes CSS.</p></details><details><summary>Quais formatos posso exportar?</summary><p>TTF (contornos TrueType), OTF (contornos CFF), WOFF e WOFF2 para a web, além do CSS @font-face pronto. Fontes variáveis com eixo de peso saem a partir de masters compatíveis.</p></details><details><summary>A fonte tem acentos como ã, ç e é?</summary><p>Sim. Desenhe as letras base e os acentos uma vez e o fontsketch monta as letras acentuadas com componentes, cobrindo Latin-1 Supplement e Latin Extended-A. Português, espanhol e francês funcionam direto.</p></details><details><summary>De quem são as fontes que eu crio?</summary><p>Suas. O fontsketch é código aberto com licença MIT e não coloca licença nem marca d'água nas suas fontes. Escolha a licença que quiser para elas.</p></details></div>
+    <div class="faq"><details><summary>Meus desenhos ou fotos são enviados para algum servidor?</summary><p>Não. Desenho, leitura da foto e exportação rodam no navegador. Os projetos ficam salvos no navegador, e você pode baixar um arquivo .fontsketch.json como cópia.</p></details><details><summary>Quais formatos posso exportar?</summary><p>TTF e OTF para instalar no computador, WOFF e WOFF2 para sites, além do trecho @font-face pronto. Fontes com um master Regular e um Bold também saem como uma fonte variável.</p></details><details><summary>A fonte tem acentos como ã, ç e é?</summary><p>Sim. Desenhe as letras base e os acentos uma vez e o fontsketch monta as letras acentuadas, então textos em português, espanhol e francês funcionam.</p></details><details><summary>De quem são as fontes que eu crio?</summary><p>Suas. O fontsketch tem licença MIT e não coloca licença nem marca d'água nas suas fontes.</p></details></div>
   </div>
 </section>
 
@@ -383,8 +367,8 @@
       <ul class="foot-list"><li><a href="../app/">Editor de fontes</a></li><li><a href="../gallery/">Galeria</a></li><li><a href="../pt/guias/">Todos os guias</a></li><li><a href="https://www.npmjs.com/package/fontsketch" rel="noopener">Pacote npm</a></li><li><a href="https://github.com/kwy404/fontsketch" rel="noopener">Código no GitHub</a></li><li><a href="https://github.com/kwy404/fontsketch/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li></ul>
     </div>
     <div>
-      <h2 class="foot-h">Guias populares</h2>
-      <ul class="foot-list"><li><a href="../pt/guias/criar-fonte-com-minha-letra/">Criar fonte com minha letra</a></li><li><a href="../pt/guias/criar-fonte-online-gratis/">Criar fonte online grátis</a></li><li><a href="../pt/guias/como-criar-uma-fonte/">Como criar uma fonte</a></li><li><a href="../pt/guias/transformar-svg-em-fonte/">Transformar SVG em fonte</a></li><li><a href="../pt/guias/gerador-de-fonte-de-icones/">Gerador de fonte de ícones</a></li></ul>
+      <h2 class="foot-h">Guias</h2>
+      <ul class="foot-list"><li><a href="../pt/guias/criar-fonte-com-minha-letra/">Fonte com a sua letra</a></li><li><a href="../pt/guias/transformar-svg-em-fonte/">Fonte a partir de SVG</a></li></ul>
     </div>
     <div>
       <h2 class="foot-h">Mais de kwy404</h2>

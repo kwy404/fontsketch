@@ -2,41 +2,15 @@
 slug: make-a-font-from-svg
 lang: en
 pair: transformar-svg-em-fonte
-title: Make a Font From SVG Files, SVG to Font in Your Browser
-description: Make a font from SVG files in your browser. Prepare clean paths, import each letter, set metrics and spacing, then export an SVG to font result as TTF or WOFF2.
-h1: How to make a font from SVG files
-keyword: make a font from SVG
+title: Building a font from SVG files
+description: How to prepare SVG letters, import them into fontsketch, line them up on the baseline, space them and export the font.
+h1: Building a font from SVG files
+topic: SVG
 art: svg-to-glyph
 alt: An SVG letter R with its path points being mapped onto a font glyph grid with baseline and cap height lines
-time: PT40M
-howto: How to convert SVG files into a font with fontsketch
-steps:
-  - name: Prepare the SVG files
-    text: Convert strokes and text to filled outlines, flatten transforms and remove clipping masks, gradients and hidden layers.
-  - name: Use one artboard size for all letters
-    text: Draw every letter on the same artboard height with the baseline at the same position so sizes stay consistent.
-  - name: Import into fontsketch
-    text: Open the editor and import each SVG file or paste an SVG path into the matching character.
-  - name: Align to the font metrics
-    text: Check that each glyph sits on the baseline and matches the x-height or cap height in the 1000 unit em.
-  - name: Clean outlines and set spacing
-    text: Remove overlaps, correct contour direction, then set side bearings and kerning pairs.
-  - name: Export the font
-    text: Export TTF or OTF for desktop use, or WOFF2 with the generated CSS @font-face snippet for the web.
-faq:
-  - q: Can I convert an SVG to a font for free?
-    a: Yes. fontsketch imports SVG files and paths into glyphs and exports TTF, OTF, WOFF and WOFF2 at no cost. It runs in your browser, so the SVG files are not uploaded anywhere.
-  - q: Why does my SVG letter come out as a thin line or disappear?
-    a: Fonts can only store filled shapes. If your SVG uses a stroke with no fill, convert the stroke to an outline in your vector editor before importing, then the letter keeps its visible thickness.
-  - q: Why is the hole in my letter O filled in after import?
-    a: The inner contour has the same direction as the outer one. Run contour direction correction in fontsketch so counters are cut out of the shape correctly.
-  - q: Can I make an icon font from SVG instead of letters?
-    a: Yes. For icons, the fontsketch CLI turns a whole folder of SVG files into an icon font with TTF, WOFF2 and CSS classes, which is faster than importing them one by one.
-  - q: What size should my SVG letters be?
-    a: The absolute size matters less than consistency. Use the same artboard height for every letter, and ideally make it match the em so that 1000 units in the SVG equal the full em of the font.
-related: [convert-image-to-font, icon-font-generator, how-to-make-a-font, create-a-font-online-free]
+related: [turn-your-handwriting-into-a-font, variable-font-tutorial]
 ---
-To make a font from SVG, prepare each letter as a clean filled path on a consistent artboard, import the SVGs into a font editor, align them to the baseline and metrics, set spacing, and export. In fontsketch this happens in the browser: you import SVG files or paste paths, tidy the outlines and export TTF, OTF, WOFF or WOFF2.
+To build a font from SVG files, prepare each letter as a clean filled path on a consistent artboard, import the SVGs into a font editor, align them to the baseline and metrics, set spacing, and export. In fontsketch this happens in the browser: you import SVG files or paste paths, tidy the outlines and export TTF, OTF, WOFF or WOFF2.
 
 ## Why SVG is a great starting point
 
@@ -115,7 +89,7 @@ Even good SVG files benefit from a quick pass:
 
 ## Spacing, accents and kerning
 
-SVG files do not carry spacing information, so you set it in fontsketch. Adjust the left and right side bearings until a test string such as *Hamburgefonstiv* reads evenly. Then add kerning pairs for the combinations that still look wrong. The [font kerning guide](guide:font-kerning-guide) lists where to start.
+SVG files do not carry spacing information, so you set it in fontsketch. Adjust the left and right side bearings until a test string such as *Hamburgefonstiv* reads evenly. Then add kerning pairs for the combinations that still look wrong. Start with pairs like To, AV and Ty.
 
 For accented letters, import or draw the marks once and fontsketch composes letters like é, ã and ç from components.
 
@@ -127,7 +101,7 @@ For accented letters, import or draw the marks once and fontsketch composes lett
 | Websites | WOFF2, with the CSS snippet fontsketch generates |
 | Older browser fallback | WOFF |
 
-If you are converting a folder of icons rather than letters, use the CLI described in the [icon font generator guide](guide:icon-font-generator), which handles codepoints and CSS classes for you.
+If you are converting a folder of icons rather than letters, use the `npx fontsketch from-svg` command, which assigns codepoints and writes the CSS classes for you.
 
 ## SVG preparation checklist
 
@@ -140,4 +114,4 @@ If you are converting a folder of icons rather than letters, use the CLI describ
 
 ## Next steps
 
-Import your first few letters into the [fontsketch editor](app:) and check them against the baseline before converting the rest. If your lettering exists only as a picture rather than vectors, read [convert an image to a font](guide:convert-image-to-font). For the full process from character set to testing, see [how to make a font](guide:how-to-make-a-font).
+Import your first few letters into the [fontsketch editor](app:) and check them against the baseline before converting the rest. If your lettering exists only on paper, [make a font from your handwriting](guide:turn-your-handwriting-into-a-font) instead.

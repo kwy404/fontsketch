@@ -2,41 +2,15 @@
 slug: transformar-svg-em-fonte
 lang: pt
 pair: make-a-font-from-svg
-title: Transformar SVG em Fonte, Passo a Passo e Grátis
-description: Aprenda a transformar SVG em fonte no navegador. Prepare os caminhos, importe cada letra, ajuste métricas e espaçamento e exporte em TTF, OTF ou WOFF2 grátis.
-h1: Como transformar arquivos SVG em fonte
-keyword: transformar svg em fonte
+title: Montar uma fonte a partir de arquivos SVG
+description: Como preparar letras em SVG, importar no fontsketch, alinhar na linha de base, ajustar o espaçamento e exportar a fonte.
+h1: Montar uma fonte a partir de arquivos SVG
+topic: SVG
 art: svg-to-glyph
 alt: Letra R em SVG com seus pontos de caminho sendo encaixados numa grade de glifo com linha de base e altura das maiúsculas
-time: PT40M
-howto: Como converter arquivos SVG em fonte com o fontsketch
-steps:
-  - name: Prepare os arquivos SVG
-    text: Converta traços e textos em contornos preenchidos, aplique as transformações e remova máscaras, degradês e camadas ocultas.
-  - name: Use a mesma prancheta para todas as letras
-    text: Desenhe todas as letras numa prancheta da mesma altura, com a linha de base sempre na mesma posição.
-  - name: Importe no fontsketch
-    text: Abra o editor e importe cada arquivo SVG, ou cole o caminho SVG, no caractere correspondente.
-  - name: Alinhe às métricas
-    text: Confira se cada glifo está apoiado na linha de base e se bate com a altura de x ou das maiúsculas no eme de 1000 unidades.
-  - name: Limpe os contornos e espace
-    text: Remova sobreposições, corrija a direção dos contornos e ajuste as margens laterais e o kerning.
-  - name: Exporte a fonte
-    text: Baixe TTF ou OTF para o computador ou WOFF2 com o CSS @font-face pronto para a web.
-faq:
-  - q: Como converter SVG em fonte de graça?
-    a: Importe os arquivos SVG no fontsketch, um por caractere, ajuste métricas e espaçamento e exporte em TTF, OTF, WOFF ou WOFF2. É gratuito e roda no navegador, sem enviar os arquivos para servidor.
-  - q: Por que minha letra em SVG aparece fininha ou some na fonte?
-    a: Fontes só guardam formas preenchidas. Se a letra foi desenhada com traço (stroke) e sem preenchimento, converta o traço em contorno no seu programa vetorial antes de exportar o SVG.
-  - q: Por que o miolo da letra O ficou preenchido?
-    a: O contorno interno está na mesma direção do externo, ou as duas formas foram desenhadas separadas. Use a correção de direção dos contornos no fontsketch e, na origem, junte as formas num caminho composto.
-  - q: Dá para transformar ícones SVG em fonte?
-    a: Dá. Para ícones, a linha de comando do fontsketch transforma uma pasta inteira de SVGs numa fonte de ícones com TTF, WOFF2 e classes CSS, o que é mais rápido que importar um por um.
-  - q: Qual tamanho devo usar nos SVGs?
-    a: O tamanho absoluto importa menos que a consistência. Use a mesma altura de prancheta em todas as letras e, se possível, faça 1000 unidades do SVG corresponderem ao eme inteiro da fonte.
-related: [gerador-de-fonte-de-icones, como-criar-uma-fonte, criar-fonte-online-gratis]
+related: [criar-fonte-com-minha-letra]
 ---
-Para transformar SVG em fonte, prepare cada letra como um caminho preenchido numa prancheta padronizada, importe os SVGs num editor de fontes, alinhe à linha de base e às métricas, ajuste o espaçamento e exporte. No fontsketch isso acontece no navegador: você importa arquivos SVG ou cola caminhos, limpa os contornos e baixa TTF, OTF, WOFF ou WOFF2.
+Para montar uma fonte a partir de arquivos SVG, prepare cada letra como um caminho preenchido numa prancheta padronizada, importe os SVGs num editor de fontes, alinhe à linha de base e às métricas, ajuste o espaçamento e exporte. No fontsketch isso acontece no navegador: você importa arquivos SVG ou cola caminhos, limpa os contornos e baixa TTF, OTF, WOFF ou WOFF2.
 
 ## Por que começar pelo SVG
 
@@ -115,7 +89,7 @@ Mesmo SVGs bem feitos se beneficiam de uma revisão rápida:
 
 ## Espaçamento, acentos e kerning
 
-Arquivos SVG não trazem informação de espaçamento, então isso é feito no fontsketch. Ajuste as margens laterais até uma sequência como *Hamburgefonstiv* ficar equilibrada, e depois crie pares de kerning para o que ainda parecer estranho. O guia [como criar uma fonte](guide:como-criar-uma-fonte) explica o método de espaçamento com n, o, H e O.
+Arquivos SVG não trazem informação de espaçamento, então isso é feito no fontsketch. Ajuste as margens laterais até uma sequência como *Hamburgefonstiv* ficar equilibrada, e depois crie pares de kerning para o que ainda parecer estranho. Comece por pares como To, AV e Ty.
 
 Para os acentos, importe ou desenhe os sinais uma vez só, e o fontsketch monta é, ã, ô e ç a partir de componentes.
 
@@ -127,7 +101,7 @@ Para os acentos, importe ou desenhe os sinais uma vez só, e o fontsketch monta 
 | Sites | WOFF2, com o CSS gerado pelo fontsketch |
 | Navegadores antigos | WOFF |
 
-Se o que você tem é uma pasta de ícones e não um alfabeto, use a linha de comando descrita no [gerador de fonte de ícones](guide:gerador-de-fonte-de-icones), que cuida dos códigos Unicode e das classes CSS para você.
+Se o que você tem é uma pasta de ícones e não um alfabeto, use o comando `npx fontsketch from-svg`, que atribui os códigos Unicode e escreve as classes CSS para você.
 
 ## Checklist de preparação
 
@@ -140,4 +114,4 @@ Se o que você tem é uma pasta de ícones e não um alfabeto, use a linha de co
 
 ## Próximos passos
 
-Importe as primeiras letras no [editor do fontsketch](app:) e confira a linha de base antes de converter o resto. Se você ainda não tem letras vetoriais, veja as outras formas de criar glifos em [criar fonte online grátis](guide:criar-fonte-online-gratis).
+Importe as primeiras letras no [editor do fontsketch](app:) e confira a linha de base antes de converter o resto. Se as suas letras estão só no papel, veja como [fazer uma fonte com a sua letra](guide:criar-fonte-com-minha-letra).

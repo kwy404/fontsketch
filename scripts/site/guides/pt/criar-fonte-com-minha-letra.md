@@ -2,41 +2,13 @@
 slug: criar-fonte-com-minha-letra
 lang: pt
 pair: turn-your-handwriting-into-a-font
-title: Criar Fonte com a Minha Letra, Grátis e no Navegador
-description: Aprenda a criar uma fonte com a sua letra de graça. Imprima a folha, fotografe com o celular e baixe TTF, OTF ou WOFF2, sem cadastro e sem enviar arquivos.
-h1: Como criar uma fonte com a sua própria letra (grátis, no navegador)
-keyword: criar fonte com minha letra
+title: Fazer uma fonte com a sua letra
+description: Imprima o modelo, preencha, fotografe e deixe o fontsketch vetorizar as letras. Com o que escrever, como tirar a foto e o que ajustar depois.
+h1: Fazer uma fonte com a sua letra
+topic: Letra à mão
 art: scan-to-font
 alt: Folha de caligrafia preenchida à mão com marcadores nos cantos sendo fotografada por um celular e virando letras vetoriais na tela
-time: PT30M
-howto: Como criar uma fonte com a sua letra usando o fontsketch
-steps:
-  - name: Imprima a folha modelo
-    text: Abra o fontsketch, escolha a folha de caligrafia e imprima o PDF em papel A4 com escala de 100 por cento, sem ajustar à página.
-  - name: Preencha os quadrinhos
-    text: Escreva um caractere por quadrinho com caneta preta de ponta porosa ou gel, sem encostar nas bordas.
-  - name: Tire uma foto ou escaneie
-    text: Fotografe a folha com luz natural indireta e os quatro marcadores dos cantos aparecendo, ou escaneie em 300 dpi.
-  - name: Carregue a imagem no fontsketch
-    text: O programa encontra os marcadores, corrige a perspectiva e a iluminação, separa os quadrinhos e vetoriza cada letra com uma nota de confiança.
-  - name: Revise as letras com nota baixa
-    text: Abra primeiro os glifos com menor confiança, apague sujeiras, simplifique os contornos e redesenhe o que não ficou bom.
-  - name: Ajuste o espaçamento
-    text: Acerte as margens laterais de cada letra e crie pares de kerning para combinações como Te, To e Vo.
-  - name: Exporte e instale a fonte
-    text: Baixe TTF ou OTF para instalar no computador, ou WOFF2 com o trecho de CSS para usar em sites.
-faq:
-  - q: Dá para criar uma fonte com a minha letra de graça?
-    a: Dá sim. O fontsketch é gratuito e de código aberto, sob licença MIT, sem versão paga e sem marca d'água. A fonte que você exporta é sua e pode ser usada como quiser.
-  - q: Preciso de scanner para transformar minha letra em fonte?
-    a: Não. Uma foto de celular resolve, porque o fontsketch detecta os quatro marcadores da folha, corrige a perspectiva e equilibra a iluminação antes de vetorizar. O scanner deixa as bordas um pouco mais limpas, mas é opcional.
-  - q: Minha fonte vai ter acentos e cedilha?
-    a: Vai. Depois de escrever as letras base e os sinais como til, agudo, circunflexo, crase e cedilha, o fontsketch monta automaticamente as letras acentuadas como ã, é, ô e ç a partir desses componentes.
-  - q: Como usar a fonte com a minha letra no Word?
-    a: Exporte em TTF, instale no Windows clicando com o botão direito no arquivo e escolhendo Instalar, ou no Mac abrindo o arquivo no Catálogo de Fontes. Depois reabra o Word e procure o nome da fonte na lista.
-  - q: Minhas fotos ficam salvas em algum servidor?
-    a: Não. Todo o processamento acontece dentro do seu navegador e nada é enviado para a internet. O projeto fica salvo automaticamente no próprio navegador e você também pode baixar um arquivo de projeto como backup.
-related: [criar-fonte-online-gratis, como-criar-uma-fonte, transformar-svg-em-fonte]
+related: [transformar-svg-em-fonte]
 ---
 Para criar uma fonte com a sua letra, imprima a folha modelo do fontsketch, preencha cada quadrinho com um caractere usando caneta escura, tire uma foto com o celular e carregue no navegador. O programa vetoriza cada letra, você ajusta o espaçamento e baixa a fonte em TTF, OTF ou WOFF2. Tudo grátis e sem cadastro.
 
@@ -111,7 +83,7 @@ Se uma letra não ficou boa, redesenhe com o pincel ou com a caneta bézier. Mis
 
 O fontsketch trabalha com 1000 unidades por eme. Confira as **métricas**: ascendente, descendente, altura de x e altura das maiúsculas devem combinar com a sua escrita.
 
-Depois acerte o espaçamento. Cada letra tem uma margem esquerda e uma direita. Teste com sequências como *nonononon* e *HOHOHOH*: se o ritmo parecer regular, a base está boa. Por fim, crie pares de kerning para combinações que ainda parecem estranhas, como Te, To, Vo e Av. O guia [como criar uma fonte](guide:como-criar-uma-fonte) explica espaçamento e kerning com mais detalhes.
+Depois acerte o espaçamento. Cada letra tem uma margem esquerda e uma direita. Teste com sequências como *nonononon* e *HOHOHOH*: se o ritmo parecer regular, a base está boa. Por fim, crie pares de kerning para combinações que ainda parecem estranhas, como Te, To, Vo e Av.
 
 Com os sinais prontos, as letras acentuadas são montadas automaticamente a partir de componentes, como a mais til formando ã. A cobertura inclui os blocos Latin-1 Supplement e Latin Extended-A, então português, espanhol, francês e alemão estão garantidos.
 
@@ -137,4 +109,4 @@ Para instalar no Windows, clique com o botão direito no arquivo TTF e escolha *
 
 ## Próximos passos
 
-Abra o [fontsketch](app:) e imprima a sua primeira folha. Se quiser entender o processo completo de criação de uma fonte, leia [como criar uma fonte](guide:como-criar-uma-fonte). Se você já tem letras desenhadas no computador, veja como [transformar SVG em fonte](guide:transformar-svg-em-fonte), e para conhecer as outras formas de criar glifos no editor, confira [criar fonte online grátis](guide:criar-fonte-online-gratis).
+Abra o [fontsketch](app:) e imprima a sua primeira folha. Se você já tem letras desenhadas no computador, veja como [montar uma fonte a partir de SVG](guide:transformar-svg-em-fonte).
