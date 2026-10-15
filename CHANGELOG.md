@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Quick font in the editor: pick a style, draw the 26 lowercase letters one by one with a faint guide letter, and the editor adds capitals made from your lowercase, digits, punctuation and marks from the style template, Latin-1 accented letters and even spacing. The start screen leads with it, and `app/#quick=script`, `#quick=block` or `#quick=pixel` opens it directly.
+- Script, block and pixel styles, each with its brush and template (Quill Hand, Atelier Geometric and the new Atelier Pixel, a 5 by 7 pixel font).
+- A pixel brush that fills and erases whole grid squares, so pixel letters stay on the grid.
+- "Use your font" steps in the Download panel for a computer, Word, Canva and websites, with the right file for each and a copy button for the CSS.
+- A "font is ready" view after quick mode with a live sample in the new font.
+
 ## [0.1.0] - 2026-10-13
 
 ### Added
