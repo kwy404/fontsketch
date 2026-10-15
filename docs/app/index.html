@@ -478,6 +478,44 @@
         <p class="pane-note">WOFF2, WOFF and TTF files, a ready @font-face stylesheet and a specimen page.</p>
         <label class="fg"><span>Hinting</span><select class="select select-sm" v-model="S.hint.mode" @change="A.savePrefs()"><option value="auto">Auto hinting</option><option value="manual">Manual stems</option><option value="none">No hinting</option></select></label>
         <div class="alert alert-warning alert-soft" v-show="S.problems.length" role="alert"><div class="alert-content"><b>Check before export</b><ul><li v-for="(p, i) in S.problems" :key="i" v-text="p"></li></ul></div></div>
+        <div class="use-guide" id="use-guide">
+          <h3 class="pane-h">Use your font</h3>
+          <div class="segmented segmented-sm segmented-block" role="radiogroup" aria-label="Where you want to use it">
+            <label class="segmented-item"><input type="radio" name="ug" value="computer" v-model="S.use.tab"> Computer</label>
+            <label class="segmented-item"><input type="radio" name="ug" value="word" v-model="S.use.tab"> Word</label>
+            <label class="segmented-item"><input type="radio" name="ug" value="canva" v-model="S.use.tab"> Canva</label>
+            <label class="segmented-item"><input type="radio" name="ug" value="web" v-model="S.use.tab"> Web</label>
+          </div>
+          <ol class="use-steps" v-show="S.use.tab === 'computer'">
+            <li><button type="button" class="btn btn-xs btn-soft" @click="A.download('ttf')"><svg class="ic"><use href="#i-download"/></svg>Download the TTF</button></li>
+            <li><b>Windows:</b> open the file and click <b>Install</b> (or right click it and choose Install).</li>
+            <li><b>macOS:</b> double click the file, then click <b>Install</b> in Font Book.</li>
+            <li><b>Linux:</b> copy the file into <code>~/.local/share/fonts</code>.</li>
+            <li>Open your apps again. The font is listed as <b v-text="S.font.family"></b>.</li>
+          </ol>
+          <ol class="use-steps" v-show="S.use.tab === 'word'">
+            <li><button type="button" class="btn btn-xs btn-soft" @click="A.download('ttf')"><svg class="ic"><use href="#i-download"/></svg>Download the TTF</button></li>
+            <li>Install it: on Windows open the file and click <b>Install</b>; on macOS double click it and click <b>Install</b> in Font Book.</li>
+            <li>Close Word and open it again, then pick <b v-text="S.font.family"></b> in the font list.</li>
+            <li>Sending the document to someone without your font? In Word for Windows, turn on <b>File, Options, Save, Embed fonts in the file</b>. Word for Mac has the same switch under Preferences, Save. You can also send them the TTF.</li>
+          </ol>
+          <ol class="use-steps" v-show="S.use.tab === 'canva'">
+            <li><button type="button" class="btn btn-xs btn-soft" @click="A.download('otf')"><svg class="ic"><use href="#i-download"/></svg>Download the OTF</button> Canva also takes the TTF.</li>
+            <li>In Canva, open <b>Brand</b> and your <b>Brand Kit</b>, find <b>Fonts</b> and choose <b>Upload a font</b>. Uploading fonts needs a Canva plan with Brand Kit, such as Pro or Teams.</li>
+            <li>Choose the file and confirm you have the right to use it. You made it, so you do.</li>
+            <li>In any design, open the font menu: <b v-text="S.font.family"></b> is listed with your uploaded fonts.</li>
+            <li class="pane-note">Menu names change from time to time. If you cannot find the button, search the Canva help for “upload fonts”.</li>
+          </ol>
+          <ol class="use-steps" v-show="S.use.tab === 'web'">
+            <li><button type="button" class="btn btn-xs btn-soft" @click="A.downloadKit()"><svg class="ic"><use href="#i-download"/></svg>Download the web font kit</button></li>
+            <li>Unzip it and copy the <code>fonts</code> folder and <code>font.css</code> next to your pages.</li>
+            <li>Add this to your page:
+              <pre class="use-code" v-text="A.useCss(S.font.family)"></pre>
+              <button type="button" class="btn btn-xs btn-ghost" @click="A.copyCss()"><svg class="ic"><use href="#i-copy"/></svg>Copy</button>
+            </li>
+            <li>Site builders that accept custom fonts usually ask for the WOFF2 file; some ask for the TTF.</li>
+          </ol>
+        </div>
         <h3 class="pane-h">Project file</h3>
         <p class="pane-note">Projects save automatically in this browser. Keep a copy or move it to another device as a .fontsketch.json file.</p>
         <div class="row">

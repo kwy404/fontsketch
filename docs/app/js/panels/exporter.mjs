@@ -91,7 +91,8 @@ export function installExport(ctx) {
       const name = `${fileBase()}${variable ? '-Variable' : ''}.${format}`;
       ctx.saveBytes(bytes, name, MIME[format]);
       flip(format, variable);
-      A.toast(`Downloaded ${name} (${(bytes.length / 1024).toFixed(1)} KB)`, 'success');
+      const help = S.panel === 'export' ? null : 'How to use it';
+      A.toast(`Downloaded ${name} (${(bytes.length / 1024).toFixed(1)} KB)`, 'success', help, help && (() => A.openUseGuide()));
       return bytes;
     } catch (e) {
       console.error(e);
@@ -226,6 +227,37 @@ Version: ${m.version}
 Made with fontsketch: https://kwy404.github.io/fontsketch/
 `;
   }
+
+  // ---------- Using the font ----------
+
+  /** The two lines a web page needs, with this font's family name. */
+  A.useCss = (family = P.font?.meta.family || 'My Font') =>
+    `<link rel="stylesheet" href="font.css">
+
+<style>
+  body { font-family: "${String(family).replace(/"/g, '')}", sans-serif; }
+</style>`;
+  A.copyCss = async () => {
+    try {
+      await navigator.clipboard.writeText(A.useCss());
+      A.toast('Copied. Paste it into the head of your page.', 'success');
+    } catch {
+      A.toast('Copying is blocked here. Select the code and copy it.', 'error');
+    }
+  };
+  /** Opens the Export panel at the "Use your font" steps. */
+  A.openUseGuide = (tab) => {
+    if (tab) S.use.tab = tab;
+    A.openPanel('export');
+    requestAnimationFrame(() => {
+      const el = document.getElementById('use-guide');
+      if (!el) return;
+      el.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      el.classList.remove('flash');
+      void el.offsetWidth;
+      el.classList.add('flash');
+    });
+  };
 
   A.saveProjectFile = () => {
     const text = projectJSON();
